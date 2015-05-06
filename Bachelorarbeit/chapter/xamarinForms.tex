@@ -1,0 +1,20 @@
+\section{Xamarin.Forms: 3 Native UIs, 1 Shared Code Basis}
+Bei Xamarin.Forms handelt es sich um ein .NET-basiertes UI Toolkit, mit dem Oberflächen entweder in
+C\# oder einem speziellen XAML-Dialekt generisch definiert werden.Während des Kompiliervorgangs
+entstehen aus dem Code plattformspezifische, native Oberflächen. Xamarin.Forms unterstützt die
+Plattformen iOS, Android und Windows Phone, aber (noch) nicht Windows Store Apps. Mit Xamarin.Forms
+können Entwickler deutlich weniger Code schreiben.
+Ziel dieser Arbeit ist speziell Xamarin.Forms zu untersuchen.
+
+\includegraphics[scale = 0.5]{graphics/XamarinForms1.png}
+\\Eine Beispiel Solution sehen wir in der folgenden Abbildung: 
+
+\includegraphics[scale = 0.5]{graphics/xamarin_forms-solution.png}
+\\Die gemeinsame Geschäftslogik ist in der Portable Class Library beinhaltet. Zusätzlich werden noch
+drei weitere Projekte erstellt, eins für Android, eins für iOS und eins für Windows Phone. In den
+plattformspezifischen Projekte befinden sich plattformspezifische Views und Logik.
+
+\includegraphics[scale = 0.5]{graphics/xamarin_forms-solution2.png}
+
+
+\section{Fazit}

@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sat Apr 04 00:30:54 CEST 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=sample.tex
+outputFile=bachelorarbeit.pdf
+langSpell=de
+markDer=true
+srcDir=

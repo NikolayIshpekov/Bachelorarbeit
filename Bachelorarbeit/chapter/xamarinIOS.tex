@@ -1,0 +1,51 @@
+\chapter{Cross-Plattform-Entwicklung mit Xamarin}
+Was ist \textbf{Xamarin}? Xamarin ist ein US-amerikanisches
+Softwareunternehmen mit Sitz in San Francisco.
+Xamarin bietet eine Entwicklungsumgebung Xamarin Studio und lässt sich auch alternativ in
+Visual Studio als Plugin einbinden. Mit Xamarin.iOS und Xamarin.Android lassen sich native iOS und
+Android Apps in C\# programmieren. Damit wird die Entwicklung von Applikationen für alle drei
+Plattformen in einer einzigen Sprache ermöglicht. Grundlage hierfür ist das Open-Source-Projekt
+\textbf{Mono}. Hierbei wird für jede Plattform spezifisch die UI in C\# implementiert. Daraus
+entstehen native Oberflächen. Bei Android passiert das zur Laufzeit und bei iOS während des
+Kompiliervorgangs. Isoliert betrachtet ist dies bereits ein gravierender Vorteil gegenüber einer 
+plattformspezifischen Entwicklung.
+ So wird anstelle von Java, Objective-C und C\# Know-how lediglich Letzteres benötigt.
+  Darüber hinaus vertreibt Xamarin Entwicklungswerkzeuge, mit denen sich auf Basis desselben C\#-
+  Codes Apps für iOS, Mac OS X, Windows-Systeme und Android erstellen lassen sollen. Außerdem ist
+  das Unternehmen maßgeblich in die Entwicklung der bereits erwähnten freien .NET-Implementierung
+  Mono involviert.
+  Xamarin ist 2011 infolge der Entlassung des früheren Teams zur Entwicklung von Mono durch Novell entstanden.
+Xamarin ist ein unabhängiges Unternehmen, aber arbeitet eng mit Microsofts .NET-Team zusammen. Es
+gibt eine Partnerschaft zwischen Microsoft und Xamarin, die dazu führt, dass Visual-Studio-Entwickler 
+durch Xamarins Produkte zur Entwicklung von Apps für iOS und Android unterstützt werden. Im Züge der 
+ Partnerschaft können MSDN-Abonnenten außerdem kostenlos auf den Kurs Xamarin University zugreifen, 
+ der dabei helfen soll, innerhalb kurzer Zeit zum Experten der Xamarin-Tools zu werden. Das
+ Entwickeln in einer einheitlichen Programmiersprache ist nicht der einzige Vorteil von Xamarin.
+ Xamarin.Forms ist ein mächtiges Feature, mit dem man nicht nur die Anwendung in C\# entwickeln
+ kann, sondern man auch den größten Teil des Codes gemeinsam für alle drei Zielplattformen nutzen
+ kann. Man kann mit Xamarin.Forms in einem Projekt gleichzeitig für iOS, Android und Windows Phone
+ entwickeln und alle drei Produkte haben am Ende bis zu 70\% gemeinsamen Code und nur 30\%
+ plattformspezifischen Code.
+
+Quelle: http://www.heise.de/developer/meldung/Microsoft-angeblich-an-Xamarin-interessiert-2150136.html
+
+\section{Getting Started mit von Xamarin}
+Um Xamarin benutzen zu können, braucht man einen kostenpflichtigen Account. Es gibt verschiedene
+Arten von Accounts, die mit unterschiedlichen Features verbunden sind.
+
+In diesem Kapitel werden die drei wichtigsten Bibliotheken von Xamarin vorgestellt. 
+Mit Xamarin.iOS / Xamarin.Android erstellte Programme stehen nativen Anwendungen in nichts nach und
+können problemlos in App Store eingestellt werden. Für erfahrene Entwickler ist der Einstieg in
+Xamarin.iOS und Xamarin.Android ganz leicht, da es sich sehr der nativen App-Programmierung ähnelt,
+aber im Gegensatz zu der üblichen Programmiersprachen (Objective-C und Java) wird bei Xamarin.iOS
+und Xamarin.Android ausschließlich C\# benutzt.
+Die plattformübergreifende App-Entwicklung mit Xamarin geht noch weiter. Mit Xamarin.Forms lassen 
+sich Apps für iOS, Android und Windows Phone mit gemeinsamen Code erstellen. Xamarin.Forms ist jedoch 
+nicht für alle Typen von Anwendungen geeignet.
+\section{Xamarin.iOS}
+Mit Xamarin.iOS bietet Xamarin die Möglichkeit, native Apps für iOS zu entwickeln. Der Ahead-Of-Time
+(AOT) Compiler kompiliert Xamarin.iOS Apps direkt zu nativen ARM Assemblercode, mit anderen Worten,
+kann man mit Xamarin native iOS Apps erstellen. Mit Xamarin.iOS hat man quasi die iOS SDK von Apple
+in C\# mit .NET Namenskonventionen. Xamarin bietet somit Zugriff auf alle iOS APIs. Dank eines 
+automatischen Binding-Generators kann man existierenden Objective-C Code, Frameworks und
+benutzerdefinierte Controls problemlos in einer Xamarin App benutzt werden.
