@@ -3,16 +3,39 @@ Bei Xamarin.Forms handelt es sich um ein .NET-basiertes UI Toolkit, mit dem Ober
 C\# oder einem speziellen XAML-Dialekt generisch definiert werden.Während des Kompiliervorgangs
 entstehen aus dem Code plattformspezifische, native Oberflächen. Xamarin.Forms unterstützt die
 Plattformen iOS, Android und Windows Phone, aber (noch) nicht Windows Store Apps. Mit Xamarin.Forms
-können Entwickler deutlich weniger Code schreiben.
-Ziel dieser Arbeit ist speziell Xamarin.Forms zu untersuchen.
+können Entwickler deutlich weniger Code schreiben und dadurch wird der jeweilige Mehraufwand pro zu
+unterstützende Plattform geringer.
+Ziel dieser Arbeit ist speziell Xamarin.Forms zu untersuchen. 
 
 \includegraphics[scale = 0.5]{graphics/XamarinForms1.png}
 \\Eine Beispiel Solution sehen wir in der folgenden Abbildung: 
 
 \includegraphics[scale = 0.5]{graphics/xamarin_forms-solution.png}
-\\Die gemeinsame Geschäftslogik ist in der Portable Class Library beinhaltet. Zusätzlich werden noch
-drei weitere Projekte erstellt, eins für Android, eins für iOS und eins für Windows Phone. In den
-plattformspezifischen Projekte befinden sich plattformspezifische Views und Logik.
+\\Im Allgemeinen besteht eine Xamarin.Forms Solution aus jeweils einem Projekt pro zu
+unterstützende Plattform und einem (oder mehreren) plattformübergreifenden Projekten. Es gibt zwei
+unterschiedliche Lösungsansätze für die plattformübergreifenden Projekte:
+\begin{itemize}
+      \item Shared Projects
+      \item Portable Class Libraries (PCL)
+   \end{itemize}
+Bei dem Shared Projects Ansatz wird der enthaltene Code für die jeweilige Plattform kopiert und
+erneut übersetzt. Auf diese Weise wird der Code direkt in die Assembly des referenzierenden Projekts
+integriert und es wird keine neue Assembly erzeugt. So lässt sich der Code dieser Assembly auf
+mehreren Plattformen wiederverwenden und zugleich über Präprozessordirektiven oder partielle
+Methoden und Klassen in den nativen Projekten auf plattformspezifische Anforderungen eingehen, ohne
+zusätzliche Abstraktionsschichten für die nativen Funktionen einbauen zu müssen. Allerdings muss
+hier erwähnt werden, dass bei diesem Lösungsansatz die Übersicht im Code schnell verloren geht und
+dadurch die Wartbarkeit des Codes erschwert wird. 
+\\Bei dem zweiten Lösungsansatz (PCL) bietet sich hingegen die Möglichkeit, mit gemeinsamer
+Funktionalität ausgewählter Zielplattformen gemeinsamen Code in einer Assembly abzubilden. Dadurch
+wird ein möglich effizientes Code Sharing erreicht. \\Die gemeinsame Geschäftslogik ist in der
+Portable Class Library beinhaltet.
+Zusätzlich werden noch drei weitere Projekte erstellt, eins für Android, eins für iOS und eins für Windows Phone. In den
+plattformspezifischen Projekte befinden sich plattformspezifische Views und Logik. Die meisten
+Dateien in den plattformspezifischen Projekten werden automatisch generiert. In ganz seltenen Fällen
+muss der Entwickler etwas in den plattformspezifischen Projekte hinzufügen. Meistens geht es um
+Datenbankanbindung oder die Implementierung von Custom Control Renderer, um die von
+Xamarin.Forms vorgegebenen Visualisierung von UI Controls zu modifizieren. 
 
 \includegraphics[scale = 0.5]{graphics/xamarin_forms-solution2.png}
 
