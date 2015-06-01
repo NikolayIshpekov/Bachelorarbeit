@@ -1,21 +1,45 @@
 \chapter{Einleitung}
 \section{Motivation / Problembeschreibung}
-Apps (mobile Softwareanwendungen) spielen eine immer größere Rolle in der
-heutigen Welt. Mobile Endgeräte werden leistungsfähiger und es wird eine Tendenz zur
-Nutzung von mobilen Geräten im Arbeitsleben beobachtet. Heutzutage sind Smartphones und Tablet-PCs
-leistungsfähiger und mit mehr Funktionen ausgestattet als die Notebooks vor zehn
-Jahren \cite[107]{SmMApps}. 
-Smartphones eröffnen dadurch beinahe unbegrenzte Möglichkeiten.
-Geschäftsabläufe werden automatisiert und Kundenkontakte finden situations- und ortsunabhängiger statt.
-\\Laut dem Bundesverband Informationswirtschaft, Telekomunikation und neue Medien (BITKOM) nutzen 44
-Millionen Deutsche ein Smartphone. Die Zahl der Smartphone-Nutzer ist in den letzten sechs Monaten
+Apps (mobile Softwareanwendungen) bekommen  eine immer größere Bedeutung in der
+heutigen Welt. Laut dem Bundesverband Informationswirtschaft, Telekomunikation und neue Medien
+(BITKOM) nutzen 44 Millionen Deutsche ein Smartphone. Die Zahl der Smartphone-Nutzer ist in den letzten sechs Monaten
 um rund 2 Millionen gestiegen. 74 Prozent der Benutzer laden zusätzliche Apps auf ihr Gerät
 herunter. 
-"`Das Smartphone ist zum digitalen Alleskönner im Alltag avanciert und ersetzt dabei eine Vielzahl
+\\"`Das Smartphone ist zum digitalen Alleskönner im Alltag avanciert und ersetzt dabei eine Vielzahl
 von Geräten, die zuvor notwendig waren, wie zum Beispiel die Digicam oder den Wecker"',
-sagt Johannes Weicksel von BITKOM \cite{BIT}.
-\\Eine der häufigsten Anforderungen für eine Business
-Anwendung ist, dass die App auf mehreren Mobilplattformen läuft.
+sagt Johannes Weicksel von BITKOM \cite{BIT}.\\Die meisten Apps adressieren den Nutzer als
+Konsumenten, aber in diesem Bereich liegen viele weitere Möglichkeiten.
+Mit Business Apps können Unternehmen schnell und unkompliziert ihre
+Geschäftsprozesse mobilisieren. Mobile Endgeräte werden leistungsfähiger und es wird
+eine Tendenz zur Nutzung von mobilen Geräten im Arbeitsleben beobachtet.
+Durch diesen grundlegenden Wandel spielen Google, Facebook und Apple heutzutage eine größere
+Rolle als Nokia oder Siemens Mobile. \\Smartphones eröffnen beinahe unbegrenzte Möglichkeiten, die
+die Geschäftsprozessen in allen Branchen optimieren. 
+Geschäftsabläufe werden automatisiert und Kundenkontakte finden situations- und ortsunabhängiger
+statt. Heutzutage sind Smartphones und Tablet-PCs leistungsfähiger und mit mehr Funktionen ausgestattet als die Notebooks vor zehn
+Jahren. Mit dem Einsatz von vielfältigen, mobilen Endgeräten wird ein Informationsfluss sowohl von
+Kunden als auch von Geschäftspartnern direkt in die eigenen IT-Systeme ermöglicht.
+\cite[4]{SmMApps}.
+
+Für die Erzeugung von Business Apps müssen
+Softwarehersteller einige technische Barrieren überwinden. Wahrscheinlich das größte Hindernis ist
+die Heterogenität der mobilen Plattformen. Derzeit existieren mehrere mobile Betriebssysteme
+(Siehe Abb.\ref{fig:abb1}) \cite{SmOSMaQ1}.
+%%\includegraphics[scale = 0.7]{graphics/chartMSOSQ1.png} 
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.7]{graphics/chartMSOSQ1.png}
+\caption{Worldwide Smartphone OS Market Share}
+\label{fig:abb1}
+\end{figure}
+\\In der Regel ist für jedes Betriebssystem eine eigene Management- und
+Entwicklungsinfrastruktur nötig und das ist mit hohen Kosten und langen Entwicklungszeiten
+verbunden. Geschäftsanwendungen, die für eine nicht überschaubare Anzahl von Nutzern bestimmt sind
+und mit vielen Varianten ausgerollt werden, bringen ein Skalierbarkeit Problem mit. Wie können
+Tausende von Endgeräten mit neuen Versionen einer Software betankt werden und wie kann im
+Einzelnen sichergestellt werden, dass die neue Softwareversion sich mit dem Betriebssystem des
+Endgerätes verträgt?\\Eine der häufigsten Anforderungen für eine Business Anwendung ist, dass die
+App auf mehreren Mobilplattformen läuft.
 Da auf den meisten Smartphones entweder Android oder iOS installiert ist, spielen diese beiden
 Plattformen eine zentrale Rolle für die Entwicklung von mobilen Softwareanwendungen.
 Unglücklicherweise sind Android und iOS inkompatibel zueinander. Das bedeutet, dass ein Entwickler,
@@ -26,8 +50,9 @@ plattformspezifischen Sprachen zu beherrschen.
  Aufwand. Man muss quasi drei mal dieselbe Anwendung in drei verschiedenen Programmiersprachen
  implementieren. Aus gleichen Anforderungen resultieren drei völlig unabhängige und unterschiedliche
   Lösungen.
-  \textbf{Cross-Plattform-Entwicklung} könnte hier Abhilfe schaffen. Die Idee ist, dass man anstatt
-  300 Stunden, nur 150 - 200 Stunden in die Entwicklung der App stecken muss.Also
+\section{Lösungsidee}
+ \textbf{Cross-Plattform-Entwicklung} könnte hier Abhilfe schaffen. Die Idee ist, dass man anstatt
+  300 Stunden, nur 150 - 200 Stunden für die Entwicklung der App einplanen muss. Also
   Softwarehersteller können somit die Entwicklungskosten deutlich reduzieren. Darüber hinaus hat sich der
   Smartphonemarkt als unbeständig erwiesen und plattformgebundene App Entwicklung ist demzufolge ein riskantes
   Unterfangen. 
@@ -43,8 +68,6 @@ plattformspezifischen Sprachen zu beherrschen.
  nachgebaut, die schon für iOS und Android entwickelt wurde. Dabei ist interessant herauszufinden, an welchen Stellen es Probleme entstehen können und ob es überhaupt möglich ist,
   die App mit Xamarin zu entwickeln, so dass es keine Leistungsverluste gibt. Die benötigten
   Installationsschritte, sowie Hardware- und Softwarevoraussetzungen werden erläutert. 
-\section{Lösungsidee}
-
 
 \section{Aufgaben und Ziele / Bewertungskriterien}
 Ziel der Arbeit - eine Cross-Plattform-Entwicklungsumgebung zu evaluieren für die Entwicklung von

@@ -2,7 +2,57 @@
 In diesem Kapitel werden die für das Verständnis notwendigen Grundlagen erläutert. Die Themen werden
 stark komprimiert und vereinfacht vorgestellt.
 \section{Aktuelle mobile Plattformen}
-
+Mobile Betriebssysteme sind fest an ein bestimmtes Smartphone gebunden. Es ist nicht möglich
+fehlende Funktionen durch einen Betriebssystemwechsel zu erlangen.
+Die Kombination aus Smartphone und Betriebssystem kann als feste Einheit betrachtet werden.
+In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
+\begin{itemize}
+  \item \textbf{Android}\\Das von Google entwickelte, mobiles Betriebssystem Android wurde im
+  November 2007 der Öffentlichkeit vorgestellt. Es besteht aus einem Betriebssystemkern, Middleware
+  und eigenen Applikationen (Telefonbuch, Kalender etc.). Da wesentliche Teile der Android Plattform unter einer Open Source Lizenz (Apache v2.0) stehen, kann Android von
+  Lizenznehmern ohne Zahlung von Lizenzgebühren lizenziert und wegen der quelloffenen Verfügbarkeit
+  nach eigenen Bedürfnissen angepasst werden. Der ebenfalls quelloffene Betriebssystemkern von
+  Android basiert auf Linux 2.6. Über "`Play Store"'(ein zentrales
+  Softwareverzeichnis) lassen sich Applikationen kaufen und auf dem Gerät installieren. Google
+  übernimmt für den Softwareentwickler die Distribution der Software und sorgt für eine kostenlose
+  Verteilung von Updates. Das Inkasso erfolgt durch ein Zahlsystem von Google, wobei Google 30\% als
+  Provision behält und dem Entwickler monatlich 70\% des
+  Verkaufserlöses als Tantieme überweist. Die Registrierung für den Android Market kostet einmalig
+  \$25.
+  Software kann alternativ auch direkt auf ein Gerät mit Android installiert werden.
+  \item \textbf{iOS}\\Das mobile Betriebssystem von Apple wird mit allen iPhones und iPads
+  ausgeliefert. Da Apple iOS nicht an andere Gerätehersteller lizenziert ist die Installation von
+  iOS nur auf Apple-Geräte möglich. Applikationen lassen sich nur durch Download über ein zentrales
+  Softwareverzeichnis von Apple ("`AppStore"') auf einem Gerät installieren. Da Apple durch
+  Signaturmechanismen die Installation von unsignierten Applikationen nicht zulässt, ist es nicht
+  möglich unter Umgehung des AppStores Programme auf das Gerät zu installieren. Ähnlich wie bei
+  Android übernimmt der AppStore eine Marktplatz-, Distributions-, Wartungs- und Inkassofunktion.
+  Eine auf dem Apple Gerät installiere Software überprüft in regelmäßigen Abständen, ob Updates für
+  die gekaufte Apps vorhanden sind und der Benutzer wird dementsprechend benachrichtigt. Wie
+  bei Android behält Apple eine Verkaufsprovision in Höhe von 30\%. Ein Vorteil von iOS
+  gegenüber Android ist die nicht so große Vielfalt in Bezug auf Displaygröße. Diese durchgängige
+  Standardisierung vereinfacht die Entwicklung, Wartung, Test und Weiterentwicklung von iOS Apps aus
+  Sicht des Entwicklers.
+  \item \textbf{Windows Phone}\\Microsoft bietet mit Windows Phone ein Bündel aus Betriebssystem und
+  einigen Zusatzprogrammen (Outlook, Word mobile etc.) für Smartphones. Im Gegensatz zu Microsoft
+  Windows für stationäre Desktop-PCs, das nahezu ausschließlich auf Intel-x86-Prozessoren läuft, ist
+  Windows Phone auf vielen unterschiedlichen Prozessorarchitekturen lauffähig. Mit Windows Phone
+  bietet Microsoft ein Betriebssystem mit einer akzeptablen Systemleistung trotz der oft begrenzten
+  Hardwareressourcen von mobilen und embedded Geräten. 
+  \item \textbf{Blackberry OS}\\Das Betriebssystem wird von Research In Motion (RIM)  für die
+  Nutzung auf Smartphones des Typs Blackberry hergestellt und ähnlich wie bei iOS von Apple nur für
+  Blackberry-Smartphones vorgesehen ist. Blackberry-Smartphones sind vorwiegend auf Geschäftskunden
+  ausgerichtet und bieten komfortable Synchronisationsmechanismen für Daten zwischen einem Server
+  und dem Smartphone, sowie einen Push-Email Dienst an. Damit sich native Applikationen störungsfrei
+  auf einem Blackberry-Smartphone installieren und ausführen lassen, müssen diese zuvor von RIM
+  digital signiert werden.
+\end{itemize}
+\cite[347]{MoApp1}
+\\Laut International Data Corporation (IDC) ist Android das am weitesten verbreitete mobiles
+Betriebssystem mit einem Marktanteil von 78\%, es folgen iOS mit 18.3\%, Windows Phone mit 2.7\% und
+Blackberry OS mit 0.3\%. Allerdings hat Android ca 3\% Marktanteil verloren im Vergleich zum Vorjahr
+und iOS hat dagegen 3\% mehr. 
+\cite{SmOSMaQ1}
 \section{Software Entwurfsmuster für mobilen Anwendungen}
 
 \section{Plattformspezifische Entwicklung (App Lifecycle)}
