@@ -11,18 +11,22 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   November 2007 der Öffentlichkeit vorgestellt. Es besteht aus einem Betriebssystemkern, Middleware
   und eigenen Applikationen (Telefonbuch, Kalender etc.). Da wesentliche Teile der Android Plattform unter einer Open Source Lizenz (Apache v2.0) stehen, kann Android von
   Lizenznehmern ohne Zahlung von Lizenzgebühren lizenziert und wegen der quelloffenen Verfügbarkeit
-  nach eigenen Bedürfnissen angepasst werden. Der ebenfalls quelloffene Betriebssystemkern von
-  Android basiert auf Linux 2.6. Über "`Play Store"'(ein zentrales
-  Softwareverzeichnis) lassen sich Applikationen kaufen und auf dem Gerät installieren. Google
+  nach eigenen Bedürfnissen angepasst werden. Neben der Bereitstellung von Programmierschnittstellen
+  bietet Android auch umfassende Quellcodesammlung für Entwickler an. Der ebenfalls quelloffene
+  Betriebssystemkern von Android basiert auf Linux 2.6.
+  Über "`Play Store"'(ein zentrales Softwareverzeichnis) lassen sich Applikationen kaufen und auf dem Gerät installieren. Google
   übernimmt für den Softwareentwickler die Distribution der Software und sorgt für eine kostenlose
   Verteilung von Updates. Das Inkasso erfolgt durch ein Zahlsystem von Google, wobei Google 30\% als
   Provision behält und dem Entwickler monatlich 70\% des
   Verkaufserlöses als Tantieme überweist. Die Registrierung für den Android Market kostet einmalig
   \$25.
-  Software kann alternativ auch direkt auf ein Gerät mit Android installiert werden.
-  \item \textbf{iOS}\\Das mobile Betriebssystem von Apple wird mit allen iPhones und iPads
-  ausgeliefert. Da Apple iOS nicht an andere Gerätehersteller lizenziert ist die Installation von
-  iOS nur auf Apple-Geräte möglich. Applikationen lassen sich nur durch Download über ein zentrales
+  Software kann alternativ auch direkt auf ein Gerät mit Android installiert werden. Das
+  Betriebssystem bringt Programme zum Senden und Empfangen von E-Mails, SMS, MMS, zum Aufnehmen und
+  Abspielen von Fotos und Videos mit. Der Funktionsumfang beinhaltet auch ein Browser zum Surfen im
+  Internet.
+  \item \textbf{iOS}\\Das mobile Betriebssystem von Apple basiert auf der Grundlage des
+  Betriebssystems Mac OS X und wird mit allen iPhones und iPads ausgeliefert. Da Apple iOS nicht an
+  andere Gerätehersteller lizenziert ist die Installation von iOS nur auf Apple-Geräte möglich. Applikationen lassen sich nur durch Download über ein zentrales
   Softwareverzeichnis von Apple ("`AppStore"') auf einem Gerät installieren. Da Apple durch
   Signaturmechanismen die Installation von unsignierten Applikationen nicht zulässt, ist es nicht
   möglich unter Umgehung des AppStores Programme auf das Gerät zu installieren. Ähnlich wie bei
@@ -32,48 +36,142 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   bei Android behält Apple eine Verkaufsprovision in Höhe von 30\%. Ein Vorteil von iOS
   gegenüber Android ist die nicht so große Vielfalt in Bezug auf Displaygröße. Diese durchgängige
   Standardisierung vereinfacht die Entwicklung, Wartung, Test und Weiterentwicklung von iOS Apps aus
-  Sicht des Entwicklers.
+  Sicht des Entwicklers. Im Laufe der Zeit wurde das Betriebssystem und der damit verbundene
+  Funktionsumfang sukzessive dem technologischen Fortschritt angepasst und beinhaltet einen
+  E-Mail-Client, ein Programm zur SMS-Verwaltung, eine Möglichkeit, kabellos zu drucken, einen
+  Browser, ein Tool zur Sprachsteuerung sowie eine Multimediaanwendung, um Videos und Bilder sowohl
+  selbst zu erstellen als auch abzuspielen.
   \item \textbf{Windows Phone}\\Microsoft bietet mit Windows Phone ein Bündel aus Betriebssystem und
   einigen Zusatzprogrammen (Outlook, Word mobile etc.) für Smartphones. Im Gegensatz zu Microsoft
   Windows für stationäre Desktop-PCs, das nahezu ausschließlich auf Intel-x86-Prozessoren läuft, ist
   Windows Phone auf vielen unterschiedlichen Prozessorarchitekturen lauffähig. Mit Windows Phone
   bietet Microsoft ein Betriebssystem mit einer akzeptablen Systemleistung trotz der oft begrenzten
-  Hardwareressourcen von mobilen und embedded Geräten. 
+  Hardwareressourcen von mobilen und embedded Geräten. Seit dem Erscheinen des Betriebssystem
+  Windows Phone setzt Microsoft ein Kachelkonzept. Neben Funktionalitäten wie SMS-Verwaltung,
+  Telefonfunktion, Kalender und soziale Netzwerke, arbeitet Windows Phone nach dem Prinzip des
+  Cloud-Computing. Z.B. Dienste wie Facebook werden integriert und mit den Funktionen des
+  Betriebssystems verknüpft.
   \item \textbf{Blackberry OS}\\Das Betriebssystem wird von Research In Motion (RIM)  für die
-  Nutzung auf Smartphones des Typs Blackberry hergestellt und ähnlich wie bei iOS von Apple nur für
-  Blackberry-Smartphones vorgesehen ist. Blackberry-Smartphones sind vorwiegend auf Geschäftskunden
-  ausgerichtet und bieten komfortable Synchronisationsmechanismen für Daten zwischen einem Server
-  und dem Smartphone, sowie einen Push-Email Dienst an. Damit sich native Applikationen störungsfrei
+  Nutzung auf Smartphones des Typs Blackberry hergestellt. Ähnlich wie bei iOS von Apple ist es nur
+  für Blackberry-Smartphones vorgesehen. Da Blackberry-Smartphones vorwiegend auf
+  Geschäftskunden ausgerichtet und bieten sie komfortable Synchronisationsmechanismen für Daten
+  zwischen einem Server und dem Smartphone, sowie einen Push-Email Dienst an. Damit sich native Applikationen störungsfrei
   auf einem Blackberry-Smartphone installieren und ausführen lassen, müssen diese zuvor von RIM
   digital signiert werden.
 \end{itemize}
 \cite[347]{MoApp1}
+\cite[98]{App4U}
 \\Laut International Data Corporation (IDC) ist Android das am weitesten verbreitete mobiles
 Betriebssystem mit einem Marktanteil von 78\%, es folgen iOS mit 18.3\%, Windows Phone mit 2.7\% und
 Blackberry OS mit 0.3\%. Allerdings hat Android ca 3\% Marktanteil verloren im Vergleich zum Vorjahr
 und iOS hat dagegen 3\% mehr. 
 \cite{SmOSMaQ1}
+\section{Mobile Applikationen}
+\begin{quote} 
+"`Eine \textbf{mobile Applikation} stellt eine spezifische Anwendungssoftware dar, die zur
+Anwendung auf einem Betriebssystem sowie zur Ausführung auf mobilen Endgeräten entwickelt wird
+und neben der Berücksichtigung besonderer Endgeräteeigenschaften, die Nutzung kabelloser
+Übertragungstechniken voraussetzt."'\footnotemark[1]
+\end{quote}
+\footnotetext[1]{\cite[105]{App4U}}
+Der Begriff Applikation (App) hat sich in Bezug auf die mobile Nutzung und
+Anwendung als eigenständiger Begriff etabliert. 
+Informationssuche und Nachrichtenübermittlung stand anfangs im Fokus des mobilen Internets.
+Allerdings hat sich im Laufe der Zeit ein Bedürfnis nach Interaktion und
+Mitgestaltung entwickelt. Daraus resultiert die Nachfrage nach einfach zu bedienenden Geräten sowie
+intuitiv steuerbare Applikationen. Immer mehr Unternehmen erkennen den daraus resultierenden
+Mehrwert und ermöglichen den Zugriff auf Dienstleistungen über mobile Anwendungen. Es entstehen
+Dienstleistungsangebote sowie im privaten als auch im geschäftlichen Bereich. Aus
+produktorientierter Sichtweise lassen sich vier Klassen mobiler Anwendungen
+identifizieren:\cite[102]{App4U}
+\begin{itemize} 
+  \item \textbf{Informationsorientierte} Dienste (z.B. Reiseinformationen, Börseninformationen
+  etc.)
+  \item \textbf{Applikationsorientierte} Dienste (z.B. Computerspiele, Übersetzungsdienste etc.)
+  \item \textbf{Transaktionsorientierte} Dienste (z.B. Bezahldienste, Reservierungsdienste etc.)
+  \item \textbf{Kommunikationsorientierte} Dienste (z.B. E-Mail, Chat oder soziale Netzwerke)
+\end{itemize}
+Mobile Applikationen werden in drei unterschiedliche Komplexitätsstufen eingeteilt:
+ \begin{itemize}
+   \item \textbf{Einfache Apps} zeichnen sich durch wenig Logik, keinen Backendzugriff,
+   minimalistisches Design und die überwiegende Verwendung von Standardkomponenten aus.
+   \item \textbf{Durchschnittliche Apps} verwenden ebenfalls kein eigenes Backend, können aber auf fremde Backends zugreifen. Bei
+durchschnittlichen Apps sind vereinzelte Konfigurationsmöglichkeiten und mehrere Bildschirme
+möglich.
+   \item \textbf{Komplexe Apps}. Für die Entwicklung einer komplexen mobilen Anwendung ist eine Konzeption und Umsetzung
+eines eignen Backends notwendig. Dazu kommt noch die Einbindung von Menüs und umfangreicheren
+Konfigurationsmöglichkeiten und Anpassung der Layouts nach eigenen Wünschen. Auch
+Funktionen und Komponenten zum Datenschutz und zur Dienstsicherheit sollten eingebaut werden.
+\end{itemize}
+Laut einer Studie der Marktforscher des "`HighText Verlags"', die im Jahr 2013 veröffentlicht
+wurde, fallen die Honorare bei der Entwicklung mobiler Anwendungen in Deutschland an (Siehe Tabelle
+\ref{table1}). Die Entwicklungskosten für iOS und Android haben sich im Laufe der Zeit stark
+angenähert und für Nischenbetriebssysteme, wie z.B. das Betriebssystem Symbian von Nokia können die
+Kosten bis zu 45\% höher anfallen. Grundsätzlich lassen sich zwei Berechnungsmodelle für die Preise
+unterscheiden: der Pauschalpreis und der Preis pro Funktion, wobei ein Großteil der in Deutschland
+entwickelten mobilen Anwendungen nach dem Preis pro Funktion kalkuliert wurde.
+\begin{table}
+\begin{tabular}{|l|l|l|l|l|}\hline
+Komplexitätsstufe & Jahr & Minimum\footnotemark[2] & Durchschnitt\footnotemark[2] &
+Maximum\footnotemark[2] \\
+\hline Einfache Anwendung & 2011  & 760  & 16500 & 97000 \\
+Einfache Anwendung & 2013  & 601  & 7754 & 78790 \\ \hline
+Durchschnittliche Anwendung & 2011  & 2450  & 23000 & 105000 \\
+Durchschnittliche Anwendung & 2013  & 809  & 13397 & 65933 \\ \hline
+Komplexe Anwendung & 2011  & 6000  & 79000 & 520000 \\
+Komplexe Anwendung & 2013  & 802  & 48804 & 382215 \\ \hline
+\hline
+\end{tabular}
+\caption{Durchschnittspreise für die mobile Anwendungsentwicklung in Deutschland.}
+\label{table1}
+\end{table}
+\cite[31]{App4U}
+\footnotetext[2]{Alle Preise sind in Euro}
+
+
 \section{Software Entwurfsmuster für mobilen Anwendungen}
 
-\section{Plattformspezifische Entwicklung (App Lifecycle)}
-In diesem Abschnitt wird kurz erläutert wie man für iOS und Android native Apps
-entwickelt.
-
-Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung XCode, welche
+\section{Plattformspezifische Entwicklung (App Life-Cycle)}
+Mit dem Begriff Software-Life-Cycle wird die Zeitspanne beschrieben, in der ein Softwareprodukt
+geplant, entwickelt und bis zum Ende seiner Nutzung eingesetzt wird (siehe Abb. \ref{fig:abb5}).
+Mobile Anwendungen werden als nativ bezeichnet wenn, die auf einem bestimmten Endgerätetyp und dessen zugehörigen Betriebssystem lauffähig sind. Die Entwicklung nativer Apps ist dann sinnvoll,
+wenn die Applikation auf gegebene Hardware- und Softwareressourcen eines bestimmten Endgerätes
+zugreifen soll, bspw. auf die interne Kamera, Bewegungssensoren oder GPS. Android, iOS und Windows
+Phone sind inkompatibel zueinander, da diese Plattforme unterschiedliche API-Befehle benutzen.
+\\In diesem Abschnitt wird kurz erläutert wie man für iOS,
+Android und Windows Phone native Apps entwickelt.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/App_Lifecycle.png}
+\caption{App Life-Cycle}
+\label{fig:abb5}
+\end{figure}
+\subsection{iOS}
+Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
 ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
-notwendig. Apps für iOS werden in Objective-C entwickelt.
-
+notwendig. Apps für iOS werden in Objective-C und seit kurzem auch mit der von Apple neu eingeführte
+Programmiersprache Swift entwickelt.
+Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-Builder unterstützt
+das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
+einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes.
+\subsection{Android}
 Android Apps werden in Java programmiert. Im Gegensatz zu iOS Apps gibt es mehrere
 Entwicklungsumgebungen mit denen man Android Apps entwickeln kann. Die können auch auf allen
-Plattformen erstellt werden, auf denen Java-Entwicklung möglich ist.
- 
-Android und iOS sind inkompatibel zueinander, da beide Plattformen unterschiedliche API-Befehle
-benutzen.
-
-\subsection{iOS}
-
-\subsection{Android}
+Plattformen erstellt werden, auf denen Java-Entwicklung möglich ist. Die Entwicklungsumgebung
+Eclipse hat sich als Standard für Android-Entwicklung etabliert. Eclipse ist unter der
+Open-Source-Lizenz frei verfügbar und wurde ursprünglich als integrierte Entwicklungsumgebung für
+die Programmiersprache Java genutzt. Seit der Version 3.0 ist die Einbindung von Plug-ins zur
+Erweiterung des Funktionsumfangs möglich. 
 \subsection{Windows Phone}
+Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der
+Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
+wird das Betriebssystem Windows von Microsoft vorausgesetzt. Wie Xcode und Eclipse stellt Visual
+Studio eine integrierte Entwicklungsumgebung zur Verfügung. Im Gegensatz zu Xcode und Eclipse ist
+Visual Studio bis auf die funktional beschränkten Express-Versionen kostenpflichtig. Für die
+Erstellung von Windows Phone Apps wird die Programmiersprache C\# verwendet. Visual Studio bietet
+Entwurfansicht zur Darstellung der Benutzeroberfläche und Texteditor für die Eingabe des Quellcodes
+an.
+\cite[125]{App4U}
 \subsection{Fazit}
 
 
