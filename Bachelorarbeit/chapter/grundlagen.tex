@@ -25,9 +25,14 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   Abspielen von Fotos und Videos mit. Der Funktionsumfang beinhaltet auch ein Browser zum Surfen im
   Internet.
   \item \textbf{iOS}\\Das mobile Betriebssystem von Apple basiert auf der Grundlage des
-  Betriebssystems Mac OS X und wird mit allen iPhones und iPads ausgeliefert. Da Apple iOS nicht an
-  andere Gerätehersteller lizenziert ist die Installation von iOS nur auf Apple-Geräte möglich. Applikationen lassen sich nur durch Download über ein zentrales
-  Softwareverzeichnis von Apple ("`AppStore"') auf einem Gerät installieren. Da Apple durch
+  Betriebssystems Mac OS X und wurde zusammen mit dem iPhone im Juni 2007 eingeführt. Da Apple iOS
+  nicht an andere Gerätehersteller lizenziert ist die Installation von iOS nur auf Apple-Geräte möglich.
+  Im Laufe der Zeit wurde das Betriebssystem und der damit verbundene
+  Funktionsumfang sukzessive dem technologischen Fortschritt angepasst und beinhaltet einen
+  E-Mail-Client, ein Programm zur SMS-Verwaltung, eine Möglichkeit, kabellos zu drucken, einen
+  Browser, ein Tool zur Sprachsteuerung sowie eine Multimediaanwendung, um Videos und Bilder sowohl
+  selbst zu erstellen als auch abzuspielen. Applikationen lassen sich nur durch Download über ein
+  zentrales Softwareverzeichnis von Apple ("`AppStore"') auf einem Gerät installieren. Da Apple durch
   Signaturmechanismen die Installation von unsignierten Applikationen nicht zulässt, ist es nicht
   möglich unter Umgehung des AppStores Programme auf das Gerät zu installieren. Ähnlich wie bei
   Android übernimmt der AppStore eine Marktplatz-, Distributions-, Wartungs- und Inkassofunktion.
@@ -36,21 +41,21 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   bei Android behält Apple eine Verkaufsprovision in Höhe von 30\%. Ein Vorteil von iOS
   gegenüber Android ist die nicht so große Vielfalt in Bezug auf Displaygröße. Diese durchgängige
   Standardisierung vereinfacht die Entwicklung, Wartung, Test und Weiterentwicklung von iOS Apps aus
-  Sicht des Entwicklers. Im Laufe der Zeit wurde das Betriebssystem und der damit verbundene
-  Funktionsumfang sukzessive dem technologischen Fortschritt angepasst und beinhaltet einen
-  E-Mail-Client, ein Programm zur SMS-Verwaltung, eine Möglichkeit, kabellos zu drucken, einen
-  Browser, ein Tool zur Sprachsteuerung sowie eine Multimediaanwendung, um Videos und Bilder sowohl
-  selbst zu erstellen als auch abzuspielen.
+  Sicht des Entwicklers. Zum Testen auf Endgeräten ist allerdings eine kostenpflichtige
+  Mitgliedschaft im iOS Developer Program erforderlich. Das iOS-SDK, welches zum Entwickeln von
+  iOS-Applikationen dient, ist nur unter Mac OS X möglich und setzt Apple Rechner mit
+  Intel-Prozessoren voraus. D.h. alte Macs mit PowerPC-CPUs können nicht zum Entwickeln verwendet
+  werden.
   \item \textbf{Windows Phone}\\Microsoft bietet mit Windows Phone ein Bündel aus Betriebssystem und
-  einigen Zusatzprogrammen (Outlook, Word mobile etc.) für Smartphones. Im Gegensatz zu Microsoft
-  Windows für stationäre Desktop-PCs, das nahezu ausschließlich auf Intel-x86-Prozessoren läuft, ist
-  Windows Phone auf vielen unterschiedlichen Prozessorarchitekturen lauffähig. Mit Windows Phone
+  einigen Zusatzprogrammen (Outlook, Word mobile etc.) für Smartphones. Windows Phone ist die
+  Weiterentwicklung von Windows Mobile. Im Gegensatz zu Microsoft Windows für stationäre
+  Desktop-PCs, das nahezu ausschließlich auf Intel-x86-Prozessoren läuft, ist Windows Phone auf vielen unterschiedlichen Prozessorarchitekturen lauffähig. Mit Windows Phone
   bietet Microsoft ein Betriebssystem mit einer akzeptablen Systemleistung trotz der oft begrenzten
   Hardwareressourcen von mobilen und embedded Geräten. Seit dem Erscheinen des Betriebssystem
   Windows Phone setzt Microsoft ein Kachelkonzept. Neben Funktionalitäten wie SMS-Verwaltung,
   Telefonfunktion, Kalender und soziale Netzwerke, arbeitet Windows Phone nach dem Prinzip des
   Cloud-Computing. Z.B. Dienste wie Facebook werden integriert und mit den Funktionen des
-  Betriebssystems verknüpft.
+  Betriebssystems verknüpft. 
   \item \textbf{Blackberry OS}\\Das Betriebssystem wird von Research In Motion (RIM)  für die
   Nutzung auf Smartphones des Typs Blackberry hergestellt. Ähnlich wie bei iOS von Apple ist es nur
   für Blackberry-Smartphones vorgesehen. Da Blackberry-Smartphones vorwiegend auf
@@ -130,7 +135,14 @@ Komplexe Anwendung & 2013  & 802  & 48804 & 382215 \\ \hline
 
 
 \section{Software Entwurfsmuster für mobilen Anwendungen}
-
+Ohne Frameworks und Debugging Tools wäre die Programmierung einer Applikation kaum vorstellbar.
+Bei Frameworks handelt es sich um ein Programmiergerüst zur Softwareentwicklung, das Entwicklern
+vorgefertigte Designstrukturen und Codefragmente zur Verfügung stellt. Debugging Tools werden während des
+Entwicklungsprozesses, zur Fehlerentdeckung und Verbesserung des Programmcodes,
+eingesetzt. Durch die Verwendung von Frameworks können Softwareentwickler auf entsprechende
+Standardbausteine zugreifen, sodass nicht bei jedem neuen Entwicklungsprojekt das Rad neu erfunden
+werden muss.
+\cite[195]{App4U}
 \section{Plattformspezifische Entwicklung (App Life-Cycle)}
 Mit dem Begriff Software-Life-Cycle wird die Zeitspanne beschrieben, in der ein Softwareprodukt
 geplant, entwickelt und bis zum Ende seiner Nutzung eingesetzt wird (siehe Abb. \ref{fig:abb5}).
@@ -138,8 +150,6 @@ Mobile Anwendungen werden als nativ bezeichnet wenn, die auf einem bestimmten En
 wenn die Applikation auf gegebene Hardware- und Softwareressourcen eines bestimmten Endgerätes
 zugreifen soll, bspw. auf die interne Kamera, Bewegungssensoren oder GPS. Android, iOS und Windows
 Phone sind inkompatibel zueinander, da diese Plattforme unterschiedliche API-Befehle benutzen.
-\\In diesem Abschnitt wird kurz erläutert wie man für iOS,
-Android und Windows Phone native Apps entwickelt.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/App_Lifecycle.png}
@@ -155,7 +165,8 @@ Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-
 das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
 einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes.
 \subsection{Android}
-Android Apps werden in Java programmiert. Im Gegensatz zu iOS Apps gibt es mehrere
+\cite[317]{App4U}
+\\Android Apps werden in Java programmiert. Im Gegensatz zu iOS Apps gibt es mehrere
 Entwicklungsumgebungen mit denen man Android Apps entwickeln kann. Die können auch auf allen
 Plattformen erstellt werden, auf denen Java-Entwicklung möglich ist. Die Entwicklungsumgebung
 Eclipse hat sich als Standard für Android-Entwicklung etabliert. Eclipse ist unter der
