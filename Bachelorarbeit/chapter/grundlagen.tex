@@ -156,14 +156,6 @@ Phone sind inkompatibel zueinander, da diese Plattforme unterschiedliche API-Bef
 \caption{App Life-Cycle \cite[154]{App4U}}
 \label{fig:abb5}
 \end{figure}
-\subsection{iOS}
-Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
-ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
-notwendig. Apps für iOS werden in Objective-C und seit kurzem auch mit der von Apple neu
-eingeführten Programmiersprache Swift entwickelt.
-Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-Builder unterstützt
-das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
-einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes.
 \subsection{Android}
 Android Apps werden mit der Programmiersprache Java programmiert. Im Gegensatz zu iOS Apps gibt es
 mehrere Entwicklungsumgebungen mit denen man Android Apps entwickeln kann. Die können auch auf allen
@@ -178,7 +170,11 @@ ist eine virtuelle Maschine, die JVM (Java Virtual Machine) ähnlich ist, aber sp
 Einschränkung mobiler Geräte angepasst wurde. Der Java-Bytecode wird mit dem Dalvik-Compiler zu Dalvik-Bytecode kompiliert
 und anschließend von der Dalvik-VM ausgeführt. Auf diese Weise wird abgesichert, dass selbst wenn an
 der Sprache Java Änderungen vorgenommen werden, der Java-Bytecode gleich bleibt (siehe
-Abb.\ref{fig:abb6}).
+Abb.\ref{fig:abb6}). Alle Kompilationsschritte werden von den Entwicklungswerkzeugen automatisiert,
+so dass keine zusätzlichen Arbeitsschritte für den Entwickler anfallen. Jede Anwendung in Android
+wird in einer eigenen virtuellen Maschine, die sogenannte Sandbox, ausgeführt. Jede Anwendung ist
+somit isoliert von den anderen Apps und kann nur auf ihre eigene Daten zugreifen. Im Folgenden
+werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
 \cite[317]{App4U}
 \begin{figure}[!h]
 \centering
@@ -186,6 +182,74 @@ Abb.\ref{fig:abb6}).
 \caption{Vergleich JVM und Dalvik-VM. \cite[318]{App4U}}
 \label{fig:abb6}
 \end{figure}
+\subsubsection{AndroidManifest.xml}
+Die wichtigste Datei in jeder Android Anwendung ist die Konfigurationsdatei, genannt
+AndroidManifest.xml. In der Datei werden globale Beschreibungen festgelegt, die für die App gelten.
+\begin{itemize}
+  \item Version der App.
+  \item Die minimale Android Version(android:minSdkVersion), die benötigt wird um die App
+  auszuführen.
+  \item Die Android Version für welche die App erstellt
+wurde(android:targetSdkVerion).
+  \item Mit dem uses-permission Tag definiert man die Funktionen, welche
+die App vom System eine Erlaubnis benötigt (z.B. Autorisierung, eine Verbindung mit dem Internet
+herzustellen).
+  \item In der Konfigurationsdatei wird noch die Start Activity definiert
+\end{itemize}
+\subsubsection{Ressources}
+Alle Ressourcen einer App liegen im dafür vorgesehenen 'res' Ordner. In diesem Ordner befinden sich
+folgende Unterordner:
+\begin{itemize}
+  \item /res/values\\Hier werden alle einfache Werten abgelegt. Für Übersetzungen gibt es hier Datei
+  pro Sprache
+  \item /res/layout\\Hier liegen alle definierten Layouts als XML Dateien. Möglicherweise benötigt
+  man für unterschiedliche Display Auflösungen unterschiedliche Layoute.
+  \item /res/menu\\Hier werden Eigenschaften von Menüeinträgen definiert.
+  \item /res/drawable\\Alle App Icons befinden sich in diesem Ordner, der wiederum in verschiedenen
+  Unterordner für die unterschiedlichen Auflösungen gegliedert wird.
+\end{itemize}
+\cite{AndroidTutorialBlog}
+\subsubsection{Activities}
+Activities sind Komponenten einer Android Applikation, die die Interaktion mit dem Benutzer
+(Bild aufnehmen, Email senden, SMS schicken etc.) ermöglichen. D.h. eine Activity stellt ein Fenster
+dar, welches vom Benutzer Eingaben erwartet. Jede Activity besitzt eine eigene Benutzeroberfläche
+und kann andere Activities starten.
+Ein Programm besteht normalerweise aus mehreren Activities, welche für verschiedene Aufgaben vorgesehen sind. In Abb.\ref{fig:abb7}
+sieht man den Lebenszyklus einer Activity.\\Eine Activity erstellt man indem man eine Klasse
+definiert, welche von Activity erbt. Jede Activity hat folgende Methoden:
+\begin{itemize}
+  \item \textbf{onCreate()} Ist für das Erstellen einer Activity und für das Zeichnen der
+  Benutzeroberfläche zuständig. In der onCreate() Methode wird die setContentView Funktion aufgerufen,
+  durch die der Activity entweder eine View, oder direkt ein Layout über die Ressourcen ID
+  zugewiesen wird.
+  \item \textbf{onStart()} Diese Methode wird beim ersten Start und auch jedes mal aufgerufen, wenn
+  der Benutzer wieder zurückkehrt nachdem eine andere Activity ausgeführt wurde. Beim Aufruf von onStart() wird
+  die Activity sichtbar.
+  \item \textbf{onResume()} Wird aufgerufen, wenn der Benutzer wieder in die Activity zurückkehrt
+  nachdem die Methode onPause() aufgerufen wurde. D.h. die Methode wird immer aufgerufen, wenn die
+  Activity den Focus zurückbekommt.
+  \item \textbf{onPause()} Wird aufgerufen, wenn eine andere Activity im Vordergrund gerät, also
+  die Activity verliert den Focus.
+  Das passiert, wenn z.B. der Benutzer zurück ins Menü geht.
+  \item \textbf{onStop()} Sobald die Activity nicht mehr sichtbar ist, wird onStop() aufgerufen.
+  \item \textbf{onDestroy()} Bevor die Activity beendet wird, wird onDestroy() aufgerufen. Es wird
+  auch dann aufgerufen, wenn die Orientierung geändert wird, also von Portrait auf Landscape
+  gewechselt wird.
+\end{itemize}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/lifecycle-activity-android.png}
+\caption{Activity Life-Cycle.(\cite{ActivityLifeCycle})}
+\label{fig:abb7}
+\end{figure}
+\subsection{iOS}
+Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
+ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
+notwendig. Apps für iOS werden in Objective-C und seit kurzem auch mit der von Apple neu
+eingeführten Programmiersprache Swift entwickelt.
+Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-Builder unterstützt
+das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
+einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes.
 \subsection{Windows Phone}
 Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der
 Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
