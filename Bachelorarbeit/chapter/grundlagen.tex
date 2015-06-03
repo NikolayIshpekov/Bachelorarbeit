@@ -153,7 +153,7 @@ Phone sind inkompatibel zueinander, da diese Plattforme unterschiedliche API-Bef
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/App_Lifecycle.png}
-\caption{App Life-Cycle}
+\caption{App Life-Cycle \cite[154]{App4U}}
 \label{fig:abb5}
 \end{figure}
 \subsection{iOS}
@@ -165,14 +165,27 @@ Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-
 das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
 einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes.
 \subsection{Android}
-\cite[317]{App4U}
-\\Android Apps werden in Java programmiert. Im Gegensatz zu iOS Apps gibt es mehrere
-Entwicklungsumgebungen mit denen man Android Apps entwickeln kann. Die können auch auf allen
+Android Apps werden mit der Programmiersprache Java programmiert. Im Gegensatz zu iOS Apps gibt es
+mehrere Entwicklungsumgebungen mit denen man Android Apps entwickeln kann. Die können auch auf allen
 Plattformen erstellt werden, auf denen Java-Entwicklung möglich ist. Die Entwicklungsumgebung
 Eclipse hat sich als Standard für Android-Entwicklung etabliert. Eclipse ist unter der
 Open-Source-Lizenz frei verfügbar und wurde ursprünglich als integrierte Entwicklungsumgebung für
 die Programmiersprache Java genutzt. Seit der Version 3.0 ist die Einbindung von Plug-ins zur
 Erweiterung des Funktionsumfangs möglich. 
+\\Der Android-SDK kompiliert den Java-Code und packt das Programm und alle anderen zugehörigen
+Ressourcen, wie Layoutdateien und Grafiken, in eine .apk-Datei.\\\textbf{Dalvik}
+ist eine virtuelle Maschine, die JVM (Java Virtual Machine) ähnlich ist, aber speziell an die
+Einschränkung mobiler Geräte angepasst wurde. Der Java-Bytecode wird mit dem Dalvik-Compiler zu Dalvik-Bytecode kompiliert
+und anschließend von der Dalvik-VM ausgeführt. Auf diese Weise wird abgesichert, dass selbst wenn an
+der Sprache Java Änderungen vorgenommen werden, der Java-Bytecode gleich bleibt (siehe
+Abb.\ref{fig:abb6}).
+\cite[317]{App4U}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/JVMvsDavlik.png}
+\caption{Vergleich JVM und Dalvik-VM. \cite[318]{App4U}}
+\label{fig:abb6}
+\end{figure}
 \subsection{Windows Phone}
 Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der
 Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
