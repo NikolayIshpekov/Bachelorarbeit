@@ -242,6 +242,18 @@ definiert, welche von Activity erbt. Jede Activity hat folgende Methoden:
 \caption{Activity Life-Cycle.(\cite{ActivityLifeCycle})}
 \label{fig:abb7}
 \end{figure}
+\subsubsection{Services}
+Service ist eine Applikation Komponente, die Operationen im Hintergrund durchführt und keine
+Interaktion mit dem Benutzer benötigt. Ein Service wird von einer anderen Komponente, wie einer
+Activity, gestartet und läuft auch weiter, wenn die Activity nicht mehr im Vordergrund ist.
+\cite[320]{App4U}
+\subsubsection{Intents}
+Activities und Services werden durch Nachrichten aufgerufen, die eine andere Komponente an sie
+sendet. Eine solche Nachricht wird Intent genannt. In einem Intentobjekt werden verschiedene Daten
+gespeichert. Jede Intentnachricht hat einen Kontext und ein Ziel. Als Kontext ist die erste
+Activity, also die Activity, die die Intentnachricht sendet und als Ziel die Activity, an die die
+Nachricht gesendet wurde. Je nach Bedarf können noch Daten, welche der neuen Activity übermittelt
+werden, in den Intent gespeichert werden, bevor die neue Activity gestartet wird.\cite[321]{App4U}
 \subsection{iOS}
 Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
 ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
