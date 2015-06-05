@@ -157,24 +157,40 @@ Phone sind inkompatibel zueinander, da diese Plattforme unterschiedliche API-Bef
 \label{fig:abb5}
 \end{figure}
 \subsection{Android}
-Android Apps werden mit der Programmiersprache Java programmiert. Im Gegensatz zu iOS Apps gibt es
-mehrere Entwicklungsumgebungen mit denen man Android Apps entwickeln kann. Die können auch auf allen
-Plattformen erstellt werden, auf denen Java-Entwicklung möglich ist. Die Entwicklungsumgebung
-Eclipse hat sich als Standard für Android-Entwicklung etabliert. Eclipse ist unter der
-Open-Source-Lizenz frei verfügbar und wurde ursprünglich als integrierte Entwicklungsumgebung für
-die Programmiersprache Java genutzt. Seit der Version 3.0 ist die Einbindung von Plug-ins zur
-Erweiterung des Funktionsumfangs möglich. 
-\\Der Android-SDK kompiliert den Java-Code und packt das Programm und alle anderen zugehörigen
-Ressourcen, wie Layoutdateien und Grafiken, in eine .apk-Datei.\\\textbf{Dalvik}
-ist eine virtuelle Maschine, die JVM (Java Virtual Machine) ähnlich ist, aber speziell an die
-Einschränkung mobiler Geräte angepasst wurde. Der Java-Bytecode wird mit dem Dalvik-Compiler zu Dalvik-Bytecode kompiliert
-und anschließend von der Dalvik-VM ausgeführt. Auf diese Weise wird abgesichert, dass selbst wenn an
-der Sprache Java Änderungen vorgenommen werden, der Java-Bytecode gleich bleibt (siehe
-Abb.\ref{fig:abb6}). Alle Kompilationsschritte werden von den Entwicklungswerkzeugen automatisiert,
-so dass keine zusätzlichen Arbeitsschritte für den Entwickler anfallen. Jede Anwendung in Android
-wird in einer eigenen virtuellen Maschine, die sogenannte Sandbox, ausgeführt. Jede Anwendung ist
-somit isoliert von den anderen Apps und kann nur auf ihre eigene Daten zugreifen. Im Folgenden
-werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
+Android Apps werden mit der Programmiersprache Java programmiert. 
+Als erstes muss man den
+  Java Development Kit (JDK) installieren. Der JDK dient zum Kompilieren der
+  Java-Textdateien in .class-Dateien. Man braucht noch den Android Software Development Kit (SDK).
+  Im Gegensatz zu iOS Apps gibt es mehrere Entwicklungsumgebungen, mit denen man
+Android Apps entwickeln kann. Die können auch auf allen Plattformen erstellt werden, auf denen
+Java-Entwicklung möglich ist. Die Entwicklungsumgebung Eclipse hat sich als Standard für
+Android-Entwicklung etabliert. Eclipse ist unter der Open-Source-Lizenz frei verfügbar und wurde
+ursprünglich als integrierte Entwicklungsumgebung für die Programmiersprache Java genutzt. Seit der Version 3.0
+ist die Einbindung von Plug-ins zur Erweiterung des Funktionsumfangs möglich. Um Android Apps mit
+Eclipse entwickeln zu können, muss das Android-Developer-Tools Plug-in (ADT) eingebunden werden.
+Im SDK-Manager können die verschiedenen Android-Versionen ausgewählt werden. Die API-Level von
+Android sind abwärtskompatibel, deswegen muss der Entwickler die niedrigste unterstützte Version
+auswählen. Zu empfehlen ist API-8 auszuwählen. Mit dem in dem ADT-Paket enthaltenen
+Virtual-Device-Manager lassen sich virtuelle Android-Geräte erstellen. Diese lassen sich mit
+verschiedenen Android-Versionen, Displayauflösungen, internem Speicherplatz, Arbeitsspeicher und
+vielem mehr erstellen. Auf diese Weise kann man das Testen der Anwendung auf verschiedenen
+Geräten simulieren. Allerdings empfiehlt es sich, die Anwendung auf möglichst vielen echten Geräten
+zu testen. Um ein Smartphone oder Tablet mit Eclipse zu verbinden, müssen zunächst die
+Entwickleroptionen des Geräts aktiviert werden und anschließend es per
+USB an den PC anschließen. Mit dem Android NDK (Nativ Development Kit) bietet Android die
+Möglichkeit an, Teile der Applikation in nativen Programmiersprachen zu implementieren.
+Die meisten Apps brauchen NDK nicht, aber für manche ist es hilfreich, C oder C++ Bibliotheken verwenden zu können.
+\\Der Android-SDK kompiliert den Java-Code und packt das Programm und alle anderen zugehörigen Ressourcen, wie
+Layoutdateien und Grafiken, in eine .apk-Datei.
+\\\textbf{Dalvik} ist eine virtuelle Maschine, die JVM (Java Virtual Machine) ähnlich ist, aber
+speziell an die Einschränkung mobiler Geräte angepasst wurde. Der Java-Bytecode wird mit dem
+Dalvik-Compiler zu Dalvik-Bytecode kompiliert und anschließend von der Dalvik-VM ausgeführt. Auf
+diese Weise wird abgesichert, dass selbst wenn an der Sprache Java Änderungen vorgenommen werden,
+der Java-Bytecode gleich bleibt (siehe Abb.\ref{fig:abb6}). Alle Kompilationsschritte werden von den
+Entwicklungswerkzeugen automatisiert, so dass keine zusätzlichen Arbeitsschritte für den Entwickler
+anfallen. Jede Anwendung in Android wird in einer eigenen virtuellen Maschine, die sogenannte
+Sandbox, ausgeführt. Jede Anwendung ist somit isoliert von den anderen Apps und kann nur auf ihre
+eigene Daten zugreifen. Im Folgenden werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
 \cite[317]{App4U}
 \begin{figure}[!h]
 \centering
@@ -254,6 +270,15 @@ gespeichert. Jede Intentnachricht hat einen Kontext und ein Ziel. Als Kontext is
 Activity, also die Activity, die die Intentnachricht sendet und als Ziel die Activity, an die die
 Nachricht gesendet wurde. Je nach Bedarf können noch Daten, welche der neuen Activity übermittelt
 werden, in den Intent gespeichert werden, bevor die neue Activity gestartet wird.\cite[321]{App4U}
+\subsubsection{Komponenten der Benutzeroberfläche}
+Die Benutzeroberfläche oder User Interface (UI) in Android Apps besteht aus Views und View Groups.
+Views sind Bausteine, wie Textview oder Imageview. View Groups sind Container, die Views oder andere View
+Groups enthalten. Um eine bessere Trennung zwischen Design und Java-Code zu erreichen wird das UI in
+XML-Dateien definiert. Der verwendete Text der App sollte auch nach Möglichkeit in einer XML-Datei
+statt in Java-Code untergebracht werden. Das erleichtert nicht nur das spätere Ändern des Textes,
+sondern auch die Mehrsprachigkeit einer App. Für bessere Übersicht empfiehlt es sich, für jede
+Activity eine XML-Datei mit dem Namen der Activity zu erstellen, welche dann das Layout der Activity
+enthält.
 \subsection{iOS}
 Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
 ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
