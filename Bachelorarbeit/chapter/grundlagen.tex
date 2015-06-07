@@ -26,25 +26,27 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   Internet.
   \item \textbf{iOS}\\Das mobile Betriebssystem von Apple basiert auf der Grundlage des
   Betriebssystems Mac OS X und wurde zusammen mit dem iPhone im Juni 2007 eingeführt. Da Apple iOS
-  nicht an andere Gerätehersteller lizenziert ist die Installation von iOS nur auf Apple-Geräte möglich.
+  nicht an andere Gerätehersteller lizenziert, ist die Installation von iOS nur auf Apple-Geräte
+  möglich. Das iOS-SDK, welches zum Entwickeln von iOS-Applikationen dient, setzt Apple Rechner mit
+  Intel-Prozessoren voraus und alte Macs mit PowerPC-CPUs können nicht zum Entwickeln verwendet
+  werden.
   Im Laufe der Zeit wurde das Betriebssystem und der damit verbundene
   Funktionsumfang sukzessive dem technologischen Fortschritt angepasst und beinhaltet einen
   E-Mail-Client, ein Programm zur SMS-Verwaltung, eine Möglichkeit, kabellos zu drucken, einen
   Browser, ein Tool zur Sprachsteuerung sowie eine Multimediaanwendung, um Videos und Bilder sowohl
   selbst zu erstellen als auch abzuspielen. Applikationen lassen sich nur durch Download über ein
-  zentrales Softwareverzeichnis von Apple ("`AppStore"') auf einem Gerät installieren. Da Apple durch
-  Signaturmechanismen die Installation von unsignierten Applikationen nicht zulässt, ist es nicht
-  möglich unter Umgehung des AppStores Programme auf das Gerät zu installieren. Ähnlich wie bei
-  Android übernimmt der AppStore eine Marktplatz-, Distributions-, Wartungs- und Inkassofunktion.
+  zentrales Softwareverzeichnis von Apple ("`App Store"') auf einem Gerät installieren. Da Apple
+  durch Signaturmechanismen die Installation von unsignierten Applikationen nicht zulässt, ist es nicht
+  möglich unter Umgehung des App Stores Programme auf das Gerät zu installieren. Ähnlich wie bei
+  Android übernimmt der App Store eine Marktplatz-, Distributions-, Wartungs- und Inkassofunktion.
   Eine auf dem Apple Gerät installiere Software überprüft in regelmäßigen Abständen, ob Updates für
   die gekaufte Apps vorhanden sind und der Benutzer wird dementsprechend benachrichtigt. Wie
   bei Android behält Apple eine Verkaufsprovision in Höhe von 30\%. Ein Vorteil von iOS
   gegenüber Android ist die nicht so große Vielfalt in Bezug auf Displaygröße. Diese durchgängige
   Standardisierung vereinfacht die Entwicklung, Wartung, Test und Weiterentwicklung von iOS Apps aus
-  Sicht des Entwicklers. Zum Testen auf Endgeräten ist allerdings eine kostenpflichtige
-  Mitgliedschaft im iOS Developer Program erforderlich. Das iOS-SDK, welches zum Entwickeln von
-  iOS-Applikationen dient, ist nur unter Mac OS X möglich und setzt Apple Rechner mit
-  Intel-Prozessoren voraus. D.h. alte Macs mit PowerPC-CPUs können nicht zum Entwickeln verwendet
+  Sicht des Entwicklers. Zum Testen auf Endgeräten und für die Veröffentlichung von Apps im Apples
+  App Store ist allerdings eine kostenpflichtige Mitgliedschaft im iOS Developer Program
+  erforderlich. Die Geräte müssen im iPhone Developer Program unter DEVICES/ADD DEVICES hinzugefügt
   werden.
   \item \textbf{Windows Phone}\\Microsoft bietet mit Windows Phone ein Bündel aus Betriebssystem und
   einigen Zusatzprogrammen (Outlook, Word mobile etc.) für Smartphones. Windows Phone ist die
@@ -55,7 +57,11 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   Windows Phone setzt Microsoft ein Kachelkonzept. Neben Funktionalitäten wie SMS-Verwaltung,
   Telefonfunktion, Kalender und soziale Netzwerke, arbeitet Windows Phone nach dem Prinzip des
   Cloud-Computing. Z.B. Dienste wie Facebook werden integriert und mit den Funktionen des
-  Betriebssystems verknüpft. 
+  Betriebssystems verknüpft. Damit Apps auf einem Windows Phone Gerät installiert und getestet
+  werden können, muss das Gerät explizit als Entwicklergerät freigeschaltet werden. Dazu muss man sich
+  zuerst bei Microsoft als Entwickler registrieren, was 99 EUR im Jahr kostet. Das ist auch
+  notwendig, wenn man Apps im Microsoft Market (vergleichbar mit App Store und Play Store)
+  veröffentlichen möchte. \cite[17]{AppsPhoneGap}
   \item \textbf{Blackberry OS}\\Das Betriebssystem wird von Research In Motion (RIM)  für die
   Nutzung auf Smartphones des Typs Blackberry hergestellt. Ähnlich wie bei iOS von Apple ist es nur
   für Blackberry-Smartphones vorgesehen. Da Blackberry-Smartphones vorwiegend auf
@@ -80,8 +86,15 @@ und neben der Berücksichtigung besonderer Endgeräteeigenschaften, die Nutzung ka
 \end{quote}
 \footnotetext[1]{\cite[105]{App4U}}
 Der Begriff Applikation (App) hat sich in Bezug auf die mobile Nutzung und
-Anwendung als eigenständiger Begriff etabliert. 
-Informationssuche und Nachrichtenübermittlung stand anfangs im Fokus des mobilen Internets.
+Anwendung als eigenständiger Begriff etabliert. Eine App wird als nativ bezeichnet, wenn sie 
+für eine bestimmte mobile Plattform entwickelt wurde und nur auf dieser Plattform installiert und
+ausgeführt werden kann. Die Vorteile einer nativen App sind eine gute Performance und vor allen
+Dingen die Möglichkeit zum Zugriff auf besondere Hardwarebestandteile der mobilen Endgeräte.
+Ebenso können viele vorgefertigte Features aus nativen Schnittstellen und APIs benutzt werden. Da
+die verschiedenen Verzeichnisdienste, wie App Store, Play Store oder Microsoft Market, native Apps
+einfordern, kommt man um eine echte Anwendung nicht herum, wenn man einen kommerziellen Vertrieb
+einer App anstrebt.\\Informationssuche und Nachrichtenübermittlung stand anfangs im Fokus des
+mobilen Internets.
 Allerdings hat sich im Laufe der Zeit ein Bedürfnis nach Interaktion und
 Mitgestaltung entwickelt. Daraus resultiert die Nachfrage nach einfach zu bedienenden Geräten sowie
 intuitiv steuerbare Applikationen. Immer mehr Unternehmen erkennen den daraus resultierenden
@@ -158,16 +171,21 @@ Phone sind inkompatibel zueinander, da diese Plattforme unterschiedliche API-Bef
 \end{figure}
 \subsection{Android}
 Android Apps werden mit der Programmiersprache Java programmiert. 
-Als erstes muss man den
-  Java Development Kit (JDK) installieren. Der JDK dient zum Kompilieren der
-  Java-Textdateien in .class-Dateien. Man braucht noch den Android Software Development Kit (SDK).
+Als erstes muss man das
+  Java Development Kit (JDK) installieren. Das JDK dient zum Kompilieren der
+  Java-Textdateien in .class-Dateien. Man braucht noch das Android Software Development Kit (SDK).
   Im Gegensatz zu iOS Apps gibt es mehrere Entwicklungsumgebungen, mit denen man
 Android Apps entwickeln kann. Die können auch auf allen Plattformen erstellt werden, auf denen
 Java-Entwicklung möglich ist. Die Entwicklungsumgebung Eclipse hat sich als Standard für
 Android-Entwicklung etabliert. Eclipse ist unter der Open-Source-Lizenz frei verfügbar und wurde
 ursprünglich als integrierte Entwicklungsumgebung für die Programmiersprache Java genutzt. Seit der Version 3.0
-ist die Einbindung von Plug-ins zur Erweiterung des Funktionsumfangs möglich. Um Android Apps mit
-Eclipse entwickeln zu können, muss das Android-Developer-Tools Plug-in (ADT) eingebunden werden.
+ist die Einbindung von Plug-ins zur Erweiterung des Funktionsumfangs möglich und somit können
+nahezu alle Programmiertechniken abgedeckt werden. Eclipse gibt es sowohl für Linux und Windows als
+auch für Mac OS. Die Installation von Eclipse ist vollkommen unproblematisch, wenn auf einem Rechner
+bereits ein JDK installiert ist. Eclipse wird als komprimierte Datei ausgeliefert, die einfach
+extrahiert werden muss. Beim ersten Start such sich die IDE die passende Java-Umgebung und richtet
+das System weitgehend automatisch ein. Um Android Apps mit Eclipse entwickeln zu können, muss das
+Android-Developer-Tools Plug-in (ADT) eingebunden werden.
 Im SDK-Manager können die verschiedenen Android-Versionen ausgewählt werden. Die API-Level von
 Android sind abwärtskompatibel, deswegen muss der Entwickler die niedrigste unterstützte Version
 auswählen. Zu empfehlen ist API-8 auszuwählen. Mit dem in dem ADT-Paket enthaltenen
@@ -286,7 +304,9 @@ notwendig. Apps für iOS werden in Objective-C und seit kurzem auch mit der von A
 eingeführten Programmiersprache Swift entwickelt.
 Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-Builder unterstützt
 das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
-einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes.
+einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes. Von besonderer Bedeutung
+ist die Integration eine iOS-Simulators, auf dem die Anwendung in der gleichen Wiese abläuft, als
+wenn ein tatsächliches iOS-Gerät die Basis wäre.
 \subsection{Windows Phone}
 Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der
 Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
