@@ -154,8 +154,73 @@ vorgefertigte Designstrukturen und Codefragmente zur Verfügung stellt. Debugging
 Entwicklungsprozesses, zur Fehlerentdeckung und Verbesserung des Programmcodes,
 eingesetzt. Durch die Verwendung von Frameworks können Softwareentwickler auf entsprechende
 Standardbausteine zugreifen, sodass nicht bei jedem neuen Entwicklungsprojekt das Rad neu erfunden
-werden muss.
+werden muss. Das Entwickeln der Benutzeroberfläche einer professionellen Softwareanwendung ist nicht
+einfach. Es kann eine schwer durchschaubare Mischung aus Daten, Interaktionsentwurf, visuellem
+Entwurf, Konnektivität, Multithreading, Sicherheit, Internationalisierung, Überprüfung,
+Komponententests und etc. sein. In Anbetracht der Tatsache, dass eine Benutzeroberfläche das
+zugrunde liegende System verfügbar macht und die nicht voraussagbaren stilistischen Ansprüche
+ihrer Benutzer entgegenkommen muss, kann dies der brisanteste Bereich vieler Anwendungen sein.
+Hierfür können Entwurfsmuster Abhilfe schaffen.
 \cite[195]{App4U}
+\subsection{Model View Controller (MVC)}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/ModelViewControllerDiagram.png}
+\caption{Model-View-Controller-Konzept. Die durchgezogene Linie symbolisiert eine direkte
+Assoziation, die gestrichelte eine indirekte Assoziation (z.B. über einen Beobachter).Quelle:\cite{WikiMVCBild}}
+\label{fig:abb8}
+\end{figure}
+Das Model View Controller (MVC) Muster (siehe Abb.\ref{fig:abb8}) gibt es schon seit Jahrzehnten. Man kann es
+sich vereinfacht folgendermaßen vorstellen:
+\begin{itemize} 
+  \item Die Daten, die auf dem Bildschirm angezeigt werden sind das Model. Das Model enthält bis auf
+  Such- und Sortierfunktionen keine Logik. 
+  \item Die View-Komponente ist für die Darstellung auf dem Bildschirm und das
+  Verarbeiten von Benutzereingaben zuständig. Sie darf den Zustand der Anwendung nur lesen.
+  \item Der Controller verknüpft Model und View. Er wertet die von der View entgegengenommenen
+  Benutzereingaben aus und bekommt lesenden und schreibenden Zugriff auf das Model und kann somit
+  den Zustand der Anwendung verändern.
+\end{itemize} 
+% Ein Vorteil von MVC ist, dass durch den separierten Quellcode, einzelne Komponente wiederverwendbar
+% werden können und leicht zu testen sind.
+\subsection{Model View ViewModel (MVVM)}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.7]{graphics/MVVMBild.png}
+\caption{MVVM-Muster.Quelle:\cite{MSDNA2MVVM}}
+\label{fig:abb9}
+\end{figure}
+Im Jahr 2005 stellte John Gossman, derzeit einer der Windows Presentation Foundation (WPF)- und
+Silverlight-Architekten bei Microsoft, das Model-View-ViewModel (MVVM)-Muster (siehe Abb.\ref{fig:abb9}) in
+seinem Blog vor.
+MVVM besteht aus drei Komponenten und ist MVC sehr ähnlich, der einzige Unterschied ist, dass wir
+hier statt Controller ein ViewModel haben
+\begin{itemize} 
+  \item Model. Das Model enthält die Geschäftslogik.
+  \item View. Die View repräsentiert die Benutzerschnittstelle.
+  \item ViewModel. Das ViewModel nimmt die Informationen vom Model und wandelt sie in eine von der
+  View verwendbare Form um. Es nimmt außerdem die Änderungen aus der View und ruft die entsprechende
+  Funktionalität im Model auf. Es handelt sich also um eine Vermittlungsschicht zwischen dem Model
+  un der View. 
+\end{itemize} 
+Es ist ein sehr lose gekoppelter Entwurf und dadurch wird das Unit-Testing erleichtert.
+Das Muster weist eine Abstraktion einer Ansicht auf, die den Zustand und das Verhalten einer
+Ansicht enthält. Diese Abstraktion einer Ansicht wird als ViewModel bezeichnet. Ein ViewModel
+benötigt keinen Verweis auf eine View. Die View wird an die Eigenschaften eines ViewModels gebunden,
+das wiederum Daten verfügbar macht, die in Modellobjekten und anderen für diese Ansicht spezifischen
+Zuständen enthalten sind. Das Erstellen der Bindungen zwischen Ansicht und ViewModel ist einfach, da
+ein ViewModel-Objekt als DataContext einer Ansicht festgelegt wird. Wenn sich Eigenschaftswerte im
+ViewModel ändern, werden diese neuen Werte automatisch über die Datenbindung an die Ansicht
+weitergeleitet. Wenn der Benutzer auf eine Schaltfläche in der Ansicht klickt, wird im ViewModel ein
+Befehl ausgeführt, um die angeforderte Aktion durchzuführen. Das ViewModel, aber niemals die
+Ansicht, führt alle an den Modelldaten vorgenommenen Änderungen durch. Die View-Klassen wissen
+nicht, dass die Modell-Klassen existieren, während dem ViewModel und dem Modell die Ansicht nicht
+bekannt ist. Das Modell weiß nichts darüber, dass das ViewModel und die Ansicht existieren. Durch
+das Binden von Eigenschaften einer View an ein ViewModel kommt es zur losen Kopplung zwischen den
+beiden, wodurch in einem ViewModel kein Code geschrieben werden muss, der eine Ansicht direkt
+aktualisiert.\\Ein besonderer Vorteil von MVVM ist die Möglichkeit, Komponententests an
+ViewModel-Klassen durchzuführen.
+\cite{MSDNAMVVM}
 \section{Plattformspezifische Entwicklung (App Life-Cycle)}
 Mit dem Begriff Software-Life-Cycle wird die Zeitspanne beschrieben, in der ein Softwareprodukt
 geplant, entwickelt und bis zum Ende seiner Nutzung eingesetzt wird (siehe Abb. \ref{fig:abb5}).
@@ -208,7 +273,9 @@ der Java-Bytecode gleich bleibt (siehe Abb.\ref{fig:abb6}). Alle Kompilationssch
 Entwicklungswerkzeugen automatisiert, so dass keine zusätzlichen Arbeitsschritte für den Entwickler
 anfallen. Jede Anwendung in Android wird in einer eigenen virtuellen Maschine, die sogenannte
 Sandbox, ausgeführt. Jede Anwendung ist somit isoliert von den anderen Apps und kann nur auf ihre
-eigene Daten zugreifen. Im Folgenden werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
+eigene Daten zugreifen. Die Entwicklung von Applikationen für Android erfolgt nach dem Model View
+Controller Architekturmuster. Im Folgenden werden die wichtigsten Komponenten einer Android
+Applikation vorgestellt.
 \cite[317]{App4U}
 \begin{figure}[!h]
 \centering
@@ -297,26 +364,80 @@ statt in Java-Code untergebracht werden. Das erleichtert nicht nur das spätere Ä
 sondern auch die Mehrsprachigkeit einer App. Für bessere Übersicht empfiehlt es sich, für jede
 Activity eine XML-Datei mit dem Namen der Activity zu erstellen, welche dann das Layout der Activity
 enthält.
+\subsubsection{Content Provider}
+Mechanismus für die Persistierung von Daten. Meistens in der Form von SQLite Datenbank auf dem
+Endgerät oder in der Cloud.
 \subsection{iOS}
 Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
 ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
 notwendig. Apps für iOS werden in Objective-C und seit kurzem auch mit der von Apple neu
-eingeführten Programmiersprache Swift entwickelt.
-Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte Interface-Builder unterstützt
-das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
+eingeführten Programmiersprache Swift entwickelt. Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte
+Interface-Builder unterstützt das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
 einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes. Von besonderer Bedeutung
-ist die Integration eine iOS-Simulators, auf dem die Anwendung in der gleichen Wiese abläuft, als
-wenn ein tatsächliches iOS-Gerät die Basis wäre.
+ist die Integration eines iOS-Simulators, auf dem die Anwendung in der gleichen Wiese abläuft, als
+wenn ein tatsächliches iOS-Gerät die Basis wäre.\\Ähnlich wie bei Android wird das
+MVC-Entwurfsmuster für die Entwicklung von iOS Apps verwendet. Für Entwicklung mobiler Applikationen ist das
+Cocoa-Framework erforderlich, das vielfältige häufig genutzte Bibliotheken (bspw. zum Zugriff auf
+Hardwaregeräte) bereitgestellt. Apple stellt mit Cocoa-Touch-Framework eine modifizierte und auf die
+Anforderungen leistungsschwächerer mobiler Endgeräte abgestimmte Version des Frameworks zur
+Verfügung. Im Folgenden werden die wichtigsten Komponenten der iOS App Entwicklung vorgestellt.
+% \\Sämtliche View-Komponenten werden unterhalb der Klassenhierarchie UIView.*
+% bereitgestellt. Um für die View-Komponenten ein Verhalten zu definieren, stehen drei Mechanismen zur
+% Verfügung:
+% \begin{itemize}
+%   \item Delegation
+%   \item Target Action
+%   \item Notification
+% \end{itemize}
+\subsubsection{Storyboard}
+In dieser Datei lassen sich gleich mehrere Ansichten erstellen und deren Übergänge (Storyboard
+Segues) definieren. Das Storyboard repräsentiert die View des MVC-Architekturmusters. Die
+iOS Benutzerschnittstelle (UI) wird mit einem Interface Builder gestaltet. Mithilfe dieses Werkzeugs
+lassen sich einzelne Komponenten der UI per Drag \& Drop zusammenstellen. 
+\subsubsection{ViewController}
+
 \subsection{Windows Phone}
-Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der
-Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
+Microsoft veröffentlichte im Juli 2000 im Rahmen einer umfangreicher Werbekampagne die
+sogenannte .NET Plattform. Die .NET Plattform besteht aus den folgenden Komponenten:
+\begin{itemize}
+  \item Eine Sammlung von Programmiersprachen, wie C\#, Visual C++ .NET, Visual Basic .NET, Visual
+  J\# .NET und JScript .NET, sowie die graphische Entwicklungsumgebung Visual Studio.NET. 
+  \item Das .NET Framework stellt eine Bibliothek dar, die vorgefertigte Klassen für die Entwicklung
+  von Web Services, Internet- und Windows-Anwendungen beinhaltet.
+  \item .NET Compact Framework ist eine im Funktionsumfang, sowie in den Hardwareanforderungen
+  reduzierte Version des .NET Frameworks und ist speziell für Geräte bestimmt, die mit dem mobilen
+  Betriebssystem Windows Phone (früher Windows CE .NET oder Windows Mobile) arbeiten.
+\end{itemize} 
+Um Apps für Windows Phone entwickeln und auf Geräten deployen zu können, wird eine MSDN Subscription
+für Entwickler benötigt. In dieser Subscription sind die Zugangsrechte für Windows Phone Store und
+Windows Store bereits für die erste Jahreslaufzeit des Abonnements enthalten. Schüler und
+Studierende, die am Microsoft DreamSpark-Programm teilnehmen, sowie Unternehmen, die für das
+Microsoft BizSpark-Programm qualifiziert sind, erhalten den Entwickler Account kostenlos. Mit
+diesem, sonst kostenpflichtigen Entwicklerkonto hat man nicht nur die Möglichkeit, Apps in den
+Windows Phone Store einzureichen und zu überwachen, sondern auch die Apps auf einem persönlichen
+Gerät zu debuggen. Man darf bis zu 10 Apps gleichzeitig installieren, die noch nicht in den Windows
+Phone Store eingestellt sind.\\Die .NET Plattform ist ähnlich wie Java plattformunabhängig.
+Mit einer Common Language Specification (CLS) wird genau definiert, wie sich fremde Compiler für verschiedene Programmiersprachen bei der
+Erzeugung eines speziellen Zwischencodes (MSIL, vergleichbar mit Bytecode von Java) zu verhalten
+haben. Der erzeugte MSIL-Code kann auf jedem System ausgeführt werden, auf dem eine
+.NET-Laufzeitumgebung (CLR-System) installiert ist. Außer Micorsofts .NET Framework, die
+nur für Windows angeboten wird, existiert noch das Open Source Projekt "`Mono"', das bspw. auf den
+Betriebssystemen Mac OS und Linux lauffähig ist.
+Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
 wird das Betriebssystem Windows von Microsoft vorausgesetzt. Wie Xcode und Eclipse stellt Visual
 Studio eine integrierte Entwicklungsumgebung zur Verfügung. Im Gegensatz zu den
 Entwicklungsumgebungen von iOS und Android ist Visual Studio bis auf die funktional beschränkten
-Express-Versionen kostenpflichtig. Für die Erstellung von Windows Phone Apps wird die Programmiersprache C\# verwendet. Visual Studio bietet
-Entwurfansicht zur Darstellung der Benutzeroberfläche und Texteditor für die Eingabe des Quellcodes
-an.
+Express-Versionen kostenpflichtig. Es wird das kostenlose Windows Phone SDK vorausgesetzt. Nach der
+Installation des SDKs, integrieren sich die Tools für die Windows Phone-Entwicklung nahtlos in die
+bestehende Entwicklungsumgebung Visual Studio. 
+Visual Studio bietet Entwurfansicht zur Darstellung der Benutzeroberfläche und Texteditor für die Eingabe des Quellcodes an.
+Für die Erstellung einer nativen Windows Phone App kann man C\#, Visual Basic und XAML oder C++ und
+DirectX verwenden. Man kann auch in Internet Explorer ablaufende Windows Phone-Apps mit HTML5,
+JavaScript und CSS entwickeln. Mithilfe des MVVM-Entwurfsmusters wird eine Separation der
+verschiedenen Komponenten erreicht.
+\cite{MSDNApps}
 \cite[125]{App4U}
+\cite[382]{MoApp1}
 \subsection{Fazit}
 
 
