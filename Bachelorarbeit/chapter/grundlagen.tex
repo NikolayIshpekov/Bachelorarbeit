@@ -208,7 +208,9 @@ hier anstatt Controller ein sogenanntes ViewModel haben und das Model im Gegensa
 zum Model von MVC nicht nur auf Such- und Sortierfunktionen begrenzt ist:
 \begin{itemize} 
   \item \textbf{Model}. Das Model enthält die Geschäftslogik.
-  \item \textbf{View}. Die View repräsentiert die Benutzerschnittstelle.
+  \item \textbf{View}. Die View (Ansicht) repräsentiert die Benutzerschnittstelle. Die Ansicht wird
+  in einer deklarativen Programmiersprache, wie bspw. XAML, erstellt. Es ist lediglich eine reine
+  Beschreibung der Ansicht und enthält keine Ausführungslogik.
   \item \textbf{ViewModel}. Das ViewModel nimmt die Informationen vom Model und wandelt sie in eine
   von der View verwendbare Form um. Es nimmt außerdem die Änderungen aus der View und ruft die entsprechende
   Funktionalität im Model auf. Es handelt sich also um eine Vermittlungsschicht zwischen dem Model
@@ -216,9 +218,9 @@ zum Model von MVC nicht nur auf Such- und Sortierfunktionen begrenzt ist:
 \end{itemize} 
 Es ist ein sehr lose gekoppelter Entwurf und dadurch wird das Unit-Testing erleichtert.
 Das Muster weist eine Abstraktion einer Ansicht auf, die den Zustand und das Verhalten einer
-Ansicht enthält. Diese Abstraktion einer Ansicht wird als ViewModel bezeichnet.\\Ein ViewModel
-benötigt keinen Verweis auf eine View. Die View wird an die Eigenschaften eines ViewModels gebunden,
-das wiederum Daten verfügbar macht, die in Modellobjekten und anderen für diese Ansicht spezifischen
+Ansicht enthält. Diese Abstraktion einer Ansicht wird als ViewModel bezeichnet.\\Ein ViewModel benötigt
+keinen Verweis auf eine View.
+Die View wird an die Eigenschaften eines ViewModels gebunden, das wiederum Daten verfügbar macht, die in Modellobjekten und anderen für diese Ansicht spezifischen
 Zuständen enthalten sind. Das Erstellen der Bindungen zwischen Ansicht und ViewModel ist einfach, da
 ein ViewModel-Objekt als DataContext einer Ansicht festgelegt wird. Wenn sich Eigenschaftswerte im
 ViewModel ändern, werden diese neuen Werte automatisch über die Datenbindung an die Ansicht
@@ -286,8 +288,9 @@ der Java-Bytecode gleich bleibt (siehe Abb.\ref{fig:abb6}). Alle Kompilationssch
 Entwicklungswerkzeugen automatisiert, so dass keine zusätzlichen Arbeitsschritte für den Entwickler
 anfallen. Jede Anwendung in Android wird in einer eigenen virtuellen Maschine, der sogenannten
 Sandbox, ausgeführt. Jede Anwendung ist somit isoliert von den anderen Apps und kann nur auf ihre
-eigene Daten zugreifen. Die Entwicklung von Applikationen für Android erfolgt nach dem
-Model-View-Controller Architekturmuster. Im Folgenden werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
+eigene Daten zugreifen. So wird unter anderem bei einem Absturz die Stabilität des Systems
+gewährleistet.
+Die Entwicklung von Applikationen für Android erfolgt nach dem Model-View-Controller Architekturmuster. Im Folgenden werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
 \cite[317]{App4U}
 \begin{figure}[!h]
 \centering
@@ -381,10 +384,14 @@ Mechanismus für die Persistierung von Daten. Meistens in der Form von SQLite Dat
 Endgerät oder in der Cloud.
 \subsection{iOS}
 Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
-ausschließlich für Apple Rechner zur Verfügung steht. Es ist ein iOS Software Development Kit (SDK)
-notwendig. Apps für iOS werden in Objective-C und seit kurzem auch mit der von Apple neu
-eingeführten Programmiersprache Swift entwickelt. Xcode wird kostenlos zur Verfügung gestellt. Der in Xcode integrierte
-Interface-Builder unterstützt das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
+ausschließlich für Apple Rechner zur Verfügung steht. Xcode bringt das aktuelle iOS Software
+Development Kit (SDK) mit. In dem iOS SDK sind hochwertige Emulatoren für die aktuelle Version
+ enthalten und bei Bedarf lassen sich auch ältere Versionen herunterladen. Apps für iOS werden in
+ Objective-C und seit kurzem auch mit der von Apple neu eingeführten Programmiersprache Swift
+ entwickelt. Die \textbf{LLVM} Compiler Infrastruktur ist ein Open Source Projekt und die technische
+ Grundlage für die native Entwicklung auf iOS (\cite{LLVM}). Xcode wird kostenlos zur Verfügung
+ gestellt.
+ Der in Xcode integrierte Interface-Builder unterstützt das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
 einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes. Von besonderer Bedeutung
 ist die Integration eines iOS-Simulators, auf dem die Anwendung in der gleichen Wiese abläuft, als
 wenn ein tatsächliches iOS-Gerät die Basis wäre.\\Ähnlich wie bei Android wird das
@@ -392,25 +399,77 @@ MVC-Entwurfsmuster für die Entwicklung von iOS Apps verwendet. Für Entwicklung m
 Cocoa-Framework erforderlich, das vielfältige häufig genutzte Bibliotheken (bspw. zum Zugriff auf
 Hardwaregeräte) bereitgestellt. Apple stellt mit Cocoa-Touch-Framework eine modifizierte und auf die
 Anforderungen leistungsschwächerer mobiler Endgeräte abgestimmte Version des Frameworks zur
-Verfügung. Im Folgenden werden die wichtigsten Komponenten der iOS App Entwicklung vorgestellt.
+Verfügung. Ähnlich wie bei Android werden Apps in einer beschränkenden Sandbox ausgeführt und es
+ist keine direkte Interprozesskommunikation möglich. Jede App kann nur in einem eigenen Ordner auf
+das Dateisystem zugreifen. Anwendungen haben im Standard nur geringe Rechte und der Benutzer muss
+die Rechte aktiv bestätigen. Im Folgenden werden die wichtigsten Komponenten der iOS App Entwicklung
+vorgestellt.
 \\Um für die View-Komponenten ein Verhalten zu definieren, stehen drei Mechanismen zur Verfügung:
 \begin{itemize}
-  \item Delegation. Ermöglicht eine entkoppelte Kommunikation.
+  \item Delegation. Ermöglicht eine entkoppelte Kommunikation. 
   \item Target Action. Über den Target-Action-Mechanismus benachrichtigt die View den Controller,
   wenn bspw. ein Button geklickt wurde.
   \item Notification. Die Kommunikation vom Model an den Controller erfolgt über Notifications und
   Key-Value-Observing.
 \end{itemize}
+\subsubsection{App Lifecycle}
+Beim Starten einer iOS App passiert Folgendes:
+\begin{enumerate} 
+  \item Zuerst wird die main()-Methode in der Klasse main.m ausgeführt.
+  \item Dann wird die didFinishLaunchingWithOptions()-Methode der Klasse AppDelegate.m ausgeführt.
+  \item Die Storyboards werden geladen.
+  \item Am Ende werden die Methoden viewDidLoad() und viewWillAppear() des ViewControllers, der als
+  Start-ViewController festgelegt wurde ausgeführt.
+\end{enumerate}
 \subsubsection{Storyboard}
 In dieser Datei lassen sich gleich mehrere Ansichten erstellen und deren Übergänge (Storyboard
 Segues) definieren. Das Storyboard repräsentiert die View des MVC-Architekturmusters. Die
-iOS Benutzerschnittstelle (UI) wird mit einem Interface Builder gestaltet. Mithilfe dieses Werkzeugs
-lassen sich einzelne Komponenten der UI per Drag \& Drop zusammenstellen. 
+iOS Benutzerschnittstelle (UI) wird mit einem Interface Builder (UI Builder) gestaltet. Mithilfe
+dieses Werkzeugs lassen sich einzelne Komponenten der UI per Drag \& Drop zusammenstellen und mit
+einem ViewController verbinden.
+Im Ui Builder werden Oberflächen nicht nur gezeichnet, sondern auch deren Eigenschaften
+definiert. Durch Constraints lassen sich die Positionen der Objekte relativ zueinander beschreiben
+und dadurch kann man flexibel mit verschiedenen Auflösungen und Darstellungsmodi
+(Landscape/Portrait) umgehen.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/storyboard.png}
+\caption{Storyboard. Quelle:\cite{DevApple}}
+\label{fig:abb12}
+\end{figure}
 \subsubsection{ViewController}
+Die ViewController sind wichtige Bausteine für alle iOS-Apps.
 Xcode legt bei View-basierten Projekten immer automatisch einen ViewController an, der die
-Funktionalität des oder eines Controllers innerhalb der App abbildet. Die ViewController sind
-wichtige Bausteine für alle iOS-Apps. Die Verwaltung einer Ansicht erfolgt über einen
-ViewController. Es empfiehlt sich, für jeden Dialog einen eigenen ViewController zu nehmen.
+Funktionalität des oder eines Controllers innerhalb der App abbildet. 
+Die Verwaltung einer Ansicht erfolgt über einen ViewController. Ein ViewController beinhaltet die
+Geschäftslogik einer Anewendung und steuert den Programmablauf (siehe Abb.\ref{fig:abb10}).
+Es empfiehlt sich, für jeden Dialog einen eigenen ViewController zu nehmen.
+ViewController, die im Storyboard definiert wurden, werden
+automatisch instanziiert. In Abb.\ref{fig:abb11}
+sieht man die Einzelschritte beim Laden einer View.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.3]{graphics/ViewController.png}
+\caption{Funktionsweise eines ViewControllers. Quelle:\cite{DevApple}}
+\label{fig:abb10}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.2]{graphics/loading_a_view_into_memory_2x.png}
+\caption{Laden einer View. Quelle:\cite{DevApple}}
+\label{fig:abb11}
+\end{figure}
+\subsubsection{Navigation Controller}
+Ein Navigation Controller kapselt die Navigation zwischen ViewControllern. Die ViewController werden
+auf einem sogenannten Navigation Stack gestapelt.
+\subsubsection{Property Lists ("`Plists"')}
+Property Lists sind ein in iOS Apps häufig verwendetes Werkzeug um Einstellungen und Zustände zu
+speichern oder auch mit einer App auszuliefern. Plists stellen eine Hierarchie von strukturierten
+Daten dar und werden als XML serialisiert. Xcode bietet einen Editor, mit dem man mittels einer
+Benutzeroberfläche Property Lists bearbeiten kann, ohne sich mit XML Code auseinandersetzen zu
+müssen. Die Einstellungen eines Projektes werden in einem speziellen File, das \textbf{Info.plist}
+gespeichert. Es wird von Xcode generiert und wird beim Start einer App automatisch eingelesen und
+ausgewertet.
 \subsection{Windows Phone}
 Microsoft veröffentlichte im Juli 2000 im Rahmen einer umfangreicher Werbekampagne die
 sogenannte .NET Plattform. Die .NET Plattform besteht aus den folgenden Komponenten:
