@@ -50,9 +50,9 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   werden.
   \item \textbf{Windows Phone}\\Microsoft bietet mit Windows Phone ein Bündel aus Betriebssystem und
   einigen Zusatzprogrammen (Outlook, Word mobile etc.) für Smartphones. Windows Phone ist die
-  Weiterentwicklung von Windows Mobile. Im Gegensatz zu Microsoft Windows für stationäre
-  Desktop-PCs, das nahezu ausschließlich auf Intel-x86-Prozessoren läuft, ist Windows Phone auf vielen unterschiedlichen Prozessorarchitekturen lauffähig. Mit Windows Phone
-  bietet Microsoft ein Betriebssystem mit einer akzeptablen Systemleistung trotz der oft begrenzten
+  Weiterentwicklung von Windows Mobile. Während Windows Mobile einseitig an Business-Kunden
+  ausgerichtet war, hat Windows Phone Geschäfts- wie Consumer-Kunden im Auge. Im Gegensatz zu
+  Microsoft Windows für stationäre Desktop-PCs, das nahezu ausschließlich auf Intel-x86-Prozessoren läuft, ist Windows Phone auf vielen unterschiedlichen Prozessorarchitekturen lauffähig. Mit Windows Phone bietet Microsoft ein Betriebssystem mit einer akzeptablen Systemleistung trotz der oft begrenzten
   Hardwareressourcen von mobilen und embedded Geräten. Seit dem Erscheinen des Betriebssystem
   Windows Phone setzt Microsoft ein Kachelkonzept. Neben Funktionalitäten wie SMS-Verwaltung,
   Telefonfunktion, Kalender und soziale Netzwerke, arbeitet Windows Phone nach dem Prinzip des
@@ -412,7 +412,7 @@ vorgestellt.
   \item Notification. Die Kommunikation vom Model an den Controller erfolgt über Notifications und
   Key-Value-Observing.
 \end{itemize}
-\subsubsection{App Lifecycle}
+\subsubsection{iOS App Lifecycle}
 Beim Starten einer iOS App passiert Folgendes:
 \begin{enumerate} 
   \item Zuerst wird die main()-Methode in der Klasse main.m ausgeführt.
@@ -497,18 +497,41 @@ haben. Der erzeugte MSIL-Code kann auf jedem System ausgeführt werden, auf dem e
 .NET-Laufzeitumgebung (CLR-System) installiert ist. Außer Micorsofts .NET Framework, die
 nur für Windows angeboten wird, existiert noch das Open Source Projekt "`Mono"', das bspw. auf den
 Betriebssystemen Mac OS und Linux lauffähig ist.
-Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung der Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio
-wird das Betriebssystem Windows von Microsoft vorausgesetzt. Wie Xcode und Eclipse stellt Visual
+\\Ähnlich wie bei iOS von Apple lassen sich Windows Phone Apps ausschließlich unter der Verwendung
+der Entwicklungsumgebung Visual Studio von Microsoft erstellen. Für die Installation von Visual Studio wird das Betriebssystem Windows von Microsoft vorausgesetzt. Wie Xcode und Eclipse stellt Visual
 Studio eine integrierte Entwicklungsumgebung zur Verfügung. Im Gegensatz zu den
 Entwicklungsumgebungen von iOS und Android ist Visual Studio bis auf die funktional beschränkten
 Express-Versionen kostenpflichtig. Es wird das kostenlose Windows Phone SDK vorausgesetzt. Nach der
 Installation des SDKs, integrieren sich die Tools für die Windows Phone-Entwicklung nahtlos in die
 bestehende Entwicklungsumgebung Visual Studio. 
-Visual Studio bietet Entwurfansicht zur Darstellung der Benutzeroberfläche und Texteditor für die Eingabe des Quellcodes an.
-Für die Erstellung einer nativen Windows Phone App kann man C\#, Visual Basic und XAML oder C++ und
-DirectX verwenden. Man kann auch in Internet Explorer ablaufende Windows Phone-Apps mit HTML5,
-JavaScript und CSS entwickeln. Mithilfe des MVVM-Entwurfsmusters wird eine Separation der
+Visual Studio bietet Entwurfansicht zur Darstellung der Benutzeroberfläche und Texteditor für die
+Eingabe des Quellcodes an.
+
+Für die Erstellung einer nativen Windows Phone App kann man C\#, Visual
+Basic und XAML oder C++ und DirectX verwenden. Man kann auch in Internet Explorer ablaufende Windows Phone-Apps mit HTML5, JavaScript und CSS entwickeln.
+Mithilfe des MVVM-Architekturmusters wird eine Separation der
 verschiedenen Komponenten erreicht.
+\\Die wichtigsten Komponenten einer Windows Phone App sind:
+\begin{itemize} 
+  \item AssemblyInfo (.vb oder .cs)\\Die Datei enthält Metadaten wie die Namen und die Version, die
+  anschließend in die fertige App generiert werden. Diese Datei gibt es nur für C\# oder Visual
+  Basic .NET Projekte.
+  \item Package.appxmanifest\\Hier werden ebenfalls Informationen wie Name, Beschreibung, Logos und
+  benötigte Systemfunktionen beschrieben (Metadaten). Die Windows Runtime kann somit die wichtigsten
+  Informationen zur Windows-Store-App entnehmen.
+  \item Assets\\Dieses Verzeichnis enthält ein Standard Logo, Splashscreen und ein Convericon. Diese
+  können durch eigene Dateien mit dem gleichen Namen ersetzt werden.
+\end{itemize}
+Für die Gestaltung der Benutzeroberfläche bietet Visual Studio einen Designer an. Es wird ein
+Werkzeugkasten zur Verfügung gestellt und man kann per Drag \& Drop verschiedene Elemente auf der
+App Oberfläche platzieren. Der Entwickler kann im Designer nur die Oberflächenlogik, aber keine
+Verarbeitungslogik der eigentlichen Aufgabe. Es entsteht einen XAML-Code \footnotemark[1]. Diese
+Trennung verschafft nicht nur eine saubere Aufteilung, sondern auch eine bessere Wartbarkeit und
+Wiederverwendbarkeit der einzelnen Komponenten. Zu jeder XAML-Datei (Datei.xaml) gibt es es eine
+C\#-Datei, die genau so heißt (Datei.xaml.cs).
+Beim Deklarieren eines Oberflächeelements im XAML lässt sich eine neue Methode in der Code-Behind-
+Datei erzeugen. In dieser Methode ist dann die Verarbeitungslogik enthalten. 
+\footnotetext[1]{XAML (Extensible Application Markup Language) ist eine Dialektform von XML.}  
 \cite{MSDNApps}
 \cite[125]{App4U}
 \cite[382]{MoApp1}
