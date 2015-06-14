@@ -386,25 +386,24 @@ enthält.
 Mechanismus für die Persistierung von Daten. Meistens in der Form von SQLite Datenbank auf dem
 Endgerät oder in der Cloud.
 \subsection{iOS}
-Um iOS Apps entwickeln zu können, braucht man Apples Entwicklungsumgebung Xcode, welche
+Um iOS Apps entwickeln zu können, braucht man Apples kostenlose Entwicklungsumgebung Xcode, welche
 ausschließlich für Apple Rechner zur Verfügung steht. Xcode bringt das aktuelle iOS Software
 Development Kit (SDK) mit. In dem iOS SDK sind hochwertige Emulatoren für die aktuelle Version
  enthalten und bei Bedarf lassen sich auch ältere Versionen herunterladen. Apps für iOS werden in
  Objective-C und seit kurzem auch mit der von Apple neu eingeführten Programmiersprache Swift
  entwickelt. Die \textbf{LLVM} Compiler Infrastruktur ist ein Open Source Projekt und die technische
- Grundlage für die native Entwicklung auf iOS (\cite{LLVM}). Xcode wird kostenlos zur Verfügung
- gestellt.
- Der in Xcode integrierte Interface-Builder unterstützt das Drag-and-drop-Verfahren und macht die Gestaltung der Benutzeroberfläche zu einer relativ
-einfachen Aufgabe. In einem Texteditor erfolgt die Eingabe des Quellcodes. Von besonderer Bedeutung
-ist die Integration eines iOS-Simulators, auf dem die Anwendung in der gleichen Wiese abläuft, als
-wenn ein tatsächliches iOS-Gerät die Basis wäre.\\Ähnlich wie bei Android wird das
-MVC-Entwurfsmuster für die Entwicklung von iOS Apps verwendet. Für Entwicklung mobiler Applikationen ist das
-Cocoa-Framework erforderlich, das vielfältige häufig genutzte Bibliotheken (bspw. zum Zugriff auf
-Hardwaregeräte) bereitgestellt. Apple stellt mit Cocoa-Touch-Framework eine modifizierte und auf die
-Anforderungen leistungsschwächerer mobiler Endgeräte abgestimmte Version des Frameworks zur
-Verfügung. Ähnlich wie bei Android werden Apps in einer beschränkenden Sandbox ausgeführt und es
+ Grundlage für die native Entwicklung auf iOS (\cite{LLVM}). Der in Xcode integrierte
+ Interface-Builder unterstützt das Drag-and-drop-Verfahren und macht die Gestaltung der
+ Benutzeroberfläche zu einer relativ einfachen Aufgabe.
+ Die Eingabe des Quellcodes erfolgt in einem Texteditor. Eine Anwendung läuft auf dem im Xcode
+ enthaltenen iOS-Simulator in der gleichen Wiese ab, als wenn ein tatsächliches iOS-Gerät die Basis wäre.
+ \\Ähnlich wie bei Android wird das MVC-Entwurfsmuster für die Entwicklung von iOS Apps verwendet.
+ Für Entwicklung mobiler Applikationen ist das Cocoa-Framework erforderlich, das vielfältige häufig
+ genutzte Bibliotheken (bspw. zum Zugriff auf Hardwaregeräte) bereitgestellt. Apple stellt mit
+ Cocoa-Touch-Framework eine modifizierte und auf die Anforderungen leistungsschwächerer mobilen
+ Endgeräte abgestimmte Version des Frameworks zur Verfügung. Analog zu Android werden Apps in einer beschränkenden Sandbox ausgeführt und es
 ist keine direkte Interprozesskommunikation möglich. Jede App kann nur in einem eigenen Ordner auf
-das Dateisystem zugreifen. Anwendungen haben im Standard nur geringe Rechte und der Benutzer muss
+das Dateisystem zugreifen und hat üblicherweise nur geringe Rechte. Der Benutzer muss
 die Rechte aktiv bestätigen. Im Folgenden werden die wichtigsten Komponenten der iOS App Entwicklung
 vorgestellt.
 \\Um für die View-Komponenten ein Verhalten zu definieren, stehen drei Mechanismen zur Verfügung:
@@ -475,7 +474,7 @@ gespeichert. Es wird von Xcode generiert und wird beim Start einer App automatis
 ausgewertet.
 \subsection{Windows Phone}
 Microsoft veröffentlichte im Juli 2000 im Rahmen einer umfangreicher Werbekampagne die
-sogenannte .NET Plattform. Die .NET Plattform besteht aus den folgenden Komponenten:
+sogenannte .NET Plattform. Sie besteht aus den folgenden Komponenten:
 \begin{itemize}
   \item Eine Sammlung von Programmiersprachen, wie C\#, Visual C++ .NET, Visual Basic .NET, Visual
   J\# .NET und JScript .NET, sowie die graphische Entwicklungsumgebung Visual Studio.NET. 
