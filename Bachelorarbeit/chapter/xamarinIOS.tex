@@ -14,19 +14,19 @@ Xamarin.
  plattformspezifischen Code.
 
 \section{Getting Started mit Xamarin}
-Um Xamarin benutzen zu können, braucht man einen kostenpflichtigen Account. Es gibt verschiedene
-Arten von Accounts, die mit unterschiedlichen Features verbunden sind.
+Um Xamarin benutzen zu können, braucht man ein kostenpflichtiges Benutzerkonto (Account). Es gibt
+verschiedene Arten von Accounts, die mit unterschiedlichen Features verbunden sind.
 \begin{itemize} 
-  \item Indie Account (\$25 im Monat)\\Studenten können es kostenlos
+  \item \textbf{Indie Account} (\$25 im Monat).\\Studenten können es kostenlos
   beantragen. Im Paket ist die Entwicklungsumgebung von Xamarin, das Xamarin Studio, enthalten.
   Xamarin.iOS und Xamarin.Android kommen ebenso mit dem Indie Account mit, sowie das
   plattformübergreifende Werkzeug, Xamarin.Forms. Man kann mit diesem Account noch
   Anwendungen in die verschiedenen App-Märkte deployen.
-  \item Business Account (\$83 im Monat)\\Wer professionell Xamarin Apps entwickeln möchte, kommt an
-  den Business Account nicht herum. In diesem Benutzerkonto sind alle Features von Indie enthalten
+  \item \textbf{Business Account} (\$83 im Monat).\\Wer professionell Xamarin Apps entwickeln
+  möchte, kommt an den Business Account nicht herum. In diesem Benutzerkonto sind alle Features von Indie enthalten
   plus zusätzliche Business Features und das wichtigste, Visual Studio Einbindung und privates Email Support von Xamarin Experten.
-  \item Enterprise Account (\$158)\\Im Enterprise Account sind viele weitere Features enthalten, wie
-  z.B. die Anbindung einer verschlüsselten lokalen Datenbank.
+  \item \textbf{Enterprise Account} (\$158 im Monat).\\Im Enterprise Account sind viele weitere
+  Features enthalten, wie z.B. die Anbindung einer verschlüsselten lokalen Datenbank.
 \end{itemize}
 Bevor man mit der App Entwicklung mit Xamarin anfangen kann, müssen einige Voraussetzungen erfüllt
 werden.\\Wenn man für iOS oder Mac OS X entwickeln möchte, wird ein Mac Rechner vorausgesetzt.
@@ -70,9 +70,60 @@ Unter Mac OS werden Xamarin Apps mit der Entwicklungsumgebung Xamarin Studio ent
 eine iOS App auf einem mobilen Endgerät deployen und testen kann, muss man einen Apple Developer
 Account haben. Dieser Account ist auch erforderlich, wenn man Apps in den App
 Store stellen möchte.
-Der Ahead-Of-Time (AOT) Compiler kompiliert Xamarin.iOS Apps direkt zu nativen ARM Assemblercode, mit anderen Worten, kann man mit Xamarin native iOS Apps erstellen. Mit Xamarin.iOS hat man die iOS SDK von Apple in C\# mit .NET Namenskonventionen. Xamarin bietet somit Zugriff auf alle iOS APIs. Dank eines automatischen Binding-Generators können existierender Objective-C Code, sowie Frameworks und
-benutzerdefinierte Controls problemlos in einer Xamarin App benutzt werden. Wenn man iOS Apps
+\\Der Ahead-Of-Time (AOT) Compiler kompiliert Xamarin.iOS Apps direkt zu nativen ARM Assemblercode.
+D.h. man kann mit Xamarin native iOS Apps erstellen. Xamarin.iOS ist eine Art Übersetzung der iOS
+SDK von Apple in C\# mit .NET Namenskonventionen. Somit hat man Zugriff auf alle iOS APIs.
+Ein automatisierter Binding-Generator ermöglicht die Benutzung von existierendem Objective-C Code,
+sowie Frameworks und benutzerdefinierten Controls in einer Xamarin App.\\Wenn man iOS Apps
 mittels Visual Studio entwickelt, muss man die App auf dem Macintosh Build Host simulieren, da es
 auf Windows keinen iOS Simulator gibt.
 
+Xamarin.iOS App Entwicklung ist wie bereits erwähnt fast identisch mit der herkömmlichen iOS App
+Entwicklung. Der Unterschied besteht grundsätzlich in der Programmiersprache. Es werden weiterhin
+Grundtechnologien der iOS Entwicklung, wie Events, Protocols und Delegates benutzt. Xamarin.iOS
+benutzt Delegates von Apple, die ähnlich der Delegates von C\# sind, aber anstatt die Definition und
+Aufruf von einer einzigen Methode, ist ein Objective-C Delegate eine ganze Klasse, die einem
+Protocol genügen soll. Ein Objective-C Protocol ist ähnlich wie ein C\# Interface, mit dem
+Unterschied, dass die Methoden eines Protocols auch optional sein können.
+Also Xamarin.iOS benutzt .NET Events mit UIKit Control-Elemente (Buttons, Labels,
+Text Felder usw.).\\Xamarin.iOS stellt einen einen iOS UI-Designer zur Verfügung, mit dem die
+Gestaltung der Benutzeroberfläche auf die gleiche Art und Weise erfolgt, wie bei der iOS App
+Entwicklung mit dem UI Builder von Xcode (siehe Abb.\ref{fig:abb17}). Der Xamarin Designer für iOS
+ist enthalten in Xamarin Studio und lässt sich auch in Visual Studio integrieren. Das Tool
+ermöglicht das Erstellen von Benutzeroberflächen mithilfe Storyboards und stellt einen Mechanismus
+zum programmatischen Zugriff auf UI Elemente bereit.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.215]{graphics/XamariniOS_UIBuilder.png}
+\caption{Xamarin.iOS Interface Builder (Quelle:\cite{XiOS})}
+\label{fig:abb17}
+\end{figure}
+\\Xamarin.iOS unterstützt den "`target-action style"' für die Bearbeitung eines Events, das durch
+eine Interaktion ausgelöst wird. D.h. Xamarin.iOS
+benutzt iOS Control-Elemente um .NET Ereignisse (Events) auszulösen.\\Beim Markieren eines
+Control-Elements (z.B. Button) kann man unter Properties eine eindeutige Bezeichnung für das
+Element, sowie andere Eigenschaften einstellen (siehe Abb.\ref{fig:abb18}).
+Um ein "`target-action"' für einen Button zu erstellen, muss man lediglich auf den Button in dem iOS
+Designer doppelklicken. Der Code des zuständigen UIViewControllers wird dann automatisch angezeigt
+und der Entwickler wird aufgefordert auszuwählen, wo die Methode hinzugefügt werden soll, die beim
+Vorkommen dieses Ereignisses aufgerufen wird.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.35]{graphics/buttonxs.png}
+\caption{Properties eines Control-Elements (Quelle:\cite{XiOS})}
+\label{fig:abb18}
+\end{figure}
+\\Xamarin.iOS unterstützt alle nativen Control-Elemente von Apple. Die können zu einer Xamarin.iOS
+Applikation hinzugefügt werden. Das kann mit dem iOS Designer, Xcodes Interface Builder oder
+programmatisch passieren. Die meist verwendeten iOS UI Control-Elemente sind:
+\begin{itemize}
+  \item UILabel - "`read only"' Textfeld.
+  \item UITextField - editierbares einzeiliges Textfeld.
+  \item UITextView - editierbares mehrzeiliges Textfeld, mit Scrollfunktion.
+  \item UIButton - klickbares Feld (Button).
+  \item UISlider - Slider.
+  \item UIImageView - Bild.
+  \item UITableView - ein scrollbarer Container, der UITableViewCells beinhaltet.
+  \item UITableViewCell - ein Viewelement, das eine Zeile in einer UITableView repräsentiert.
+\end{itemize}
 \cite{XiOS}

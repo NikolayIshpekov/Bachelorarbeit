@@ -1,10 +1,40 @@
 \section{Xamarin.Android}
 Ähnlich wie bei Xamarin.iOS bietet Xamarin.Android die Möglichkeit native Android Apps mit Xamarin
-zu erstellen. Xamarin benutzt den sogenannten Just-In-Time (JIT) Compiler um eine raffinierte
-Optimierung der App Performance zur Laufzeit zu ermöglichen. D.h. eine Xamarin.Android App ist eine
-native Android APK. Xamarin bringt 100\% von Google´s Android API in C\# mit. Mit dem bereits
-erwähnten automatischen Binding-Generator kann man Java Code, Frameworks und benutzerdefinierte
-Controls in einer Xamarin App benutzen. 
+zu erstellen. Xamarin.Android benutzt den sogenannten Just-In-Time (JIT) Compiler um eine
+raffinierte Optimierung der App Performance zur Laufzeit zu ermöglichen. Eine Xamarin.Android App
+ist eine native Android APK (siehe Abb. \ref{fig:abb19}). Xamarin bringt 100\% von Google´s Android API in C\#
+mit.
+Mit dem bereits erwähnten automatischen Binding-Generator kann man Java Code, Frameworks und benutzerdefinierte
+Control-Elemente in einer Xamarin App benutzen.\\Im Gegensatz zu Xamarin.iOS kann man
+Xamarin.Android sowie auf Windows- als auch auf einem Mac-Rechner installieren. Außer das
+aktuelle Android SDK werden bei der Installation von Xamarin.Android auch alle andere benötigte
+Komponenten mitinstalliert. Xamarin Studio, bzw. Visual Studio stellt einen Android Emulator zur
+Verfügung, mit dem man eine App debuggen kann.
+
+Genau wie Xamarin.iOS Entwicklung der herkömmlichen iOS Entwicklung sehr ähnlich ist, ist auch
+Xamarin.Android fast identisch mit der nativen Android App Entwicklung. Anstatt Java wird C\#
+benutzt, aber die Entwicklungsansätze sind gleich. Es werden Activities benutzt und der Lebenszyklus einer Activity
+entspricht dem einer Activity aus der Android App Entwicklung. Die Ressourcen werden auch analog
+geordnet.
+\\Gleich am Anfang, wenn man ein neues Projekt erstellt, sollte man folgende drei Sachen einstellen:
+\begin{itemize}
+  \item Target Framework - dieses API Level wird zur Kompilierzeit benutzt und legt das Framework
+  fest, mit der die App erstellt werden soll.
+  \item Minimum Android Version - spezifiziert die älteste Android Version, die die App unterstützen
+  soll. Wird zur Laufzeit benutzt.
+  \item Target Android Version - spezifiziert die Android Version auf der die App laufen soll. Wird
+  zur Laufzeit benutzt.
+\end{itemize}
+Die verwendeten SDKs müssen durch den Open Android SDK Manager von Xamarin Studio (bzw. Visual
+Studio) installiert werden.\\Wie bei Xamarin.iOS, bietet Xamarin.Android einen Designer für das
+Gestalten der Benutzeroberfläche.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.8]{graphics/Xamarin_Android.png}
+\caption{Xamarin.Android (Quelle:\cite{XamAndroid})}
+\label{fig:abb19}
+\end{figure}
+
 \section{NuGet und Xamarin Component Store}
 Xamarin bietet die Möglichkeit Komponente zu jeder App direkt aus der IDE hinzuzufügen.
 Somit kann man diverse Controls, Web Service APIs und vieles mehr benutzen. Es können auch
