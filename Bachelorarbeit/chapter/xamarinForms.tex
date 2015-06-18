@@ -1,10 +1,11 @@
 \section{Xamarin.Forms: 3 Native UIs, 1 Shared Code Basis}
 Bei Xamarin.Forms handelt es sich um ein .NET-basiertes UI Toolkit, mit dem Oberflächen entweder in
-C\# oder einem speziellen XAML-Dialekt generisch definiert werden.Während des Kompiliervorgangs
-entstehen aus dem Code plattformspezifische, native Oberflächen. Xamarin.Forms unterstützt die
-Plattformen iOS, Android und Windows Phone, aber (noch) nicht Windows Store Apps. Mit Xamarin.Forms
+C\# oder einem speziellen XAML-Dialekt generisch definiert werden. Während des Kompiliervorgangs
+entstehen aus dem gemeinsamen Code plattformspezifische, native Benutzeroberflächen. Xamarin.Forms
+unterstützt die Plattformen iOS, Android und Windows Phone, aber (noch) nicht Windows Store Apps. Mit Xamarin.Forms
 können Entwickler deutlich weniger Code schreiben und dadurch wird der jeweilige Mehraufwand pro zu
-unterstützende Plattform geringer.
+unterstützende Plattform geringer. Allerdings gibt es (noch) keinen UI Designer bei Xamarin.Forms
+und man muss die Benutzeroberflächen aus dem Code gestalten.
 %%\includegraphics[scale = 0.5]{graphics/XamarinForms1.png}
 \\Es gibt zwei
 unterschiedliche Lösungsansätze für die plattformübergreifenden Projekte:
@@ -47,6 +48,18 @@ unterstützende Plattform und einem (oder mehreren) plattformübergreifenden Proje
 \label{fig:abb4}
 \end{figure}
 
-
+\section{NuGet und Xamarin Component Store}
+Xamarin bietet die Möglichkeit Komponente zu jeder App direkt aus der IDE hinzuzufügen.
+Somit kann man diverse Controls, Web Service APIs und vieles mehr benutzen. Es können auch
+populäre Backends wie Microsoft Azure, Parse, Salesforce, SAP usw. in die APP integriert werden,
+sowie auch Security Features wie Authentifizierung und Verschlüsselung.
 
 \section{Fazit}
+Xamarin.iOS und Xamarin.Android verschaffen direkten Zugriff auf die plattformspezifischen APIs und
+dadurch lassen sich Apps erstellen, die spezielle Interaktionen erfordern. Solche Apps haben
+die Funktionalität und die Leistung einer nativen Anwendung.\\Hingegen ist der Ansatz von
+Xamarin.Forms besonders gut für Apps geeignet, die wenig plattformspezifische Funktionalität
+aufweisen oder solche, bei denen keine spezielleren Benutzeroberflächen erfordert werden. Also
+Anwendungen, bei denen die Geschäftslogik höher priorisiert wird als optische Effekte der
+Benutzeroberfläche, lassen sich ganz bequem mit Xamarin.Forms erstellen. Unter diese Kategorie
+fallen die sogenannten Business(Enterprise)-Anwendungen.
