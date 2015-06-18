@@ -40,14 +40,53 @@ Datenbankanbindung oder die Implementierung von Custom Control Renderer, um die 
 Xamarin.Forms vorgegebenen Visualisierung von UI Controls zu modifizieren.
 %%\includegraphics[scale = 0.5]{graphics/xamarin_forms-solution.png}
 \\Im Allgemeinen besteht eine Xamarin.Forms Solution aus jeweils einem Projekt pro zu
-unterstützende Plattform und einem (oder mehreren) plattformübergreifenden Projekten. 
+unterstützende Plattform und einem (oder mehreren) plattformübergreifenden Projekten (siehe
+Abb.\ref{fig:abb4}). 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.73]{graphics/xamarin_forms-solution.png}
 \caption{Solution}
 \label{fig:abb4}
 \end{figure}
-
+\\Xamarin.Forms Applikationen können für die folgenden mobilen Betriebssystemen entwickelt werden:
+\begin{itemize}
+  \item Android 4.0 oder höher
+  \item iOS 6.1 oder höher
+  \item Windows Phone 8 oder höher (nur mit Visual Studio 2013 oder höher plus Windows Phone SDK
+  möglich)
+\end{itemize}
+\subsection{View und Layouts}
+Xamarin.Forms stellt eine API bereit, die für das Erstellen von Benutzeroberflächen mit
+Control-Elemente und Layouts genutzt wird. Die Xamarin.Forms Control-Elemente werden zur
+Laufzeit den entsprechenden nativen Control-Elementen zugeordnet. Folgende vier Klassen werden für
+die Gestaltung der Benutzeroberflächen einer Xamarin.Forms App verwendet:
+\begin{itemize}
+  \item \textbf{View} - repräsentiert Control-Elemente, wie:
+  \begin{itemize}
+    \item Label - analog zu der herkömmlichen Software Entwicklung ein "`read only"' Display
+    Control-Element.
+    \item Entry - einzeiliges Eingabetextfeld.
+    \item Button.
+    \item Image.
+    \item ListView - eine scrollbare Liste von Elemente (Cells).
+  \end{itemize}
+  \item \textbf{Page} - repräsentiert eine enzelne Seite auf dem Bildschirm, analog zu einer
+  Activity bei Android, iOS ViewController oder Windows Phone Page.
+  \item \textbf{Layout} - Spezielles Untertyp von View. Wird als Container für andere Layouts oder
+  Views verwendet. Es gibt zwei Arten von Layouts in Xamarin.Forms:
+  \begin{itemize}
+    \item Managed Layouts - ein Beispiel ist das StackLayout von Xamarin.Forms. Managed Layouts sind
+    für die Positionierung und die Größenanpassung ihrer Kinder zuständig (ähnlich wie das
+    CSS-Box-Model bei der Web Entwicklung).
+    Applikationen sollten nicht direkt die Größe und Position der Kind-Control-Elemente eines StackLayouts anpassen
+    können.
+    \item Unmanaged Layouts - im Gegensatz zu managed Layouts kümmern sich Layouts, wie z.B.
+    AbsoluteLayout, nicht um die Positionierung ihrer Kinder auf dem Bildschirm.
+  \end{itemize}
+  \item \textbf{Cell} - ein Element einer Liste oder Tabelle. Beschreibt wie jedes Element einer
+  Liste abgebildet werden soll.
+\end{itemize}
+Views werden immer in Layouts untergebracht.
 \section{NuGet und Xamarin Component Store}
 Xamarin bietet die Möglichkeit Komponente zu jeder App direkt aus der IDE hinzuzufügen.
 Somit kann man diverse Controls, Web Service APIs und vieles mehr benutzen. Es können auch
