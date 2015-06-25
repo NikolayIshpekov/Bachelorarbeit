@@ -85,7 +85,7 @@ benutzt Delegates von Apple, die ähnlich der Delegates von C\# sind, aber anstat
 Aufruf von einer einzigen Methode, ist ein Objective-C Delegate eine ganze Klasse, die einem
 Protocol genügen soll. Ein Objective-C Protocol ist ähnlich wie ein C\# Interface, mit dem
 Unterschied, dass die Methoden eines Protocols auch optional sein können.
-Also Xamarin.iOS benutzt .NET Events mit UIKit Control-Elemente (Buttons, Labels,
+Also Xamarin.iOS benutzt .NET Events mit UIKit Steuerelemente (Buttons, Labels,
 Text Felder usw.).\\Xamarin.iOS stellt einen einen iOS UI-Designer zur Verfügung, mit dem die
 Gestaltung der Benutzeroberfläche auf die gleiche Art und Weise erfolgt, wie bei der iOS App
 Entwicklung mit dem UI Builder von Xcode (siehe Abb.\ref{fig:abb17}). Der Xamarin Designer für iOS
@@ -100,8 +100,8 @@ zum programmatischen Zugriff auf UI Elemente bereit.
 \end{figure}
 \\Xamarin.iOS unterstützt den "`target-action style"' für die Bearbeitung eines Events, das durch
 eine Interaktion ausgelöst wird. D.h. Xamarin.iOS
-benutzt iOS Control-Elemente um .NET Ereignisse (Events) auszulösen.\\Beim Markieren eines
-Control-Elements (z.B. Button) kann man unter Properties eine eindeutige Bezeichnung für das
+benutzt iOS Steuerelemente um .NET Ereignisse (Events) auszulösen.\\Beim Markieren eines
+Steuerelements (z.B. Button) kann man unter Properties eine eindeutige Bezeichnung für das
 Element, sowie andere Eigenschaften einstellen (siehe Abb.\ref{fig:abb18}).
 Um ein "`target-action"' für einen Button zu erstellen, muss man lediglich auf den Button in dem iOS
 Designer doppelklicken. Der Code des zuständigen UIViewControllers wird dann automatisch angezeigt
@@ -110,12 +110,12 @@ Vorkommen dieses Ereignisses aufgerufen wird.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.35]{graphics/buttonxs.png}
-\caption{Properties eines Control-Elements (Quelle:\cite{XiOS})}
+\caption{Properties eines Steuerelements (Quelle:\cite{XiOS})}
 \label{fig:abb18}
 \end{figure}
-\\Xamarin.iOS unterstützt alle nativen Control-Elemente von Apple. Die können zu einer Xamarin.iOS
+\\Xamarin.iOS unterstützt alle nativen Steuerelemente von Apple. Die können zu einer Xamarin.iOS
 Applikation hinzugefügt werden. Das kann mit dem iOS Designer, Xcodes Interface Builder oder
-programmatisch passieren. Die meist verwendeten iOS UI Control-Elemente sind:
+programmatisch passieren. Die meist verwendeten iOS UI Steuerelemente sind:
 \begin{itemize}
   \item UILabel - "`read only"' Textfeld.
   \item UITextField - editierbares einzeiliges Textfeld.
