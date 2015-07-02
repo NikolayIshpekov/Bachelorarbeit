@@ -147,7 +147,7 @@ Komplexe Anwendung & 2013  & 802  & 48804 & 382215 \\ \hline
 \caption{Durchschnittspreise für App Entwicklung in Deutschland.\cite[31]{App4U}}
 \label{table1}
 \end{table}
-\cite[31]{App4U}
+(\cite[31]{App4U})
 \footnotetext[2]{Alle Preise sind in Euro}
 
 \section{Software Architekturmuster für mobilen Anwendungen}
@@ -170,7 +170,8 @@ Hierfür können Architekturmuster Abhilfe schaffen.
 \centering
 \includegraphics[scale = 0.5]{graphics/ModelViewControllerDiagram.png}
 \caption{Model-View-Controller-Konzept. Die durchgezogene Linie symbolisiert eine direkte
-Assoziation, die gestrichelte eine indirekte Assoziation (z.B. über einen Beobachter).Quelle:\cite{WikiMVCBild}}
+Assoziation, die gestrichelte eine indirekte Assoziation (z.B. über einen
+Beobachter).(\cite{WikiMVCBild})}
 \label{fig:abb8}
 \end{figure}
 Das \textbf{Model-View-Controller} (\textbf{MVC}) Muster (siehe Abb.\ref{fig:abb8}) gibt es schon
@@ -199,7 +200,7 @@ und jede View lässt sich in vollkommen unterschiedliche Applikationen einsetzen.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/MVVMBild.png}
-\caption{MVVM-Muster.Quelle:\cite{MSDNA2MVVM}}
+\caption{MVVM-Muster.(\cite{MSDNA2MVVM})}
 \label{fig:abb9}
 \end{figure}
 Im Jahr 2005 stellte John Gossman, derzeit einer der Windows Presentation Foundation (WPF)- und
@@ -435,7 +436,7 @@ und dadurch kann man flexibel mit verschiedenen Auflösungen und Darstellungsmodi
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/storyboard.png}
-\caption{Storyboard. Quelle:\cite{DevApple}}
+\caption{Storyboard. (\cite{DevApple})}
 \label{fig:abb12}
 \end{figure}
 \subsubsection{ViewController}
@@ -443,7 +444,7 @@ Die ViewController sind wichtige Bausteine für alle iOS-Apps.
 Xcode legt bei View-basierten Projekten immer automatisch einen ViewController an, der die
 Funktionalität des oder eines Controllers innerhalb der App abbildet. 
 Die Verwaltung einer Ansicht erfolgt über einen ViewController. Ein ViewController beinhaltet die
-Geschäftslogik einer Anewendung und steuert den Programmablauf (siehe Abb.\ref{fig:abb10}).
+Geschäftslogik einer Anwendung und steuert den Programmablauf (siehe Abb.\ref{fig:abb10}).
 Es empfiehlt sich, für jeden Dialog einen eigenen ViewController zu nehmen.
 ViewController, die im Storyboard definiert wurden, werden
 automatisch instanziiert. In Abb.\ref{fig:abb11}
@@ -451,13 +452,13 @@ sieht man die Einzelschritte beim Laden einer View.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.3]{graphics/ViewController.png}
-\caption{Funktionsweise eines ViewControllers. Quelle:\cite{DevApple}}
+\caption{Funktionsweise eines ViewControllers. (\cite{DevApple})}
 \label{fig:abb10}
 \end{figure}
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.2]{graphics/loading_a_view_into_memory_2x.png}
-\caption{Laden einer View. Quelle:\cite{DevApple}}
+\caption{Laden einer View. (\cite{DevApple})}
 \label{fig:abb11}
 \end{figure}
 \subsubsection{Navigation Controller}
@@ -467,7 +468,7 @@ auf einem sogenannten Navigation Stack gestapelt.
 Property Lists sind ein in iOS Apps häufig verwendetes Werkzeug um Einstellungen und Zustände zu
 speichern oder auch mit einer App auszuliefern. Plists stellen eine Hierarchie von strukturierten
 Daten dar und werden als XML serialisiert. Xcode bietet einen Editor, mit dem man mittels einer
-Benutzeroberfläche Property Lists bearbeiten kann, ohne sich mit XML Code auseinandersetzen zu
+Benutzeroberfläche Property Lists bearbeiten kann, ohne sich mit XML Code auseinander setzen zu
 müssen. Die Einstellungen eines Projektes werden in einem speziellen File, das \textbf{Info.plist}
 gespeichert. Es wird von Xcode generiert und wird beim Start einer App automatisch eingelesen und
 ausgewertet.
