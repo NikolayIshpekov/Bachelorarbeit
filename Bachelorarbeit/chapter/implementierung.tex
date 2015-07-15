@@ -1,4 +1,60 @@
 \section{Implementierung mit Xamarin}
-
-\subsection{Datenmodell}
+In diesem Abschnitt wird die Implementierung der Nüßing ScanApp mit Xamarin.Forms beschrieben. 
+\subsection{Architekturmuster}
+Für die Entwicklung der Applikation wurde das für Xamarin übliche MVVM-Muster angewendet.
+\subsection{Persistierung der Daten}
+Für die Persistenz der Appdaten wurde SQLite eingesetzt.
 \subsection{Views}
+Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für die Implementierung
+der Benutzeroberflächen. Mit C\# lassen sich die Positionierung der Steuerelemente und deren
+Funktionalität in einer C\#-Datei implementieren, aber das macht den Code schwer lesbar und nicht
+wiederverwendbar. Aus diesem Grund wurden die grafischen Interfaces der Nüßing ScanApp mit der
+Markupsprache Xaml beschrieben.
+Somit wurde eine strikte Trennung zwischen dem Oberflächendesign (in einer
+Xaml-Datei beschrieben) und der Funktionalität (in der
+zugrundeliegenden (Code-Behind) C\#-Datei implementiert) erreicht. Ein weiterer Vorteil von der
+Benutzung von Xaml ist die daraus entstehende Möglichkeit, dass Designer und Entwickler unabhängig
+voneinander arbeiten können.\\Bei der Erstellung einer Xamarin.Forms ContentPage Xaml-Datei wird
+automatisch auch die zugrundeliegende C\#-Datei angelegt (siehe Abb. \ref{fig:abb21}).
+
+ In Abbildung \ref{fig:abb23} sieht man den Xaml-Code für die Benutzeroberfläche, die in Abbildung
+\ref{fig:abb24} zu sehen ist. Der Aufbau einer Xaml-Datei entspricht eines XML-Dokuments. Es gibt ein Wurzelelement und jedes
+Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente. Durch
+das Attribut x:Name kann man auf das Element aus dem Code-Behind-Datei zugreifen und so kann man
+z.B. den Text eines Labels oder die Textfarbe ändern (siehe \ref{fig:abb26}).
+\\In Abbildung \ref{fig:abb25} sieht man die zugrundeliegenden C\#-Datei, in der z.B. die
+Funktionalität der Toolbar-Buttons implementiert ist. Beim Klick auf den Button zum Speichern der
+Angaben, werden die Texten der Texteingabefeldern in einem Objekt vom Typ Kopfdaten gespeichert und
+anschließend wird das neu erstellte Objekt in die SQLite-Datenbank gespeichert. Beim Klick auf den
+Müllkorb-Button, werden die gespeicherten persönlichen Daten aus der SQLite-Datenbank gelöscht. 
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
+\caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
+\label{fig:abb21}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.324]{graphics/XamlDatei.png}
+\caption{Xaml-Datei}
+\label{fig:abb23}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.3]{graphics/appScreenshots/PersoenlicheDaten.png}
+\caption{Seite zum Editieren der persönlichen Daten eines Nutzers der ScanApp}
+\label{fig:abb24}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/HeaderDatenCSDatei.png}
+\caption{Zugrundeliegende (Code-Behind) C\#-Datei}
+\label{fig:abb26}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/HeaderDatenToolbar.png}
+\caption{Zugrundeliegende C\#-Datei}
+\label{fig:abb25}
+\end{figure}
