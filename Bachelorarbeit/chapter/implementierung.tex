@@ -2,43 +2,55 @@
 In diesem Abschnitt wird die Implementierung der Nüßing ScanApp mit Xamarin.Forms beschrieben. 
 Es wurde das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
 Methoden zum Code-Sharing:
- Shared Projects und Portable Class Libraries (PCL). Da wir Code-Sharing nur innerhalb der Nüßing
- App beabsichtigen haben wir uns für Shared Projects entschieden (der PCL Ansatz wird für den Fall
- empfohlen, wenn der Entwickler seinen Code für andere Developer in Form einer DLL Bibliothek bereitstellen möchte).
+ Shared Projects und Portable Class Libraries (PCL). Da im vorliegenden Fall Code-Sharing nur
+ innerhalb der Nüßing App vorgesehen wurde, wurde Shared Projects gewählt (der PCL
+ Ansatz wird für den Fall empfohlen, wenn der Entwickler seinen Code für andere Developer in Form einer DLL Bibliothek bereitstellen möchte).
 Beim Erstellen des Xamarin.Forms Projekts namens ScanApp wurden automatisch zwei weitere Projekte
-erstellt, so dass man drei verschiedene Projekte hat:
+erstellt, so dass folgende Projekte entstanden sind:
 \begin{itemize}
   \item ScanApp - das gemeinsame Projekt. Hier wird die Geschäftslogik der Anwendung implementiert.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
 \subsection{Persistierung der Daten SQLite}
-Für die Persistenz der Appdaten wurde die open-source Datenbank SQLite eingesetzt. SQLite ist gut
+Für die Persistenz der Appdaten wurde die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
 geeignet für Cross-Plattform-Entwicklung, weil:
 \begin{itemize}
   \item die Datenbank klein, schnell und leicht portierbar ist;
   \item der Fileformat leicht zu benutzen und plattformübergreifend ist;
   \item SQLite die meisten SQL92 Standards implementiert.
 \end{itemize}
-Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
+Da
+beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
+SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
+benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
+\\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
 der Datenbank File zu finden ist (es ist abhängig vom
 Ziel-Plattform unterschiedlich). Für iOs und Android kann man Environment class benutzen um einen
-validen Pfad zu konstruieren.
- Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden
-werden können muss man den
+validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
+spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
+auf die SQLite Datenbank aus verschiedenen multiple Threads zuzugreifen wird manuel ein "`lock"'
+benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
+Datenbankzugriffe sind mit demselben "`lock"' gekapselt.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.4]{graphics/SQLitePath.png}
+\caption{SQLite Pfad}
+\label{fig:abb27}
+\end{figure}
+
 \subsection{GUI}
 Die Benutzeroberflächen werden mit wenigen Ausnahmen im gemeinsamen Projekt, ScanApp erstellt.
 Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für die Implementierung
-der UIs (User Interfaces). Mit C\# lassen sich die Positionierung der Steuerelemente und deren
+der UIs (User Interfaces).\\Mit C\# lassen sich die Positionierung der Steuerelemente und deren
 Funktionalität in einer C\#-Datei implementieren, aber das macht den Code schwer lesbar und nicht
 wiederverwendbar. Aus diesem Grund wurden die grafischen Interfaces der Nüßing ScanApp mit der
 Markupsprache Xaml beschrieben.
 Somit wurde eine strikte Trennung zwischen dem Oberflächendesign (in einer
 Xaml-Datei beschrieben) und der Funktionalität (in der
-zugrundeliegenden (Code-Behind) C\#-Datei implementiert) erreicht. Darüber hinaus ermögilcht dieser
-Ansatz, dass Designer und Entwickler unabhängig voneinander arbeiten können.\\Bei der Erstellung
-einer Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei,
-sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
+zugrundeliegenden (Code-Behind) C\#-Datei implementiert) erreicht. Darüber hinaus gibt Xaml die
+Möglichkeit, dass Designer und Entwickler unabhängig voneinander arbeiten können.\\Bei der
+Erstellung einer Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
 
  In Abbildung \ref{fig:abb23} sieht man den Xaml-Code für die Benutzeroberfläche, die in Abbildung
 \ref{fig:abb24} zu sehen ist. Der Aufbau einer Xaml-Datei entspricht eines XML-Dokuments. Es gibt ein Wurzelelement und jedes
@@ -83,5 +95,16 @@ Müllkorb-Button, werden die gespeicherten persönlichen Daten aus der SQLite-Date
 \end{figure}
 
 \subsection{Implementierung des Barcodescanners}
-
+Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen man auf die
+plattformspezifischen Projekte zugreifen musste. In beiden plattformspezifischen Projekte musste die
+Komponente ZXing.Net.Mobile hinzugefügt werden. Im gemeinsamen Projekt wurde das Interface
+IScanner.cs
+erstellt (Abb. \ref{fig:abb28}). In beiden plattformspezifischen Projekte wurde je eine Klasse
+Scanner.cs erstellt, die dieses Interface implementiert. 
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.4]{graphics/IScanner.png}
+\caption{Das Interface IScanner}
+\label{fig:abb28}
+\end{figure}
 \subsection{Web Services für die Kommunikation mit dem Backend}
