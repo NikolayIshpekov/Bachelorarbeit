@@ -64,24 +64,32 @@ die Gestaltung der Benutzeroberflächen einer Xamarin.Forms App verwendet:
 \begin{itemize}
   \item \textbf{View} - repräsentiert Steuerelemente, wie:
   \begin{itemize}
-    \item Label - analog zu der herkömmlichen Software Entwicklung ein "`read only"' Display
+    \item \emph{Label} - analog zu der herkömmlichen Software Entwicklung ein "`read only"' Display
     Steuerelement.
-    \item Entry - einzeiliges Eingabetextfeld.
-    \item Button.
-    \item Image.
-    \item ListView - eine scrollbare Liste von Elemente (Cells).
+    \item \emph{Entry} - einzeiliges Eingabetextfeld.
+    \item \emph{Button}.
+    \item \emph{Image}.
+    \item \emph{ListView} - eine scrollbare Liste von Elemente (Cells).
   \end{itemize}
-  \item \textbf{Page} - repräsentiert eine enzelne Seite auf dem Bildschirm, analog zu einer
-  Activity bei Android, iOS ViewController oder Windows Phone Page.
+  \item \textbf{Page} - repräsentiert eine einzelne Seite auf dem Bildschirm, analog zu einer
+  Activity bei Android, iOS ViewController oder Windows Phone Page. Xamarin.Forms bietet fünf
+  verschiedene Arten von Pages an:
+    \begin{itemize}
+        \item \emph{Content Page} 
+        \item \emph{MasterDetailPage} 
+        \item \emph{NavigationPage} 
+        \item \emph{TabbedPage} 
+        \item \emph{CarouselPage} 
+    \end{itemize}
   \item \textbf{Layout} - Spezielles Untertyp von View. Wird als Container für andere Layouts oder
   Views verwendet. Es gibt zwei Arten von Layouts in Xamarin.Forms:
   \begin{itemize}
-    \item Managed Layouts - ein Beispiel ist das StackLayout von Xamarin.Forms. Managed Layouts sind
-    für die Positionierung und die Größenanpassung ihrer Kinder zuständig (ähnlich wie das
+    \item \emph{Managed Layouts} - ein Beispiel ist das StackLayout von Xamarin.Forms. Managed
+    Layouts sind für die Positionierung und die Größenanpassung ihrer Kinder zuständig (ähnlich wie das
     CSS-Box-Model bei der Web Entwicklung).
     Applikationen sollten nicht direkt die Größe und Position der Kind-Steuerelemente eines StackLayouts anpassen
     können.
-    \item Unmanaged Layouts - im Gegensatz zu managed Layouts kümmern sich Layouts, wie z.B.
+    \item \emph{Unmanaged Layouts} - im Gegensatz zu managed Layouts kümmern sich Layouts, wie z.B.
     AbsoluteLayout, nicht um die Positionierung ihrer Kinder auf dem Bildschirm.
   \end{itemize}
   \item \textbf{Cell} - ein Element einer Liste oder Tabelle. Beschreibt wie jedes Element einer

@@ -1,19 +1,21 @@
 \section{Entwurf für die Entwicklung mit Xamarin}
 In diesem Abschnitt wird der Entwurf der Nüßing ScanApp mit Xamarin.Forms beschrieben. 
-Es wurde das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
+Es wird das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
 Methoden zum Code-Sharing:
  Shared Projects und Portable Class Libraries (PCL). Da im vorliegenden Fall Code-Sharing nur
- innerhalb der Nüßing App vorgesehen wurde, wurde Shared Projects gewählt (der PCL
+ innerhalb der Nüßing App vorgesehen wurde, wird Shared Projects gewählt (der PCL
  Ansatz wird für den Fall empfohlen, wenn der Entwickler seinen Code für andere Developer in Form einer DLL Bibliothek bereitstellen möchte).
-Beim Erstellen des Xamarin.Forms Projekts namens ScanApp wurden automatisch zwei weitere Projekte
-erstellt, so dass folgende Projekte entstanden sind:
+Beim Erstellen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
+erstellt, so dass folgende Projekte entstehen:
 \begin{itemize}
   \item ScanApp - das gemeinsame Projekt. Hier wird die Geschäftslogik der Anwendung implementiert.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
+\subsection{MVVM}
+
 \subsection{Persistierung der Daten SQLite}
-Für die Persistenz der Appdaten wurde die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
+Für die Persistenz der Appdaten wird die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
 geeignet für Cross-Plattform-Entwicklung, weil:
 \begin{itemize}
   \item die Datenbank klein, schnell und leicht portierbar ist;
@@ -26,10 +28,10 @@ SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. 
 benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
 \\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
 der Datenbank File zu finden ist (es ist abhängig vom
-Ziel-Plattform unterschiedlich). Für iOs und Android kann man Environment class benutzen um einen
+Ziel-Plattform unterschiedlich). Für iOs und Android kann man "`Environment class"' benutzen um einen
 validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
 spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
-auf die SQLite Datenbank aus verschiedenen multiple Threads zuzugreifen wird manuel ein "`lock"'
+auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
 benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
 Datenbankzugriffe sind mit demselben "`lock"' gekapselt.
 \begin{figure}[!h]
@@ -42,18 +44,20 @@ Datenbankzugriffe sind mit demselben "`lock"' gekapselt.
 \subsection{GUI}
 Die Benutzeroberflächen werden mit wenigen Ausnahmen im gemeinsamen Projekt, ScanApp erstellt.
 Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für die Implementierung
-der UIs (User Interfaces).\\Mit C\# lassen sich die Positionierung der Steuerelemente und deren
-Funktionalität in einer C\#-Datei implementieren, aber das macht den Code schwer lesbar und nicht
-wiederverwendbar. Aus diesem Grund wurden die grafischen Interfaces der Nüßing ScanApp mit der
-Markupsprache Xaml beschrieben.
-Somit wurde eine strikte Trennung zwischen dem Oberflächendesign (in einer
-Xaml-Datei beschrieben) und der Funktionalität (in der
-zugrundeliegenden (Code-Behind) C\#-Datei implementiert) erreicht. Darüber hinaus gibt Xaml die
-Möglichkeit, dass Designer und Entwickler unabhängig voneinander arbeiten können.\\Bei der
-Erstellung einer Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
+der UIs (User Interfaces).\\Beide Ansätze führen zum gleichen Ergebnis. Die
+Positionierung der Steuerelemente und deren Funktionalität lassen sich in einer C\#-Datei
+implementieren, allerdings ist der Code schwer lesbar und nicht wiederverwendbar.\\Aus diesem
+Grund werden die grafischen Interfaces der Nüßing ScanApp mit der Markupsprache Xaml beschrieben.
+Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
+Xaml-Datei beschrieben \ref{fig:abb23}) und der Funktionalität (in der
+zugrundeliegenden (Code-Behind) C\#-Datei implementiert \ref{fig:abb26}, \ref{fig:abb25}) erreicht.
+Darüber hinaus gibt Xaml die Möglichkeit, dass Designer und Entwickler unabhängig voneinander arbeiten können.\\Bei der
+Erstellung einer Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende
+C\#-Datei, sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
 
- In Abbildung \ref{fig:abb23} sieht man den Xaml-Code für die Benutzeroberfläche, die in Abbildung
-\ref{fig:abb24} zu sehen ist. Der Aufbau einer Xaml-Datei entspricht eines XML-Dokuments. Es gibt ein Wurzelelement und jedes
+%  In Abbildung \ref{fig:abb23} sieht man den Xaml-Code für die Benutzeroberfläche, die in Abbildung
+% \ref{fig:abb24} zu sehen ist. 
+Der Aufbau einer Xaml-Datei entspricht eines XML-Dokuments. Es gibt ein Wurzelelement und jedes
 Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente. Durch
 das Attribut x:Name kann man auf das Element aus dem Code-Behind-Datei zugreifen und so kann man
 z.B. den Text eines Labels oder die Textfarbe ändern (siehe \ref{fig:abb26}).
@@ -62,62 +66,160 @@ Funktionalität der Toolbar-Buttons implementiert ist. Beim Klick auf den Button 
 Angaben, werden die Texten der Texteingabefeldern in einem Objekt vom Typ Kopfdaten gespeichert und
 anschließend wird das neu erstellte Objekt in die SQLite-Datenbank gespeichert. Beim Klick auf den
 Müllkorb-Button, werden die gespeicherten persönlichen Daten aus der SQLite-Datenbank gelöscht. 
+\\
+\\
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
 \caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
 \label{fig:abb21}
 \end{figure}
-
+\\
+\\
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.324]{graphics/XamlDatei.png}
 \caption{Xaml-Datei}
 \label{fig:abb23}
 \end{figure}
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.3]{graphics/appScreenshots/PersoenlicheDaten.png}
-\caption{Screenshot: Seite zum Editieren der persönlichen Daten eines Nutzers der ScanApp}
-\label{fig:abb24}
-\end{figure}
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.3]{graphics/appScreenshots/PersoenlicheDaten.png}
+% \caption{Screenshot: Seite zum Editieren der persönlichen Daten eines Nutzers der ScanApp}
+% \label{fig:abb24}
+% \end{figure}
+
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.4]{graphics/HeaderDatenCSDatei.png}
 \caption{Zugrundeliegende (Code-Behind) C\#-Datei}
 \label{fig:abb26}
 \end{figure}
+
+
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/HeaderDatenToolbar.png}
 \caption{Zugrundeliegende C\#-Datei}
 \label{fig:abb25}
 \end{figure}
-\subsection{Xamarin Komponente (Components) und NuGet Packages, die für den Entwurf der App genutzt
-wurden}
+
+\subsection{Entwurf der Navigation zwischen den verschiedenen Seiten der ScanApp}
+Die Implementierung der Navigation der App erfolgt ausschließlich im gemeinsamen Projekt, ScanApp.
+In der Startseite der App, \emph{public class App}, wird in der Datenbank überprüft ob bereits ein
+Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es zwei mögliche Wege:
 \begin{itemize}
-  \item Components 
-  	\begin{itemize}
-  		\item ModernHttpClient
-  		\item ZXing.Net.Mobile
-	\end{itemize}
-  \item NuGet Packages 
-    \begin{itemize}
-  		\item Newtonsoft.Json
-  		\item Xam.Plugin.DeviceInfo
-	\end{itemize}
+  \item Im Falle, dass ein Datenbankeintrag mit einem Benutzer existiert, wird der User zu einer
+  Menü-Seite navigiert. Diese Menü-Seite ist vom Typ \textbf{MasterDetailPage}. An
+  dieser Stelle ist wichtig zu erwähnen, dass bei Xamarin.Adroid, die Benutzung von einer
+  MasterDetailPage in einer NavigationPage nicht möglich ist und die App stürzt ab. Aus diesem Grund
+  wird hier folgende Compiler-Direktive zur Fallunterscheidung benutzt:
+  \textcolor{gray}{
+  \\ \#if \textunderscore\textunderscore iOS\textunderscore\textunderscore
+   \\MainPage = new NavigationPage( new MenuMasterDetailPage());\\ \#endif}\\Für Android sieht der
+   Code folgendermaßen aus:\\ \textcolor{gray}{\#if \textunderscore\textunderscore
+   Android\textunderscore\textunderscore \\ MainPage = new MenuMasterDetailPage();\\ \#endif}
+  \item Wenn noch kein Benutzer registriert wurde, wird eine \textbf{NavigationPage} erstellt und
+  der User wird zu der \textbf{Login-Seite}, vom Typ ContentPage, navigiert (siehe
+  Abb.\ref{fig:abb29}). Auf der Login-Seite gibt es außer ein paar Labels mit Hinweistexten und
+  einen Registrierung-Button, zwei Entry-Felder, in denen der User seine Kundennummer und seine Postleitzahl eingeben muss. Die Daten werden zum
+  Server gesendet und im Falle einer erfolgreichen Registrierung, wird zu der bereits erwähnten
+  \textbf{MasterDetailPage} navigiert (siehe Abb.\ref{fig:abb31}). Wegen der bekannten Problemen bei
+  Xamarin.Android zwischen NavigationPage und MasterDetailPage, muss hier wieder unterschieden werden zwischen iOS und
+  Android. Bei Android muss die Navigation von Typ "`modal"' sein (ohne
+  Möglichkeit zurückzunavigieren):\\\textcolor{gray}{\#if \textunderscore\textunderscore
+  Android\textunderscore\textunderscore \\this.Navigation.PushModalAsync(new MenuMasterDetailPage());\\
+   \#endif}
 \end{itemize}
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.2]{graphics/appScreenshots/ScreenShot_Login.png}
+\caption{Login-Seite}
+\label{fig:abb29}
+\end{figure}
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.2]{graphics/appScreenshots/ScreenShot_Menu.png}
+\caption{Menüsteuerungsseite}
+\label{fig:abb31}
+\end{figure}
+
+
+\subsubsection{Steuerung des Menüs mit MasterDetailPage}
+In der Abb.\ref{fig:abb31} sieht man das aufgeklappte Menü der Menüsteuerungsseite der Nüßing
+ScanApp. Die MasterDetailPage hat zwei wichtige Properties von Typ Page:
+\begin{itemize}
+  \item Master - eine ContentPage mit einem Element, nämlich eine TableView, in der die
+  unterschiedlichen Navigationspunkte aufgelistet werden.
+  \item Detail - je nachdem, welcher Navigationspunkt geklickt wurde, wird eine neue NavigationPage
+  erstellt und der Benutzer wird zu der entsprechenden Seite (ContentPage) navigiert.
+\end{itemize}
+Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
+\\ \\ \textcolor{gray}{\textsl{void onKontaktTapped(object sender, EventArgs e)\\ \{\\ this.Detail
+= new NavigationPage(new KontaktPage());\\this.isPresent = false;
+\\
+\}}}
+\\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}} sorgt dafür, dass das Menü
+automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
 \subsection{Implementierung des Barcodescanners}
-Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen man auf die
-plattformspezifischen Projekte zugreifen musste. In beiden plattformspezifischen Projekte musste die
-Komponente ZXing.Net.Mobile hinzugefügt werden. Im gemeinsamen Projekt wurde das Interface
+Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen ein Eingriff in
+die plattformspezifischen Projekte notwendig ist. Sowie zum ScanApp.iOS als auch zum ScanApp.Droid
+muss die Komponente ZXing.Net.Mobile hinzugefügt werden. Im gemeinsamen Projekt wird das Interface
 IScanner.cs
-erstellt (Abb. \ref{fig:abb28}). In beiden plattformspezifischen Projekte wurde je eine Klasse
-Scanner.cs erstellt, die dieses Interface implementiert. 
+definiert (Abb. \ref{fig:abb28}). In beiden plattformspezifischen Projekte wird je eine Klasse
+Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
+man auf die plattformspezifische Scanner.cs Klassen mit:\\
+\textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}}.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.4]{graphics/IScanner.png}
 \caption{Das Interface IScanner}
 \label{fig:abb28}
 \end{figure}
+
+\subsection{Xamarin Komponenten (Components) und NuGet Packages, die für die
+Entwicklung der App genutzt werden}
+Die Vielfalt der zur Verfügung gestellten Komponenten ist eine der größten Stärken von Xamarin.
+Zu dem gemeinsamen Xamarin.Forms-Projekt können keine Komponenten hinzugefügt werden. Aus diesem
+Grund müssen die benötigten Komponenten zu den plattformspezifischen Projekten
+hinzugefügt werden. Im gemeinsamen Projekt wird ein Interface definiert, das von den jeweiligen
+Klassen der plattformspezifischen Projekte implementiert wird. 
+Der Zugriff erfolgt folgendermaßen:
+\textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
+\subsubsection{Xamarin Components}
+\begin{itemize}
+        \item \textbf{ModernHttpClient} - Für die Kommunikation mit dem Backend wird ein Http-Client
+        benötigt.
+        Mit dieser Komponente wird ein Http-Client folgendermaßen erstellt:  
+        \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
+        ModernHttpClient.NativeMessageHandler())}}.
+        \item \textbf{ZXing.Net.Mobile} - Die Kernfunktionalität der Nüßing ScanApp, nämlich die
+        Scan-Funktion wird mithilfe der Xamarin-Komponente ZXing.Net.Mobile ermöglicht. Der Entwickler braucht sich
+        nicht um native Funktionen, wie die Nutzung der Kamera und das Ein- und Ausschalten des
+        Blitzlichtes, zu kümmern. Diese Funktionalität, sowie die Erkennung des Barcodes wird von der
+        ZXing-Komponente bereitgestellt. 
+\end{itemize}
+\subsubsection{NuGet Packages}
+\begin{itemize}
+        \item \textbf{Newtonsoft.Json} - Für die Kommunikation mit dem Backend werden Json-Objekte
+        benutzt.
+        Damit man zu den in einem Json-Objekt enthaltenen Informationen gelangen kann, muss das Objekt
+        zerteilt (geparst) werden. Das NuGet Package Newtonsoft.Json sorgt für das Parsen eines Json-Objekts.
+        \item \textbf{Xam.Plugin.DeviceInfo} - Beim ersten Start der Applikation, muss der Kunde sich
+        einmalig registrieren. Bei der Registrierung wird auch Information über das Gerät mitgesendet. An diese
+        native Information gelangt man mithilfe des NuGet Packages, Xam.Plugin.DeviceInfo, gelangt man zu
+        dieser Information.
+\end{itemize}
 \subsection{Web Services für die Kommunikation mit dem Backend}
+Web Services kommen in den folgenden Fällen zum Einsatz:
+\begin{itemize}
+  \item Bei der einmaligen Registrierung eines Benutzers.
+  \item Beim Überprüfen eines Barcodes.
+  \item Beim Abschließen einer Bestellung.
+  \item Beim Anzeigen des Kundennamen bei der Eingabe einer Kundennummer (Nur im
+  Mitarbeiter-Modus).
+\end{itemize} 

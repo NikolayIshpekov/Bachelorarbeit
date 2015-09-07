@@ -1,4 +1,7 @@
 \chapter{Evaluierung inkl. Bewertungskriterien}
+
+% \section{Anforderungen}
+\section{Bewertungskriterien}
 Es werden folgende Bewertungskriterien festgelegt:
 \begin{itemize}
   \item Es soll eine plattformübergreifende Programmiersprache benutzt werden.
@@ -16,6 +19,16 @@ Es werden folgende Bewertungskriterien festgelegt:
   Referenz Applikation aufweisen.
   \item Soll nicht deutlich langsamer als die Referenz Applikation sein.
 \end{itemize}
-\section{Anforderungen}
-\section{Bewertungskriterien}
+\section{Evaluierung}
 \section{Grenzen der Cross-Plattform-Entwicklung}
+Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
+.NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den
+nativ entwickelten iOS- und Android-Apps zu unterscheiden sind. \\Interessant für die vorliegende
+Arbeit ist der Ansatz von Xamarin.Forms. Wie im Kapitel 4.4.1.
+bereits erläutert, haben Entwickler fünf verschiedene Möglichkeiten eine Seite (Page) mit Xamarin.Forms zu erstellen. Für die Implementierung der Nüßing ScanApp ist
+diese Auswahl ausreichend. Es werden lediglich ContentPages, NavigationPages und eine
+MasterDetailPage für die Menüsteuerung benutzt. \\Sollte es speziellere Anforderungen an der
+Benutzeroberfläche geben, müssen Entwickler sogenannte "`custom renderer"' benutzen, um auf native
+plattformspezifische SDK-Features zugreifen zu können. Allerdings befinden sich die Xamarin
+Renderer-APIs noch in einer Bearbeitungsphase (\cite{XamarinCustomRenderer}) und allem Anschein nach wird es noch
+einige Zeit dauern bis Xamarin die Mächtigkeit der herkömmlichen nativen App Entwicklung erreichen kann.
