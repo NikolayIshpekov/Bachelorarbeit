@@ -112,8 +112,8 @@ Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es 
   \item Im Falle, dass ein Datenbankeintrag mit einem Benutzer existiert, wird der User zu einer
   Menü-Seite navigiert. Diese Menü-Seite ist vom Typ \textbf{MasterDetailPage}. An
   dieser Stelle ist wichtig zu erwähnen, dass bei Xamarin.Adroid, die Benutzung von einer
-  MasterDetailPage in einer NavigationPage nicht möglich ist und die App stürzt ab. Aus diesem Grund
-  wird hier folgende Compiler-Direktive zur Fallunterscheidung benutzt:
+  MasterDetailPage in einer NavigationPage nicht möglich ist und die Anwendung stürzt ab. Aus
+  diesem Grund wird hier folgende Compiler-Direktive zur Fallunterscheidung benutzt:
   \textcolor{gray}{
   \\ \#if \textunderscore\textunderscore iOS\textunderscore\textunderscore
    \\MainPage = new NavigationPage( new MenuMasterDetailPage());\\ \#endif}\\Für Android sieht der
