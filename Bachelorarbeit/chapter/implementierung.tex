@@ -12,7 +12,7 @@ erstellt, so dass folgende Projekte entstehen:
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
-\subsection{MVVM}
+\subsection{Umsetzung des MVVM-Architekturmusters}
 
 \subsection{Persistierung der Daten SQLite}
 Für die Persistenz der Appdaten wird die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
@@ -163,7 +163,7 @@ Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
 = new NavigationPage(new KontaktPage());\\this.isPresent = false;
 \\
 \}}}
-\\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}} sorgt dafür, dass das Menü
+\\ \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}} sorgt dafür, dass das Menü
 automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
 \subsection{Implementierung des Barcodescanners}
 Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen ein Eingriff in
