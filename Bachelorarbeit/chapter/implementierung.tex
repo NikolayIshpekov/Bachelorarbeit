@@ -13,7 +13,15 @@ erstellt, so dass folgende Projekte entstehen:
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
 \subsection{Umsetzung des MVVM-Architekturmusters}
-
+Wie bereits im Kapitel 2.3.2 erklärt, hat man beim MVVM-Pattern eine strikte Trennung zwischen
+Model, View und Viewmodel. Um diese Trennung visuell zu gestalten, werden drei Ordner (Model, View und Viewmodel)
+erstellt. Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page sind oder von dieser Klasse
+erben) kommen in den View-Ordner.
+Jede solche Ansicht wird an einem Viewmodel (eine normale C\#-Klasse, die das Interface
+INotifyPropertyChanged implementiert) gebunden.
+Die Viewmodels gehören in den Ordner Viewmodel.
+Im Ordner Model werden typischerweise Klassen defniert, die anwendungsspezifische Datentypen
+beschreiben.
 \subsection{Persistierung der Daten SQLite}
 Für die Persistenz der Appdaten wird die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
 geeignet für Cross-Plattform-Entwicklung, weil:
