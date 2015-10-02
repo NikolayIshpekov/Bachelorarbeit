@@ -53,7 +53,11 @@ Xaml-Datei beschrieben \ref{fig:abb23}) und der Funktionalität (in der
 zugrundeliegenden (Code-Behind) C\#-Datei implementiert \ref{fig:abb26}, \ref{fig:abb25}) erreicht.
 Darüber hinaus gibt Xaml die Möglichkeit, dass Designer und Entwickler unabhängig voneinander arbeiten können.\\Bei der
 Erstellung einer Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende
-C\#-Datei, sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
+C\#-Datei, sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}). Diese
+Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
+\emph{InitializeComponent()} Methode im Konstruktor und Zuweisungen einiger Properties der Klasse,
+sonst komplett leer sein. D.h. es sollte keine Businesslogik in der Code-Behind-Datei unterbracht
+werden.
 
 %  In Abbildung \ref{fig:abb23} sieht man den Xaml-Code für die Benutzeroberfläche, die in Abbildung
 % \ref{fig:abb24} zu sehen ist. 
@@ -163,7 +167,7 @@ Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
 = new NavigationPage(new KontaktPage());\\this.isPresent = false;
 \\
 \}}}
-\\ \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}} sorgt dafür, dass das Menü
+\\ \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
 automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
 \subsection{Implementierung des Barcodescanners}
 Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen ein Eingriff in

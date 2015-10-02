@@ -20,6 +20,20 @@ Es werden folgende Bewertungskriterien festgelegt:
   \item Soll nicht deutlich langsamer als die Referenz Applikation sein.
 \end{itemize}
 \section{Evaluierung}
+Es hat sich als keine einfache Aufgabe herausgestellt, sich an dem von Xamarin empfohlenen
+MVVM-Architekturmuster zu halten. In den meisten Beispiele werden einfache Szenarien beschrieben,
+ohne komplizierte Interaktionen, wie z.B. Navigation zwischen den Ansichten. In der Xamarin
+Community werden unterschiedliche Ansätze empfohlen, um das Problem mit der Navigation zu umgehen.
+\begin{itemize}
+  \item Das Framework MVVM-Light
+  \item Messaging
+  \item unsaubere Anwendung von MVVM, wie z.B. das Property NavigatioPage einer Ansicht dem
+  zugehörigen ViewModel mitzugeben. Das würde die Navigation aus dem ViewModel ermöglichen, aber
+  es verletzt eine der Grundideen von MVVM ist es, dass der ViewModel die View nicht kennt.
+\end{itemize}
+
+Die Größe der IPA-Datei ist ein weiterer Minuspunkt. Die Datei ist deutlich größer als die IPA-Datei
+einer nativ entwickelten iOS-App.
 \section{Grenzen der Cross-Plattform-Entwicklung}
 Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
 .NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den
