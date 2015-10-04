@@ -198,21 +198,21 @@ Weder das Model noch die View sollten die Klassen oder Methoden des Controllers 
 Weise wird eine Wiederverwendbarkeit der Model- und View-Schichten erreicht. Jedes Model-Objekt kann
 also durch unterschiedliche Controller verarbeitet und über verschiedene Views dargestellt werden
 und jede View lässt sich in vollkommen unterschiedliche Applikationen einsetzen.\cite{AppsForiPhone}
-\subsection{Model-View-ViewModel (MVVM)}
+\subsection{Model-View-ViewModel (MVVM)}\label{MVVM}
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/MVVMBild.png}
 \caption{MVVM-Muster.(\cite{MSDNA2MVVM})}
 \label{fig:abb9}
 \end{figure}
-Im Jahr 2005 stellte John Gossman, derzeit einer der Windows Presentation Foundation (WPF)- und
-Silverlight-Architekten bei Microsoft, das \textbf{Model-View-ViewModel} (\textbf{MVVM})-Muster
-(siehe Abb.\ref{fig:abb9}) in seinem Blog vor.
-MVVM besteht aus drei Komponenten und ist MVC sehr ähnlich, der Unterschied ist, dass wir
-hier anstatt Controller ein sogenanntes ViewModel haben und das Model im Gegensatz
-zum Model von MVC nicht nur auf Such- und Sortierfunktionen begrenzt ist:
+% Im Jahr 2005 stellte John Gossman, derzeit einer der Windows Presentation Foundation (WPF)- und
+% Silverlight-Architekten bei Microsoft, das \textbf{Model-View-ViewModel} (\textbf{MVVM})-Muster
+% (siehe Abb.\ref{fig:abb9}) in seinem Blog vor.
+Das \textbf{Model-View-ViewModel} (\textbf{MVVM})-Muster besteht aus drei Komponenten und ist MVC
+sehr ähnlich, der Unterschied ist, dass es bei MVVM anstatt Controller ein sogenanntes
+ViewModel gibt (siehe Abb.\ref{fig:abb9}):
 \begin{itemize} 
-  \item \textbf{Model}. Das Model enthält die Geschäftslogik.
+  \item \textbf{Model}. %Das Model enthält die Geschäftslogik.
   \item \textbf{View}. Die View (Ansicht) repräsentiert die Benutzerschnittstelle. Die Ansicht wird
   in einer deklarativen Programmiersprache, wie bspw. XAML, erstellt. Es ist lediglich eine reine
   Beschreibung der Ansicht und enthält keine Ausführungslogik.

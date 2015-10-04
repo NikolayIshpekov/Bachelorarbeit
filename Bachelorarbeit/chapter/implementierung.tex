@@ -3,26 +3,93 @@ In diesem Abschnitt wird der Entwurf der Nüßing ScanApp mit Xamarin.Forms beschr
 Es wird das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
 Methoden zum Code-Sharing:
  Shared Projects und Portable Class Libraries (PCL). Da im vorliegenden Fall Code-Sharing nur
- innerhalb der Nüßing App vorgesehen wurde, wird Shared Projects gewählt (der PCL
+ innerhalb der Applikation vorgesehen wurde, wird Shared Projects gewählt (der PCL
  Ansatz wird für den Fall empfohlen, wenn der Entwickler seinen Code für andere Developer in Form einer DLL Bibliothek bereitstellen möchte).
 Beim Erstellen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
 erstellt, so dass folgende Projekte entstehen:
 \begin{itemize}
-  \item ScanApp - das gemeinsame Projekt. Hier wird die Geschäftslogik der Anwendung implementiert.
+  \item ScanApp - das gemeinsame Projekt.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
+Der Großteil des Codes befindet sich im gemeinsamen Projekt. In die plattformspezifischen Projekte
+gehören App-Ressourcen wie bspw. Icons, sowie benutzerdefinierte Renderer. Die sogenannten "`Custom
+Renderer"' werden für die Implementierung und Gestaltung von benutzerdefinierten
+Steuerelementen und Ansichten benötigt, die mit den von Xamarin.Forms zur Verfügung gestellten
+Techniken nicht zu realisieren sind. \\Sollte eine Funktionalität plattformspezifische APIs
+erfordern, wird ein Interface im gemeinsamen Projekt definiert und wird von
+den jeweiligen Klassen der plattformspezifischen Projekte implementiert.
+Der Zugriff aus dem gemeinsamen Projekt erfolgt folgendermaßen:\\
+\textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
 \subsection{Umsetzung des MVVM-Architekturmusters}
-Wie bereits im Kapitel 2.3.2 erklärt, hat man beim MVVM-Pattern eine strikte Trennung zwischen
-Model, View und Viewmodel. Um diese Trennung visuell zu gestalten, werden drei Ordner (Model, View und Viewmodel)
-erstellt. Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page sind oder von dieser Klasse
-erben) kommen in den View-Ordner.
-Jede solche Ansicht wird an einem Viewmodel (eine normale C\#-Klasse, die das Interface
-INotifyPropertyChanged implementiert) gebunden.
-Die Viewmodels gehören in den Ordner Viewmodel.
-Im Ordner Model werden typischerweise Klassen defniert, die anwendungsspezifische Datentypen
-beschreiben.
-\subsection{Persistierung der Daten SQLite}
+Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
+zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
+\begin{itemize}
+  \item \textbf{Model} - Im Ordner Model werden typischerweise Klassen defniert, die
+  anwendungsspezifische Datentypen beschreiben. Im Model sind Klassen zur Speicherung und
+  Verarbeitung von Daten zu finden, die dafür sorgen, dass die Daten konsistent gehalten
+  werden.
+  \item \textbf{View} - Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page oder
+Xamarin.Forms.View sind oder von diesen Klassen erben) gehören in den Ordner View.
+  \item \textbf{Viewmodel} - In den Viewmodel-Ordner kommen die Viewmodel-Klassen (C\#-Klassen,
+  die das Interface \textbf{\textit{INotifyPropertChanged}} implementieren). 
+\end{itemize}
+Jede Ansicht wird an einem Viewmodel gebunden. In Abb.\ref{fig:abb23} sieht man eine typische
+Xaml-Datei, die eine Ansicht beschreibt und sich im Ordner View befindet. Diese Ansicht wird
+von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
+abgeleitet wird. In Base\_Page werden Eigenschaften definiert, die für die meisten Ansichten
+gemeinsam sind, sowie bspw. die Steuerung der Navigation. \\Eine der wichtigsten Eigenschaften der
+Klasse Xamarin.Forms.Page ist das Property \textit{BindingContext}. Mithilfe dieser Eigenschaft wird
+ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
+\ref{fig:abb23}, Zeile 23-25).
+\\In Zeile 12 findet eine typische Datenbindung statt.
+Das Text-Property eines Entry-Textfeldes wird an das Property \textit{Name} gebunden, das im
+Viewmodel definiert wird (siehe Abb.\ref{fig:abb33}).
+Sobald der Text des Textfelds sich ändert, wird das Viewmodel darüber informiert. Diese Bindung
+funktioniert in beiden Richtungen, d.h. Änderungen, die im Viewmodel vorgenommen werden, werden in
+der Ansicht angezeigt.\\In Abbildung \ref{fig:abb23}, Zeile 20 ist die Definition eines
+Toolbarbuttons zu sehen. Sobald dieser Button gedrückt wird, wird ein Command ausgeführt, das an
+das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
+löst den Aufruf einer Methode in der Viewmodel-Klasse auf.\\Das Ganze veranschaulicht, welche
+Vorteile das MVVM-Architekturmuster mit sich bringt.
+Durch die Datenbindung entsteht eine lose Kopplung zwischen View und ViewModel. Da das Viewmodel die Views nicht kennt, lässt sich eine Ansicht problemlos durch eine andere austauschen. Die neue Ansicht muss lediglich an das Viewmodel gebunden werden.
+\\Ein ViewModel muss das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
+Dadurch können sogenannte "`Bindable Properties"` definiert werden (siehe Abb.\ref{fig:abb33}).
+\\Wie bei den meisten Applikationen, sind für die Scan-Anwendung mehrere Ansichten
+erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um
+zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse
+\textit{NavigationPage} benötigt: \textit{new NavigationPage(new Page())}. \\Jede
+Xamarin.Forms.Page-Klasse hat über das Property
+\textbf{\textit{Navigation}} Zugriff auf das NavigationPage: \textit{this.Navigation.PushAsync(new
+Page())}.\\Nach dem MVVM-Muster sollten sich die Viewmodels um die Navigation kümmern. Allerdings
+ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
+dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
+kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
+abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
+Seite gewechselt werden soll.
+
+% \begin{itemize}
+%   \item Das Framework MVVM-Light
+%   \item Messaging
+%   \item unsaubere Anwendung von MVVM, wie z.B. das Property NavigatioPage einer Ansicht dem
+%   zugehörigen ViewModel mitzugeben. Das würde die Navigation aus dem ViewModel ermöglichen, aber
+%   es verletzt eine der Grundideen von MVVM ist es, dass der ViewModel die View nicht kennt.
+% \end{itemize}
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.435]{graphics/Typische_Xaml_Datei.png}
+\caption{Typische Xaml-Datei}
+\label{fig:abb23}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.6]{graphics/Bindable_Property.png}
+\caption{Definition von Bindable Property}
+\label{fig:abb33}
+\end{figure}
+\subsection{Persistierung der Daten mit SQLite}
 Für die Persistenz der Appdaten wird die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
 geeignet für Cross-Plattform-Entwicklung, weil:
 \begin{itemize}
@@ -55,45 +122,56 @@ Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für d
 der UIs (User Interfaces).\\Beide Ansätze führen zum gleichen Ergebnis. Die
 Positionierung der Steuerelemente und deren Funktionalität lassen sich in einer C\#-Datei
 implementieren, allerdings ist der Code schwer lesbar und nicht wiederverwendbar.\\Aus diesem
-Grund werden die grafischen Interfaces der Nüßing ScanApp mit der Markupsprache Xaml beschrieben.
+Grund werden die grafischen Interfaces der ScanApp mit der Markupsprache Xaml beschrieben.
 Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
-Xaml-Datei beschrieben \ref{fig:abb23}) und der Funktionalität (in der
-zugrundeliegenden (Code-Behind) C\#-Datei implementiert \ref{fig:abb26}, \ref{fig:abb25}) erreicht.
-Darüber hinaus gibt Xaml die Möglichkeit, dass Designer und Entwickler unabhängig voneinander arbeiten können.\\Bei der
-Erstellung einer Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende
-C\#-Datei, sogenannte Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}). Diese
-Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
-\emph{InitializeComponent()} Methode im Konstruktor und Zuweisungen einiger Properties der Klasse,
-sonst komplett leer sein. D.h. es sollte keine Businesslogik in der Code-Behind-Datei unterbracht
-werden.
-
-%  In Abbildung \ref{fig:abb23} sieht man den Xaml-Code für die Benutzeroberfläche, die in Abbildung
-% \ref{fig:abb24} zu sehen ist. 
-Der Aufbau einer Xaml-Datei entspricht eines XML-Dokuments. Es gibt ein Wurzelelement und jedes
-Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente. Durch
-das Attribut x:Name kann man auf das Element aus dem Code-Behind-Datei zugreifen und so kann man
-z.B. den Text eines Labels oder die Textfarbe ändern (siehe \ref{fig:abb26}).
-\\In Abbildung \ref{fig:abb25} sieht man die zugrundeliegenden C\#-Datei, in der z.B. die
-Funktionalität der Toolbar-Buttons implementiert ist. Beim Klick auf den Button zum Speichern der
-Angaben, werden die Texten der Texteingabefeldern in einem Objekt vom Typ Kopfdaten gespeichert und
-anschließend wird das neu erstellte Objekt in die SQLite-Datenbank gespeichert. Beim Klick auf den
-Müllkorb-Button, werden die gespeicherten persönlichen Daten aus der SQLite-Datenbank gelöscht. 
-\\
-\\
+Xaml-Datei beschrieben 
+% \ref{fig:abb23}
+) und der Funktionalität (in der
+an der Xaml-Datei gebundenen Viewmodel-C\#-Datei implementiert 
+% \ref{fig:abb26},
+% \ref{fig:abb25}
+) erreicht.
+Diese Technik macht Wiederverwendbarkeit und Austauschbarkeit einer Ansicht möglich.
+Somit können Designer und Entwickler unabhängig voneinander arbeiten. \\Bei der Erstellung einer
+Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt
+auch als Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
+Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
+\emph{InitializeComponent()} Methode im Konstruktor und der bereits erwähnten Methoden, die
+Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
+Es ist möglich, dass die Funktionalität eines Viewmodels in der Code-Behind-Datei einer Ansicht
+untergebracht wird. Das entspricht, allerdings, nicht dem MVVM-Architekturmuster. Dadurch
+würde eine sehr enge Kopplung zwischen View und Funktionalität entstehen und die Ansichten wären
+nicht mehr austauschbar.
+\\Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich. Es gibt ein
+Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente
+(Siehe \ref{fig:abb23}).
+Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
+Text eines Labels oder die Textfarbe setzen. 
+% (siehe \ref{fig:abb26}).
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
 \caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
 \label{fig:abb21}
 \end{figure}
-\\
-\\
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.324]{graphics/XamlDatei.png}
-\caption{Xaml-Datei}
-\label{fig:abb23}
-\end{figure}
+% \\In Abbildung \ref{fig:abb25} sieht man die zugrundeliegenden C\#-Datei, in der z.B. die
+% Funktionalität der Toolbar-Buttons implementiert ist. Beim Klick auf den Button zum Speichern der
+% Angaben, werden die Texten der Texteingabefeldern in einem Objekt vom Typ Kopfdaten gespeichert und
+% anschließend wird das neu erstellte Objekt in die SQLite-Datenbank gespeichert. Beim Klick auf den
+% Müllkorb-Button, werden die gespeicherten persönlichen Daten aus der SQLite-Datenbank gelöscht. 
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
+% \caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
+% \label{fig:abb21}
+% \end{figure}
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.435]{graphics/Typische_Xaml_Datei.png}
+% \caption{Typische Xaml-Datei}
+% \label{fig:abb23}
+% \end{figure}
+
 % \begin{figure}[!h]
 % \centering
 % \includegraphics[scale = 0.3]{graphics/appScreenshots/PersoenlicheDaten.png}
@@ -101,20 +179,20 @@ Müllkorb-Button, werden die gespeicherten persönlichen Daten aus der SQLite-Date
 % \label{fig:abb24}
 % \end{figure}
 
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.4]{graphics/HeaderDatenCSDatei.png}
-\caption{Zugrundeliegende (Code-Behind) C\#-Datei}
-\label{fig:abb26}
-\end{figure}
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.4]{graphics/HeaderDatenCSDatei.png}
+% \caption{Zugrundeliegende (Code-Behind) C\#-Datei}
+% \label{fig:abb26}
+% \end{figure}
 
 
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.5]{graphics/HeaderDatenToolbar.png}
-\caption{Zugrundeliegende C\#-Datei}
-\label{fig:abb25}
-\end{figure}
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.5]{graphics/HeaderDatenToolbar.png}
+% \caption{Zugrundeliegende C\#-Datei}
+% \label{fig:abb25}
+% \end{figure}
 
 \subsection{Entwurf der Navigation zwischen den verschiedenen Seiten der ScanApp}
 Die Implementierung der Navigation der App erfolgt ausschließlich im gemeinsamen Projekt, ScanApp.
@@ -139,7 +217,7 @@ Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es 
   \textbf{MasterDetailPage} navigiert (siehe Abb.\ref{fig:abb31}). Wegen der bekannten Problemen bei
   Xamarin.Android zwischen NavigationPage und MasterDetailPage, muss hier wieder unterschieden werden zwischen iOS und
   Android. Bei Android muss die Navigation von Typ "`modal"' sein (ohne
-  Möglichkeit zurückzunavigieren):\\\textcolor{gray}{\#if \textunderscore\textunderscore
+  Möglichkeit zurückzunavigieren).\\\textcolor{gray}{\#if \textunderscore\textunderscore
   Android\textunderscore\textunderscore \\this.Navigation.PushModalAsync(new MenuMasterDetailPage());\\
    \#endif}
 \end{itemize}
@@ -171,11 +249,11 @@ ScanApp. Die MasterDetailPage hat zwei wichtige Properties von Typ Page:
   erstellt und der Benutzer wird zu der entsprechenden Seite (ContentPage) navigiert.
 \end{itemize}
 Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
-\\ \\ \textcolor{gray}{\textsl{void onKontaktTapped(object sender, EventArgs e)\\ \{\\ this.Detail
+\\ \textcolor{gray}{\textsl{void onKontaktTapped(object sender, EventArgs e)\\ \{\\ this.Detail
 = new NavigationPage(new KontaktPage());\\this.isPresent = false;
 \\
 \}}}
-\\ \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
+\\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
 automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
 \subsection{Implementierung des Barcodescanners}
 Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen ein Eingriff in
@@ -185,7 +263,7 @@ IScanner.cs
 definiert (Abb. \ref{fig:abb28}). In beiden plattformspezifischen Projekte wird je eine Klasse
 Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
 man auf die plattformspezifische Scanner.cs Klassen mit:\\
-\textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}}.
+\textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}} zugreifen.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.4]{graphics/IScanner.png}
@@ -196,12 +274,9 @@ man auf die plattformspezifische Scanner.cs Klassen mit:\\
 \subsection{Xamarin Komponenten (Components) und NuGet Packages, die für die
 Entwicklung der App genutzt werden}
 Die Vielfalt der zur Verfügung gestellten Komponenten ist eine der größten Stärken von Xamarin.
-Zu dem gemeinsamen Xamarin.Forms-Projekt können keine Komponenten hinzugefügt werden. Aus diesem
-Grund müssen die benötigten Komponenten zu den plattformspezifischen Projekten
-hinzugefügt werden. Im gemeinsamen Projekt wird ein Interface definiert, das von den jeweiligen
-Klassen der plattformspezifischen Projekte implementiert wird. 
-Der Zugriff erfolgt folgendermaßen:
-\textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
+Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen (shared) Projekt
+hinzugefügt werden können, müssen die benötigten Komponenten zu den
+plattformspezifischen Projekten hinzugefügt werden.
 \subsubsection{Xamarin Components}
 \begin{itemize}
         \item \textbf{ModernHttpClient} - Für die Kommunikation mit dem Backend wird ein Http-Client
@@ -232,6 +307,6 @@ Web Services kommen in den folgenden Fällen zum Einsatz:
   \item Bei der einmaligen Registrierung eines Benutzers.
   \item Beim Überprüfen eines Barcodes.
   \item Beim Abschließen einer Bestellung.
-  \item Beim Anzeigen des Kundennamen bei der Eingabe einer Kundennummer (Nur im
+  \item Beim Anzeigen des Kundennamen nach der Eingabe einer Kundennummer (Nur im
   Mitarbeiter-Modus).
 \end{itemize} 
