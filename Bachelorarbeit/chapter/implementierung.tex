@@ -281,9 +281,6 @@ plattformspezifischen Projekten hinzugefügt werden.
 \begin{itemize}
         \item \textbf{ModernHttpClient} - Für die Kommunikation mit dem Backend wird ein Http-Client
         benötigt.
-        Mit dieser Komponente wird ein Http-Client folgendermaßen erstellt:  
-        \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
-        ModernHttpClient.NativeMessageHandler())}}.
         \item \textbf{ZXing.Net.Mobile} - Die Kernfunktionalität der Nüßing ScanApp, nämlich die
         Scan-Funktion wird mithilfe der Xamarin-Komponente ZXing.Net.Mobile ermöglicht. Der Entwickler braucht sich
         nicht um native Funktionen, wie die Nutzung der Kamera und das Ein- und Ausschalten des
@@ -310,3 +307,8 @@ Web Services kommen in den folgenden Fällen zum Einsatz:
   \item Beim Anzeigen des Kundennamen nach der Eingabe einer Kundennummer (Nur im
   Mitarbeiter-Modus).
 \end{itemize} 
+Im gemeinsamen Projekt wird für diesen Zweck eine Klasse mit jeweils eine Methode für die oben
+genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen Http-Client der
+Komponente \textbf{ModernHttpClient}:\\  
+\textcolor{gray}{\emph{HttpClient client = new HttpClient(new
+ModernHttpClient.NativeMessageHandler())}}.
