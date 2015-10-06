@@ -1,3 +1,49 @@
+\section{Anwendungsfälle und Anforderungen}
+Im Folgenden werden zwei typische Anwendungsfälle (Use Cases) aufgeführt.\\ \textbf{Einmalige
+Anmeldung eines Benutzers:}
+\begin{enumerate}
+  \item Ein Benutzer meldet sich an, indem er seine Kundennummer und seine Postleitzahl eingibt und
+  auf einen Button "`Anmelden"' drückt.
+  \item Beim Backend werden die Angaben des Benutzers überprüft \begin{enumerate}
+    \item Erfolgreich: Die App wird "`frei geschaltet"'.
+    \item Fehler: Der User muss seine Daten prüfen und erneut versuchen.
+  \end{enumerate}
+\end{enumerate} 
+\textbf{Bestellung abschießen:}
+\begin{enumerate}
+  \item Der User füllt seine persönlichen Daten (Name, Telefonnummer, Emailadresse) aus und
+speichert die.
+  \item Der Benutzer scannt einen Barcode.
+  \item Die Barcodenummer wird beim Server überprüft \begin{enumerate}
+    \item Ein Artikel mit dieser Nummer wird gefunden und es erscheint eine Beschreibung des
+    Produkts auf dem Bildschirm des Smartphones.
+    \item Im Falle, dass es keinen Artikel in der Serverdatenbank gefunden wird, erscheint eine
+    Fehlermeldung auf dem Bildschirm.
+  \end{enumerate}
+  \item Der Benutzer gibt die gewünschte Menge an und fügt, durch Klick auf
+einen Einkaufswagen-Toolbarbutton, den Artikel in den Warenkorb ein.
+  \item Im Warenkorb hat der Benutzer die Möglichkeit eine der Bestellpositionen auszuwählen und den
+  entsprechenden Artikel zu seiner Favoritenliste hinzuzufügen.
+  \item Bevor der User die Bestellung abschickt, hat er die
+Möglichkeit, einen Wunschliefertermin einzugeben oder eine Notiz, wie z.B. andere Lieferadresse
+mitzusenden.
+  \item Der User drückt den "`Absenden"'-Button und die Bestellung wird gesendet.
+  \item Die Bestelldaten werden beim Server überprüft. \begin{enumerate}
+    \item Der Server meldet, dass die Bestellung erfolgreich abgeschlossen wurde.
+    \item Der Server meldet, dass ein Fehler aufgetreten ist
+  \end{enumerate}
+  \item Der User kann sich die abgeschlossenen Bestellungen, sowie die Liste aller gescannten
+Barocodes ansehen.
+\end{enumerate}
+Aus diesen Anwendungsfällen sind mehrere Anforderugen an die App entstanden. Neben triviale
+Anforderungen, wie bspw. die App soll nummerische, sowie alpha-nummerische Eingabefelder anbieten,
+gibt es einige sehr anspruchsvolle und für die Evaluierung des
+Cross-Plattform-Entwicklung-Frameworks interessante Anforderungen.
+Zum Beispiel: Die Applikation soll mittels Web Services mit dem Server kommunizieren können.
+Die App soll mithilfe des Verschlüsselungsalgorithmus SHA-256 einen Adresszusatz für die Web
+Services URI generieren können, um eine Kommunikation mit dem Backend zu ermöglichen.
+Die Anwendung soll auf die Kamera, inkl. das Blitzlicht des Gerätes zugreifen können. Die Daten
+sollen persistiert werden können.
 \section{Entwurf für die Entwicklung mit Xamarin}
 In diesem Abschnitt wird der Entwurf der Nüßing ScanApp mit Xamarin.Forms beschrieben. 
 Es wird das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
@@ -8,18 +54,22 @@ Methoden zum Code-Sharing:
 Beim Erstellen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
 erstellt, so dass folgende Projekte entstehen:
 \begin{itemize}
-  \item ScanApp - das gemeinsame Projekt.
+  \item ScanApp - das gemeinsame, plattformübergreifende Projekt.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
-Der Großteil des Codes befindet sich im gemeinsamen Projekt. In die plattformspezifischen Projekte
-gehören App-Ressourcen wie bspw. Icons, sowie benutzerdefinierte Renderer. Die sogenannten "`Custom
-Renderer"' werden für die Implementierung und Gestaltung von benutzerdefinierten
-Steuerelementen und Ansichten benötigt, die mit den von Xamarin.Forms zur Verfügung gestellten
-Techniken nicht zu realisieren sind. \\Sollte eine Funktionalität plattformspezifische APIs
-erfordern, wird ein Interface im gemeinsamen Projekt definiert und wird von
-den jeweiligen Klassen der plattformspezifischen Projekte implementiert.
-Der Zugriff aus dem gemeinsamen Projekt erfolgt folgendermaßen:\\
+Der Großteil des Codes befindet sich im plattformübergreifenden Projekt, ScanApp. In die Projekte
+ScanApp.Droid und ScanApp.iOS gehören App-Ressourcen wie bspw. Icons, sowie
+benutzerdefinierte Renderer. Die sogenannten "`Custom Renderer"' werden für die Implementierung und
+Gestaltung von benutzerdefinierten Steuerelementen und Ansichten benötigt, die mit den von
+Xamarin.Forms zur Verfügung gestellten Werkzeugen nicht zu realisieren sind. \\Sollte eine
+Anforderung nicht plattformübergreifend zu gewährleisten sein, muss diese Funktionalität in den
+plattformspezifischen Projekten implementiert werden. Im gemeinsamen Projekt wird ein Interface
+definiert, das von den dafür zuständigen Klassen in ScanApp.Droid und ScanApp.iOS implementiert
+werden muss.
+% Die angeforderte Funktionalität wird in den plattformspezifischen Projekten implementiert. Dieses
+% Interface muss von den jeweiligen Klassen, die die Funktionalität gewährleisten, der plattformspezifischen Projekte implementiert.
+Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
 \textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
 \subsection{Umsetzung des MVVM-Architekturmusters}
 Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
@@ -37,12 +87,14 @@ Xamarin.Forms.View sind oder von diesen Klassen erben) gehören in den Ordner Vie
 Jede Ansicht wird an einem Viewmodel gebunden. In Abb.\ref{fig:abb23} sieht man eine typische
 Xaml-Datei, die eine Ansicht beschreibt und sich im Ordner View befindet. Diese Ansicht wird
 von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
-abgeleitet wird. In Base\_Page werden Eigenschaften definiert, die für die meisten Ansichten
-gemeinsam sind, sowie bspw. die Steuerung der Navigation. \\Eine der wichtigsten Eigenschaften der
-Klasse Xamarin.Forms.Page ist das Property \textit{BindingContext}. Mithilfe dieser Eigenschaft wird
-ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
+abgeleitet wird. In Base\_Page werden Eigenschaften und Methoden definiert, die für die meisten
+Ansichten gemeinsam sind. Bspw. das Navigationsheader-Logo oder Methoden für die Steuerung
+der Navigation.
+\\Eine der wichtigsten Klassenvariablen der Klasse Xamarin.Forms.Page ist das Property
+\textit{BindingContext}.
+Mithilfe dieser Eigenschaft wird ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
 \ref{fig:abb23}, Zeile 23-25).
-\\In Zeile 12 findet eine typische Datenbindung statt.
+\\In Zeile 12 findet eine typische Datenbindung ("`data binding"') statt.
 Das Text-Property eines Entry-Textfeldes wird an das Property \textit{Name} gebunden, das im
 Viewmodel definiert wird (siehe Abb.\ref{fig:abb33}).
 Sobald der Text des Textfelds sich ändert, wird das Viewmodel darüber informiert. Diese Bindung
@@ -53,11 +105,12 @@ das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dies
 löst den Aufruf einer Methode in der Viewmodel-Klasse auf.\\Das Ganze veranschaulicht, welche
 Vorteile das MVVM-Architekturmuster mit sich bringt.
 Durch die Datenbindung entsteht eine lose Kopplung zwischen View und ViewModel. Da das Viewmodel die Views nicht kennt, lässt sich eine Ansicht problemlos durch eine andere austauschen. Die neue Ansicht muss lediglich an das Viewmodel gebunden werden.
-\\Ein ViewModel muss das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
-Dadurch können sogenannte "`Bindable Properties"` definiert werden (siehe Abb.\ref{fig:abb33}).
-\\Wie bei den meisten Applikationen, sind für die Scan-Anwendung mehrere Ansichten
-erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um
-zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse
+\\Ein ViewModel muss zwingend das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
+Dadurch können sogenannte "`Bindable Properties"` definiert werden (siehe Abb.\ref{fig:abb33}). Bei
+jeder Änderung wird die
+OnPropertyChanged()-Methode mit dem Property-Name als Stringparameter aufgerufen und dadurch wird
+ein PropertyChangedEventHandler ausgelöst.
+\\Wie bei den meisten Applikationen, sind auch für die Scan-Anwendung mehrere Ansichten erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse
 \textit{NavigationPage} benötigt: \textit{new NavigationPage(new Page())}. \\Jede
 Xamarin.Forms.Page-Klasse hat über das Property
 \textbf{\textit{Navigation}} Zugriff auf das NavigationPage: \textit{this.Navigation.PushAsync(new
@@ -119,7 +172,7 @@ Datenbankzugriffe sind mit demselben "`lock"' gekapselt.
 \subsection{GUI}
 Die Benutzeroberflächen werden mit wenigen Ausnahmen im gemeinsamen Projekt, ScanApp erstellt.
 Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für die Implementierung
-der UIs (User Interfaces).\\Beide Ansätze führen zum gleichen Ergebnis. Die
+der UIs (User Interfaces), wobei beide Techniken zum gleichen Ergebnis führen. \\Die
 Positionierung der Steuerelemente und deren Funktionalität lassen sich in einer C\#-Datei
 implementieren, allerdings ist der Code schwer lesbar und nicht wiederverwendbar.\\Aus diesem
 Grund werden die grafischen Interfaces der ScanApp mit der Markupsprache Xaml beschrieben.
