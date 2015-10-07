@@ -9,7 +9,7 @@ Anmeldung eines Benutzers:}
     \item Fehler: Der User muss seine Daten prüfen und erneut versuchen.
   \end{enumerate}
 \end{enumerate} 
-\textbf{Bestellung abschießen:}
+\textbf{Bestellung abschließen:}
 \begin{enumerate}
   \item Der User füllt seine persönlichen Daten (Name, Telefonnummer, Emailadresse) aus und
 speichert die.
@@ -22,8 +22,8 @@ speichert die.
   \end{enumerate}
   \item Der Benutzer gibt die gewünschte Menge an und fügt, durch Klick auf
 einen Einkaufswagen-Toolbarbutton, den Artikel in den Warenkorb ein.
-  \item Im Warenkorb hat der Benutzer die Möglichkeit eine der Bestellpositionen auszuwählen und den
-  entsprechenden Artikel zu seiner Favoritenliste hinzuzufügen.
+  \item Im Warenkorb wählt der Benutzer eine der Bestellpositionen aus und fügt durch einen Klick
+  auf ein Sternchen-Symbol, den entsprechenden Artikel zu seiner Favoritenliste hinzuzu.
   \item Bevor der User die Bestellung abschickt, hat er die
 Möglichkeit, einen Wunschliefertermin einzugeben oder eine Notiz, wie z.B. andere Lieferadresse
 mitzusenden.
@@ -43,14 +43,15 @@ Zum Beispiel: Die Applikation soll mittels Web Services mit dem Server kommunizi
 Die App soll mithilfe des Verschlüsselungsalgorithmus SHA-256 einen Adresszusatz für die Web
 Services URI generieren können, um eine Kommunikation mit dem Backend zu ermöglichen.
 Die Anwendung soll auf die Kamera, inkl. das Blitzlicht des Gerätes zugreifen können. Die Daten
-sollen persistiert werden können.
+sollen permanent gesichert werden können.
 \section{Entwurf für die Entwicklung mit Xamarin}
 In diesem Abschnitt wird der Entwurf der Nüßing ScanApp mit Xamarin.Forms beschrieben. 
 Es wird das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
 Methoden zum Code-Sharing:
  Shared Projects und Portable Class Libraries (PCL). Da im vorliegenden Fall Code-Sharing nur
  innerhalb der Applikation vorgesehen wurde, wird Shared Projects gewählt (der PCL
- Ansatz wird für den Fall empfohlen, wenn der Entwickler seinen Code für andere Developer in Form einer DLL Bibliothek bereitstellen möchte).
+ Ansatz wird für den Fall empfohlen, wenn ein Entwickler seinen Code für andere Developer in Form
+ einer DLL Bibliothek bereitstellen möchte).
 Beim Erstellen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
 erstellt, so dass folgende Projekte entstehen:
 \begin{itemize}
@@ -76,8 +77,8 @@ Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kop
 zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
 \begin{itemize}
   \item \textbf{Model} - Im Ordner Model werden typischerweise Klassen defniert, die
-  anwendungsspezifische Datentypen beschreiben. Im Model sind Klassen zur Speicherung und
-  Verarbeitung von Daten zu finden, die dafür sorgen, dass die Daten konsistent gehalten
+  anwendungsspezifische Datentypen beschreiben. Das sind Klassen zur Speicherung und
+  Verarbeitung von Daten, die dafür sorgen, dass die Daten konsistent gehalten
   werden.
   \item \textbf{View} - Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page oder
 Xamarin.Forms.View sind oder von diesen Klassen erben) gehören in den Ordner View.
@@ -114,8 +115,8 @@ ein PropertyChangedEventHandler ausgelöst.
 \textit{NavigationPage} benötigt: \textit{new NavigationPage(new Page())}. \\Jede
 Xamarin.Forms.Page-Klasse hat über das Property
 \textbf{\textit{Navigation}} Zugriff auf das NavigationPage: \textit{this.Navigation.PushAsync(new
-Page())}.\\Nach dem MVVM-Muster sollten sich die Viewmodels um die Navigation kümmern. Allerdings
-ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
+Page())}.\\Nach dem MVVM-Muster sollten sich die Viewmodel-Klassen um die Navigation kümmern.
+Allerdings ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
 dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
 kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
 abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
@@ -161,7 +162,8 @@ validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Dire
 spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
 auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
 benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
-Datenbankzugriffe sind mit demselben "`lock"' gekapselt.
+Datenbankzugriffe sind mit demselben "`lock"' gekapselt, wobei hier Vorsicht geboten ist. Es könnten
+Deadlocks entstehen! 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.4]{graphics/SQLitePath.png}
@@ -187,7 +189,7 @@ an der Xaml-Datei gebundenen Viewmodel-C\#-Datei implementiert
 Diese Technik macht Wiederverwendbarkeit und Austauschbarkeit einer Ansicht möglich.
 Somit können Designer und Entwickler unabhängig voneinander arbeiten. \\Bei der Erstellung einer
 Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt
-auch als Code-Behind-Datei, angelegt (siehe Abb. \ref{fig:abb21}).
+auch als "`Code-Behind-Datei"', angelegt (siehe Abb. \ref{fig:abb21}).
 Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
 \emph{InitializeComponent()} Methode im Konstruktor und der bereits erwähnten Methoden, die
 Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
@@ -324,33 +326,6 @@ man auf die plattformspezifische Scanner.cs Klassen mit:\\
 \label{fig:abb28}
 \end{figure}
 
-\subsection{Xamarin Komponenten (Components) und NuGet Packages, die für die
-Entwicklung der App genutzt werden}
-Die Vielfalt der zur Verfügung gestellten Komponenten ist eine der größten Stärken von Xamarin.
-Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen (shared) Projekt
-hinzugefügt werden können, müssen die benötigten Komponenten zu den
-plattformspezifischen Projekten hinzugefügt werden.
-\subsubsection{Xamarin Components}
-\begin{itemize}
-        \item \textbf{ModernHttpClient} - Für die Kommunikation mit dem Backend wird ein Http-Client
-        benötigt.
-        \item \textbf{ZXing.Net.Mobile} - Die Kernfunktionalität der Nüßing ScanApp, nämlich die
-        Scan-Funktion wird mithilfe der Xamarin-Komponente ZXing.Net.Mobile ermöglicht. Der Entwickler braucht sich
-        nicht um native Funktionen, wie die Nutzung der Kamera und das Ein- und Ausschalten des
-        Blitzlichtes, zu kümmern. Diese Funktionalität, sowie die Erkennung des Barcodes wird von der
-        ZXing-Komponente bereitgestellt. 
-\end{itemize}
-\subsubsection{NuGet Packages}
-\begin{itemize}
-        \item \textbf{Newtonsoft.Json} - Für die Kommunikation mit dem Backend werden Json-Objekte
-        benutzt.
-        Damit man zu den in einem Json-Objekt enthaltenen Informationen gelangen kann, muss das Objekt
-        zerteilt (geparst) werden. Das NuGet Package Newtonsoft.Json sorgt für das Parsen eines Json-Objekts.
-        \item \textbf{Xam.Plugin.DeviceInfo} - Beim ersten Start der Applikation, muss der Kunde sich
-        einmalig registrieren. Bei der Registrierung wird auch Information über das Gerät mitgesendet. An diese
-        native Information gelangt man mithilfe des NuGet Packages, Xam.Plugin.DeviceInfo, gelangt man zu
-        dieser Information.
-\end{itemize}
 \subsection{Web Services für die Kommunikation mit dem Backend}
 Web Services kommen in den folgenden Fällen zum Einsatz:
 \begin{itemize}
@@ -365,3 +340,37 @@ genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen H
 Komponente \textbf{ModernHttpClient}:\\  
 \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
 ModernHttpClient.NativeMessageHandler())}}.
+
+\subsection{Xamarin Komponenten (Components) und NuGet Packages, die für die
+Entwicklung der App genutzt werden}
+Die Möglichkeit, Komponenten und NuGet Packages an ein Projekt anzubinden, ist eine der
+größten Stärken von Xamarin.
+Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen (shared) Projekt
+hinzugefügt werden können, müssen die benötigten Komponenten zu den
+plattformspezifischen Projekten hinzugefügt werden.
+\subsubsection{Xamarin Components}
+\begin{itemize}
+        \item \textbf{ModernHttpClient} - Für die Kommunikation mit dem Backend wird ein Http-Client
+        benötigt. Es gibt mehrere ähnliche Komponenten und NuGet Packages. \\Für die vorliegende
+        Arbeit ist die Wahl auf die ModernHttpClient-Komponente gefallen, weil diese          
+        vorwiegend sehr positiv in der Xamarin-Community bewertet wird und anders als andere
+        ähnliche Packages auch mit dem Protokol Https funktioniert.
+        \item \textbf{ZXing.Net.Mobile} - Die Kernfunktionalität der Nüßing ScanApp, nämlich die
+        Scan-Funktion wird mithilfe der Xamarin-Komponente ZXing.Net.Mobile gewährleistet. Der
+        Entwickler braucht sich nicht um native Funktionen, wie die Nutzung der Kamera und das Ein- und Ausschalten des
+        Blitzlichtes, zu kümmern. Diese Funktionalität, sowie die Erkennung des Barcodes wird von der
+        ZXing-Komponente bereitgestellt. 
+\end{itemize}
+\subsubsection{NuGet Packages}
+\begin{itemize}
+        \item \textbf{Newtonsoft.Json} - Für die Kommunikation mit dem Backend werden Json-Objekte
+        benutzt.
+        Damit man zu den in einem Json-Objekt enthaltenen Informationen gelangen kann, muss das Objekt
+        zerteilt (geparst) werden. Das NuGet Package Newtonsoft.Json sorgt für das Parsen eines Json-Objekts.
+        \item \textbf{Xam.Plugin.DeviceInfo} - Beim ersten Start der Applikation, muss der Kunde sich
+        einmalig registrieren. Bei der Registrierung wird auch Information über das Gerät
+        mitgesendet. Zu dieser nativen Information gelangt man mithilfe des NuGet Packages,
+        Xam.Plugin.DeviceInfo.
+\end{itemize}
+Es gibt eine große Vielfalt an Xamarin Komponenten und NuGet Packages. Somit kann eine
+Xamarin Applikation mit mehreren Features angereichert werden. 

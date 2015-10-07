@@ -31,19 +31,21 @@ keine einfache Aufgabe, sich an dem MVVM-Architekturmuster zu halten.
 Es ist zu beobachten, dass in vielen der Beispielen aus dem Netz, die ganze Funktionalität einer
 Ansicht(Xaml-Datei) in der dazugehörenden Code-Behind-Datei untergebracht wird, was die Idee
 des MVVMs und die lose Kopplung zwischen View und Viewmodel zunichte macht. 
-\\Für einen Entwickler ohne Erfahrung mit MVVM-Pattern kann das sehr irreführend sein.
-In den Beispielen, in denen das MVVM-Pattern sauber angewendet wird, werden oft einfache Szenarien
-beschrieben, ohne komplizierte Interaktionen, wie z.B. Navigation zwischen den
-Ansichten. 
+\\Für einen Entwickler ohne Erfahrung mit dem MVVM-Entwurfsmuster kann das sehr irreführend sein.
+In den Beispielen, in denen das MVVM-Pattern sauber angewendet wird, werden oft lediglich einfache
+Szenarien beschrieben, ohne komplizierte Interaktionen, wie z.B. Navigation zwischen den
+Ansichten, so dass es für einen Anfänger eine richtige Strukturierung einer App zu einer
+rätselhaften Aufgabe werden könnte. Es wird den Eindruck hinterlassen, dass Xamarin noch nicht ganz
+ausgereift für MVVM ist.
 \subsubsection{HTTPS}
 Wie bereits erwähnt wird das Protokol https benutzt, um eine sichere Kommunikation mit dem
 Backend, in einer unsicheren Umgebung, zu gewährleisten. Für die Nutzung von Web Services wird in
 der Xamarin Comunity das NuGet Package \textit{Microsoft.Net.Http} empfohlen. Der in diesem Package
 enthaltene Http-Client weist allerdings Schwächen auf, wenn die Kommunikation wie im vorliegenden
 Fall nicht über http sondern über https erfolgen soll. Diese Schwächen sind kaum
-dokumentiert worden und es kann lange dauern bis der Entwickler auf die Fehlerquelle kommt.
+dokumentiert und es kann lange dauern bis der Entwickler auf die Fehlerquelle kommt.
 \subsubsection{Die Größe der IPA-Datei}
-Die Datei ist deutlich größer als die IPA-Datei einer nativ entwickelten iOS-App.
+Die Datei ist größer als die IPA-Datei einer nativ entwickelten iOS-App.
 \section{Grenzen der Cross-Plattform-Entwicklung}
 Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
 .NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den
