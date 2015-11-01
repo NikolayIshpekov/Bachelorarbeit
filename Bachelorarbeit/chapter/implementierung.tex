@@ -1,9 +1,52 @@
 \section{Implementierung und Test}
 \subsection{Implementierung}
+Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich. Es gibt ein
+Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente.
+% Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
+% Text eines Labels oder die Textfarbe setzen. 
+In Abb.\ref{fig:abb23} sieht man eine typische
+Xaml-Datei, die eine Ansicht beschreibt und sich im Entwurf beschriebene Ordner View befindet. Diese
+Ansicht wird von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
+abgeleitet wird.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.435]{graphics/Typische_Xaml_Datei.png}
+\caption{Typische Xaml-Datei}
+\label{fig:abb23}
+\end{figure}
+\\Eine der wichtigsten Klassenvariablen der Klasse Xamarin.Forms.Page ist das Property
+\textit{BindingContext}.
+Mithilfe dieser Eigenschaft wird ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
+\ref{fig:abb23}, Zeile 23-25).
+\\In Zeile 12 findet eine typische Datenbindung ("`data binding"') statt.
+Das Text-Property eines Entry-Textfeldes wird an das Property \textit{Name} gebunden, das im
+Viewmodel definiert wird (siehe Abb.\ref{fig:abb33}).
+Sobald der Text des Textfelds sich ändert, wird das Viewmodel darüber informiert. Diese Bindung
+funktioniert in beiden Richtungen, d.h. Änderungen, die im Viewmodel vorgenommen werden, werden in
+der Ansicht angezeigt.\\In Abbildung \ref{fig:abb23}, Zeile 20 ist die Definition eines
+Toolbarbuttons zu sehen. Sobald dieser Button gedrückt wird, wird ein Command ausgeführt, das an
+das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
+löst den Aufruf einer Methode in der Viewmodel-Klasse auf.
+\\Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw.
+den Text eines Labels oder die Textfarbe setzen.
+% \\Das Ganze veranschaulicht, welche
+% Vorteile das MVVM-Architekturmuster mit sich bringt.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.6]{graphics/Bindable_Property.png}
+\caption{Definition von Bindable Property}
+\label{fig:abb33}
+\end{figure}
+
+\newpage
 \subsection{Test}
-Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. 
-Ein typischer Weg, eine App zu testen ist die zu starten und zu benutzen. Im besten Fall tut die App
-genau das was sie tun soll - funktioniert korrekt und stürzt nicht ab. Erfahrungsgemäß ist das so
+Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es wird zwischen zwei Arten
+von Tests unterschieden, UI- und Unit-Tests. 
+Während Unit-Tests die App-Logik testen, wird bei UI-Tests sichergestellt, dass die App so aussieht
+und sich so verhält, wie man es erwartet, also es wird das Optische getestet.\\Ein typischer Weg,
+eine App zu testen ist die zu starten und zu benutzen.
+Im besten Fall tut die App genau das was sie tun soll - funktioniert korrekt und stürzt nicht ab. Erfahrungsgemäß ist das so
 gut wie nie der Fall. Diese Art von Testen, indem man die App auf einem realen Gerät nutzt, wird als UI
 Acceptance Testing bezeichnet.
 Die zur Verfügung gestellten Simulatoren erleichtern wesentlich den Testprozess, allerdings um
@@ -11,12 +54,17 @@ sicher zu gehen, dass eine App wirklich fehlerfrei funktioniert, kommt man an Te
 herum. Da es vor allem bei Android eine große Vielfalt an Geräten gibt, kann das sehr mühsam sein.
 Softwarehersteller müssen nicht selten Apps auf dutzende sogar hunderte Geräte installieren und
 testen.\\Die meisten Developer verzichten auf systematisches Testen, weil die verfügbaren Tools und
-Dienste zu kompliziert und schwer zu benutzen sind.
-Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro Monat. D.h.
-jeder Entwickler, der einen Xamarin Account hat, kann die Dienste der Xamarin Test Cloud in Anspruch nehmen.
-Xamarin verfügt über 1600 reale iOS und Android Smartphones und Tabletts. Mit Xamarin Test Cloud
-kann man leicht visuelle Inkonsistenzen feststellen, indem man die Ergebnisse auf dutzende Geräten
-vergleicht. Es werden Screenshots abgebildet. Der Service bietet auch Videoaufnahme von Tests.
+Dienste zu kompliziert und schwer zu benutzen sind und nur auf einem Gerät bzw. Simulator ausgeführt
+werden können. \\Abhilfe kann man sich bei einem Feature von Xamarin, genannt Xamarin Test Cloud,
+schaffen.\\Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro Monat. D.h. jeder Entwickler, der einen Xamarin Account hat,
+kann die Dienste der Xamarin Test Cloud in Anspruch nehmen.
+Xamarin verfügt über 1600 reale iOS- und Android-Smartphones und Tabletts. An dieser Stelle muss
+klargestellt werden, dass es allerdings nur iOS- und Android-Geräte sind, also die Test Cloud von
+Xamarin unterstützt noch nicht Windows Phone.
+Mit der Test Cloud kann man leicht visuelle Inkonsistenzen feststellen, indem man die Ergebnisse eines UI-Tests auf
+dutzende Geräten vergleicht. Der Entwickler hat die Möglichkeit Screenshots an beliebigen Stellen
+des Tests zu machen.
+Darüber hinaus bietet der Service auch Videoaufnahme von Tests.
 Eine Geräte-Minute wird konsumiert, wenn der Test auf einem Gerät ausgeführt wird, wobei es keine
 Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgeführt werden.
 
