@@ -1,6 +1,6 @@
 %\newpage
 \section{Entwurf für die Entwicklung mit Xamarin}
-In diesem Abschnitt wird der Entwurf der ScanApp mit Xamarin.Forms beschrieben. 
+In diesem Abschnitt wird der Entwurf der Scan-App mit Xamarin.Forms beschrieben. 
 Es wird das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
 Methoden zum Code-Sharing:
  Shared Projects und Portable Class Libraries (PCL). Da im vorliegenden Fall Code-Sharing nur
@@ -105,7 +105,7 @@ Seite gewechselt werden soll.
 % \caption{Definition von Bindable Property}
 % \label{fig:abb33}
 % \end{figure}
-\subsection{Persistierung der Daten mit SQLite}
+\subsection{Datenpersistenz mit SQLite}
 Für die Persistenz der Appdaten wird die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
 geeignet für Cross-Plattform-Entwicklung, weil:
 \begin{itemize}
@@ -135,22 +135,17 @@ Deadlocks entstehen!
 
 \subsection{GUI}
 Die Benutzungsoberfläche (in English: graphical user interface (GUI)) soll den Designvorgaben der
-unterschiedlichen Betriebssystemhersteller folgen.
-Die GUI wird mit wenigen
-Ausnahmen im gemeinsamen Projekt, ScanApp erstellt.
+unterschiedlichen Betriebssystemhersteller folgen. In Abb. \ref{fig:abb34} werden die Mockups für
+die unterschiedelichen Ansichten der Scan-App abgebildet. 
+\\Die GUI wird mit wenigen Ausnahmen im gemeinsamen Projekt, ScanApp erstellt.
 Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für die Implementierung
 der UIs (User Interfaces), wobei beide Techniken zum gleichen Ergebnis führen. \\Die
 Positionierung der Steuerelemente und deren Funktionalität lassen sich in einer C\#-Datei
 implementieren, allerdings ist der Code schwer lesbar und nicht wiederverwendbar.\\Aus diesem
 Grund werden die grafischen Interfaces der ScanApp mit der Markupsprache Xaml beschrieben.
 Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
-Xaml-Datei beschrieben 
-% \ref{fig:abb23}
-) und der Funktionalität (in der
-an der Xaml-Datei gebundenen Viewmodel-C\#-Datei implementiert 
-% \ref{fig:abb26},
-% \ref{fig:abb25}
-) erreicht.
+Xaml-Datei beschrieben) und der Funktionalität (in der an der Xaml-Datei gebundenen
+Viewmodel-C\#-Datei implementiert) erreicht.
 Diese Technik macht Wiederverwendbarkeit und Austauschbarkeit einer Ansicht möglich.
 Somit können Designer und Entwickler unabhängig voneinander arbeiten. \\Bei der Erstellung einer
 Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt
@@ -161,19 +156,27 @@ Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
 Es ist möglich, dass die Funktionalität eines Viewmodels in der Code-Behind-Datei einer Ansicht
 untergebracht wird. Das entspricht, allerdings, nicht dem MVVM-Architekturmuster. Dadurch
 würde eine sehr enge Kopplung zwischen View und Funktionalität entstehen und die Ansichten wären
-nicht mehr austauschbar.
-% \\Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich. Es gibt ein
-% Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente
-% (Siehe \ref{fig:abb23}).
-% Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
-% Text eines Labels oder die Textfarbe setzen. 
-% (siehe \ref{fig:abb26}).
+nicht mehr austauschbar. 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
 \caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
 \label{fig:abb21}
 \end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.65]{graphics/MockUpsScanApp.png}
+\caption{GUI Mockups}
+\label{fig:abb34}
+\end{figure}
+% \\Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich. Es gibt ein
+% Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine übersichtliche Hierarchie der Elemente
+% (Siehe \ref{fig:abb23}).
+% Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
+% Text eines Labels oder die Textfarbe setzen. 
+% (siehe \ref{fig:abb26}).
+
 % \\In Abbildung \ref{fig:abb25} sieht man die zugrundeliegenden C\#-Datei, in der z.B. die
 % Funktionalität der Toolbar-Buttons implementiert ist. Beim Klick auf den Button zum Speichern der
 % Angaben, werden die Texten der Texteingabefeldern in einem Objekt vom Typ Kopfdaten gespeichert und
@@ -216,13 +219,13 @@ nicht mehr austauschbar.
 
 \subsection{Entwurf der Navigation zwischen den verschiedenen Seiten der ScanApp}
 Die Implementierung der Navigation der App erfolgt ausschließlich im gemeinsamen Projekt, ScanApp.
-In der Startseite der App, \emph{public class App}, wird in der Datenbank überprüft ob bereits ein
-Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es zwei mögliche Wege:
+\\In der Initialisierungsdatei der App, \emph{public class App}, wird in der Datenbank überprüft ob
+bereits ein Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es zwei mögliche Wege:
 \begin{itemize}
   \item Im Falle, dass ein Datenbankeintrag mit einem Benutzer existiert, wird der User zu einer
-  Menü-Seite navigiert. Diese Menü-Seite ist vom Typ \textbf{MasterDetailPage}. An
+  Menü-Ansicht navigiert. Diese Menü-Ansicht ist vom Typ \textbf{MasterDetailPage}. An
   dieser Stelle ist wichtig zu erwähnen, dass bei Xamarin.Adroid, die Benutzung von einer
-  MasterDetailPage in einer NavigationPage nicht möglich ist und die Anwendung stürzt ab. Aus
+  MasterDetailPage in einer NavigationPage nicht möglich ist und die Anwendung abstürzt. Aus
   diesem Grund wird hier folgende Compiler-Direktive zur Fallunterscheidung benutzt:
   \textcolor{gray}{
   \\ \#if \textunderscore\textunderscore iOS\textunderscore\textunderscore
@@ -230,35 +233,22 @@ Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es 
    Code folgendermaßen aus:\\ \textcolor{gray}{\#if \textunderscore\textunderscore
    Android\textunderscore\textunderscore \\ MainPage = new MenuMasterDetailPage();\\ \#endif}
   \item Wenn noch kein Benutzer registriert wurde, wird eine \textbf{NavigationPage} erstellt und
-  der User wird zu der \textbf{Login-Seite}, vom Typ ContentPage, navigiert (siehe
-  Abb.\ref{fig:abb29}). Auf der Login-Seite gibt es außer ein paar Labels mit Hinweistexten und
-  einen Registrierung-Button, zwei Entry-Felder, in denen der User seine Kundennummer und seine Postleitzahl eingeben muss. Die Daten werden zum
-  Server gesendet und im Falle einer erfolgreichen Registrierung, wird zu der bereits erwähnten
-  \textbf{MasterDetailPage} navigiert (siehe Abb.\ref{fig:abb31}). Wegen der bekannten Problemen bei
-  Xamarin.Android zwischen NavigationPage und MasterDetailPage, muss hier wieder unterschieden werden zwischen iOS und
-  Android. Bei Android muss die Navigation von Typ "`modal"' sein (ohne
-  Möglichkeit zurückzunavigieren).\\\textcolor{gray}{\#if \textunderscore\textunderscore
+  der User wird zu der \textbf{Login-Ansicht}, vom Typ ContentPage, navigiert (siehe die Mockups in
+  Abb.\ref{fig:abb34}).
+   Auf der Login-Ansicht gibt der User seine Kundennummer und seine
+  Postleitzahl ein und die Daten werden zum Server gesendet. Im Falle einer erfolgreichen
+  Registrierung, wird zu der bereits erwähnten \textbf{MasterDetailPage} navigiert (siehe Mockup
+  Menüführung in Abb.\ref{fig:abb34}). Wegen der bekannten Problemen bei Xamarin.Android zwischen
+  NavigationPage und MasterDetailPage, muss hier wieder unterschieden werden zwischen iOS und
+  Android. Bei Android muss die Navigation von Typ "`modal"' sein (ohne Möglichkeit zurückzunavigieren).
+  \\\textcolor{gray}{\#if \textunderscore\textunderscore
   Android\textunderscore\textunderscore \\this.Navigation.PushModalAsync(new MenuMasterDetailPage());\\
    \#endif}
-\end{itemize}
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.2]{graphics/appScreenshots/ScreenShot_Login.png}
-\caption{Login-Seite}
-\label{fig:abb29}
-\end{figure}
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.2]{graphics/appScreenshots/ScreenShot_Menu.png}
-\caption{Menüsteuerungsseite}
-\label{fig:abb31}
-\end{figure}
-
-
+\end{itemize} 
+Es muss noch beachtet werden, dass auch wenn die Navigation "`modal"' ist, hat man bei Android
+immernoch die Möglichkeit zurück zu der Login-Ansicht zu navigieren, indem man den physischen
+"`Back"'-Button des Android-Geräts drückt. Das muss programmatisch deaktiviert werden und zwar nur
+für Android, also "`nicht cross-plattform"'.
 \subsubsection{Steuerung des Menüs mit MasterDetailPage}
 % In der Abb.\ref{fig:abb31} sieht man das aufgeklappte Menü der Menüsteuerungsseite der ScanApp. 
 Die Xamarin.Forms.MasterDetailPage hat zwei wichtige Properties von Typ Page:
@@ -266,7 +256,7 @@ Die Xamarin.Forms.MasterDetailPage hat zwei wichtige Properties von Typ Page:
   \item Master - eine ContentPage mit einem Element, nämlich eine TableView, in der die
   unterschiedlichen Navigationspunkte aufgelistet werden.
   \item Detail - je nachdem, welcher Navigationspunkt geklickt wurde, wird eine neue NavigationPage
-  erstellt und der Benutzer wird zu der entsprechenden Seite (ContentPage) navigiert.
+  erstellt und der Benutzer wird zu der entsprechenden Ansicht (ContentPage) navigiert.
 \end{itemize}
 Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
 \\ \textcolor{gray}{\textsl{void onKontaktTapped(object sender, EventArgs e)\\ \{\\ this.Detail
@@ -304,9 +294,22 @@ genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen H
 Komponente \textbf{ModernHttpClient}:\\  
 \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
 ModernHttpClient.NativeMessageHandler())}}.
-
-\subsection{Xamarin Komponenten (Components) und NuGet Packages, die für die
-Entwicklung der App genutzt werden}
+\\Wie bei jeder App muss man hier beachten, dass mobile Geräte nicht selten einen schlechten oder
+gar keinen Empfang haben. Abhängig vom Netzwerktyp kann die Geschwindigkeit einer Internetverbindung
+stark variieren. Aus diesem Grund ist es wichtig, dass alle Serveranfragen in einem
+separaten Thread ausgeführt werden, so dass der Ablauf der App nicht durch eine schlechte oder
+fehlende Verbindung beeinträchtigt wird. Außerdem kann je nach Tarif der mobile Datenvolumen
+begrenzt oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von verbrauchten MB pro Monat erreicht
+wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
+erkennen. D.h. ob die Verbindung über WLAN oder über das mobile Internet erfolgt. Xamarin.Android
+bietet einen Mechanismus für diesen Zweck - durch die Klasse \textbf{NetworkInfo}. Mithilfe dieser Klasse
+kann die App auch erkennen ob Roaming eingeschaltet wurde (\cite{XamNetzwerkStatus}).\\Bei
+Xamarin.iOS gibt es einen ähnlichen Mechanismus.
+\\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
+darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
+Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
+plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten.
+\subsection{Xamarin Komponenten (Components) und NuGet Packages}
 Die Möglichkeit, Komponenten und NuGet Packages an ein Projekt anzubinden, ist eine der
 größten Stärken von Xamarin.
 Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen (shared) Projekt
@@ -330,7 +333,8 @@ plattformspezifischen Projekten hinzugefügt werden.
         \item \textbf{Newtonsoft.Json} - Für die Kommunikation mit dem Backend werden Json-Objekte
         benutzt.
         Damit man zu den in einem Json-Objekt enthaltenen Informationen gelangen kann, muss das Objekt
-        zerteilt (geparst) werden. Das NuGet Package Newtonsoft.Json sorgt für das Parsen eines Json-Objekts.
+        zerteilt (geparst) werden. Das NuGet Package Newtonsoft.Json macht das Parsen eines
+        Json-Objekts zu einer relativ einfache Aufgabe.
         \item \textbf{Xam.Plugin.DeviceInfo} - Beim ersten Start der Applikation, muss der Kunde sich
         einmalig registrieren. Bei der Registrierung wird auch Information über das Gerät
         mitgesendet. Zu dieser nativen Information gelangt man mithilfe des NuGet Packages,
