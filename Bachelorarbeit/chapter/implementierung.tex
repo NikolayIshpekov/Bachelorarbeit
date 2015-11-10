@@ -1,10 +1,25 @@
 \section{Implementierung und Test}
+In diesem Abschnitt werden kurz Feststellungen beschrieben, die während der konktreten Realisierung
+der Implementierung der ScanApp aufgefallen sind. Es werden noch typische Testvorgänge erleutert,
+vor allem den Dienst von Xamarin - die Xamarin Test Cloud.
 \subsection{Implementierung}
 Die Benutzung von Xamarin mit Visual Studio erfordert einen Business-Account. Außerdem werden zwei
 Rechner benötigt - ein Mac-Rechner als Build-Server  und ein Windows-PC auf dem Visual Studio läuft.
 Aus diesem Grund fiel die Entwicklungsumgebungswahl für die Implementierung der Scan-App die auf
-Xamarin Studio. Wie bereits im vorigen Kapitel erläutert, werden die Ansichten der App in Xaml
-impementiert. Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich.
+Xamarin Studio. Beim Anlegen einer neuen Solution bietet Xamarin Studio mehrere Solution-Templates
+(siehe \ref{fig:abb36}).
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.435]{graphics/XamarinStudioTemplate.png}
+\caption{Xamarin Studio Solution Templates}
+\label{fig:abb36}
+\end{figure}
+Beim Erstellen einer neuen Datei bietet Xamarin Studio außer
+Standarddateien C\#-Dateien, wie "`Empty Class"', "`Empty Interface"' usw., noch vorgefertigte
+Xamarin.Forms-Dateien, wie "`Forms ContentPage"', "`Forms ContentPage Xaml"', "`Forms Content View"'
+oder "`Forms ContentView Xaml"' an. \\Wie bereits im vorherigen Kapitel erläutert, werden die
+Ansichten der App in Xaml implementiert.
+Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich.
 Es gibt ein Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine
 übersichtliche Hierarchie der Elemente.
 % Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
@@ -33,7 +48,8 @@ Toolbarbuttons zu sehen. Sobald dieser Button gedrückt wird, wird ein Command au
 das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
 löst den Aufruf einer Methode in der Viewmodel-Klasse auf.
 \\Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw.
-den Text eines Labels oder die Textfarbe setzen.
+den Text eines Labels oder die Textfarbe setzen.\\Analog ließen sich auch die anderen Ansichten der
+Scan App implementieren. Aus diesem wird nicht näher ins Detail rangegangen.
 % \\Das Ganze veranschaulicht, welche
 % Vorteile das MVVM-Architekturmuster mit sich bringt.
 
@@ -44,13 +60,12 @@ den Text eines Labels oder die Textfarbe setzen.
 \label{fig:abb33}
 \end{figure}
 
-\newpage
 \subsection{Test}
 Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es wird zwischen zwei Arten
 von Tests unterschieden, UI- und Unit-Tests. 
 Während Unit-Tests die App-Logik testen, wird bei UI-Tests sichergestellt, dass die App so aussieht
 und sich so verhält, wie man es erwartet, also es wird das Optische getestet.\\Ein typischer Weg,
-eine App zu testen ist die zu starten und zu benutzen.
+eine App zu testen ist die Anwendung zu starten und zu benutzen.
 Im besten Fall tut die App genau das was sie tun soll - funktioniert korrekt und stürzt nicht ab. Erfahrungsgemäß ist das so
 gut wie nie der Fall. Diese Art von Testen, indem man die App auf einem realen Gerät nutzt, wird als UI
 Acceptance Testing bezeichnet.
@@ -60,7 +75,7 @@ herum. Da es vor allem bei Android eine große Vielfalt an Geräten gibt, kann das
 Softwarehersteller müssen nicht selten Apps auf dutzende sogar hunderte Geräte installieren und
 testen.\\Die meisten Developer verzichten auf systematisches Testen, weil die verfügbaren Tools und
 Dienste zu kompliziert und schwer zu benutzen sind und nur auf einem Gerät bzw. Simulator ausgeführt
-werden können. \\Abhilfe kann man sich bei einem Feature von Xamarin, genannt Xamarin Test Cloud,
+werden können. \\Abhilfe kann man sich bei einem Dienst von Xamarin, genannt Xamarin Test Cloud,
 schaffen.\\Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro Monat. D.h. jeder Entwickler, der einen Xamarin Account hat,
 kann die Dienste der Xamarin Test Cloud in Anspruch nehmen.
 Xamarin verfügt über 1600 reale iOS- und Android-Smartphones und Tabletts. An dieser Stelle muss
@@ -71,7 +86,60 @@ dutzende Geräten vergleicht. Der Entwickler hat die Möglichkeit Screenshots an b
 des Tests zu machen.
 Darüber hinaus bietet der Service auch Videoaufnahme von Tests.
 Eine Geräte-Minute wird konsumiert, wenn der Test auf einem Gerät ausgeführt wird, wobei es keine
-Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgeführt werden.
+Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgeführt werden.\\Beim
+Anlegen der Xamarin.Forms Solution, wurde außer des plattformübergreifenden Projekt und der
+plattformspezifischen Projekte noch ein weiteres Projekt angelegt - das
+ScanApp.UITests Projekt.
+In diesem vorgefertigten Projekt befinden sich die Klassen: AppInitializer.cs und Tests.cs.\\In
+AppInitializer werden Konfigurierugen vorgenommen, wie Angabe des Pfads der Android APK Datei und
+der iOS IPA Datei. In der Klasse Tests.cs werden die Tests implementiert. Eine sogenannte
+TestFixture umfasst mehrere Test-Methoden. Auf diese Klasse wird später näher eingegangen.
+\\Xamarin.UITest
+basiert auf Calabash, eins der berühmtesten Frameworks für automatisiertes Testen von mobilen Apps.
+Solche Tests setzen auf den Xamarin Test Cloud Agent auf, einen speziellen HTTP-Server, der mit der
+zu testenden mobilen Applikation kommuniziert.
+Der Xamarin Test Cloud Agent muss eingebettet in die iOS Applikationen sein, wenn die App
+kompiliert wird. Bei Android Applikationen ist der TestCloud Agent eine separate Anwendung, die
+neben der zu testende App installiert wird. Die Tests interagieren mit der UI als würde ein Benutzer
+in Wirklichkeit Text ein ein Entry-Feld eintippen, irgendeine Geste durchführen, oder auf einen Button klicken usw.
+% Nachdem die Tests geschrieben worden sind, kann man die lokal ausführen und wenn die Tests
+% erfolgreich abgeschlossen wurden, kann man die auch in der Cloud ausführen lassen.
+Solche Tests können lokal ausgeführt werden und erleichtern die Entwicklung einer App. Die
+eigentliche Stärke von Xamarin.UITest ist, allerdings, die Möglichkeit, diese lokale Tests in die
+Xamarin Test Cloud hochzuladen. In der Cloud steht eine Vielzahl von realen Geräten (alle ohne
+Jailbreak) zur Verfügung. Xamarin Test Cloud generiert bei jedem Schritt eines Testfalls Screenshots von der App.
+Somit kann der Developer einen Vergleich zwischen den Darstellungen seiner App auf den verschiedenen
+Geräten ziehen. Screenshots können allerdings nicht alle Benutzereindrücke abbilden. Für diesen
+Zweck ist auch ein Screen Recording möglich.
+
+Typischerweise wird jeder UITest als eine Methode definiert. Die Klasse, die den Test enthält, wird als Test Fixture bezeichnet. Eine Text Fixture enthält entweder einen Test oder eine logische Gruppe von Tests. 
+Sie ist für Einstellungen und Bereingungen, die nach den Tests durchgeführt werden sollen zuständig.
+Jeder Test sollte dem "`arrange-act-assert"' Muster folgen (siehe Abb. \ref{fig:abb37}):
+\begin{itemize}
+  \item Vereinbarungen treffen (arranging) - Vorbereitungen für den Test. D.h. hier werden
+  Bedingunen eingestellt und Initialisierungen durchgeführt, so dass der Test gestartet werden kann.
+  \item Handeln (acting) - Interaktionen mit der App, wie Eintippen von Text, Klicken auf Buttons
+  usw.
+  \item Behauptungen überprüfen (asserting) - hier werden die Ergebnisse der Interaktionen auf
+  Korrektheit überprüft
+\end{itemize}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.565]{graphics/XamarinUITest.png}
+\caption{Xamarin.UITest}
+\label{fig:abb37}
+\end{figure}
+Xamarin.UITests setzen auf Queries auf, um Views auf dem Screen zu lokalisieren. Diese Queries
+benutzen Attributen der Views, wie Identifier, und nicht die physiche Position der Views auf dem
+Screen. Dies ist eine sehr mächtige Technik, die es Xamarin.UITest erlaubt mit den Objekten zu
+interagieren, unabhängig von Bildschirmgröße, Orientierung oder Layout. Xamarin.UITest bietet ein
+REPL (read eval print loop) an, das sehr hilfreich beim Erstellen einer solchen Query sein kann.
+REPL erlaubt Entwicklern, mit der Anwendung zu interagieren, während es läuft.
+Um einen Xamarin.UITest zum laufen zu bringen, muss das NuGet Package Xamarin Test Cloud Agent zum
+iOS-Projekt hinzugefügt werden. Bei Xamarin.Android ist das nicht erforderlich. Allerdings braucht
+man bei Android eine APK-Datei. D.h. JDK und Android SDK müssen installiert sein. In den meisten
+Fällen werden die aber mitinstalliert bei der Installation von Xamarin.Android (\cite{XamUITest}).
+
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.15]{graphics/XamarinTestCloud.png}

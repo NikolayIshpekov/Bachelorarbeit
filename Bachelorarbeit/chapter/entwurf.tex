@@ -135,8 +135,12 @@ Deadlocks entstehen!
 
 \subsection{GUI}
 Die Benutzungsoberfläche (in English: graphical user interface (GUI)) soll den Designvorgaben der
-unterschiedlichen Betriebssystemhersteller folgen. In Abb. \ref{fig:abb34} werden die Mockups für
-die unterschiedelichen Ansichten der Scan-App abgebildet. 
+unterschiedlichen Betriebssystemhersteller folgen. Der Entwickler soll sich, allerdings, nicht darum
+kümmern, diese Aufgabe erledigt Xamarin. Der Xamarin-Code wird pro Plattform zu Maschinencode
+kompiliert und dadurch erweckt die App den Eindruck, Teil der konkreten Plattform zu sein. D.h.
+aus der Perspektive eines Benutzers fühlt sich eine Xamarin.iOS App wie jede native iOS App an.
+Selbstverständlich gilt dasselbe für eine Xamarin.Android App. \\In Abb.
+\ref{fig:abb34} werden die Mockups für die unterschiedelichen Ansichten der Scan-App abgebildet. 
 \\Die GUI wird mit wenigen Ausnahmen im gemeinsamen Projekt, ScanApp erstellt.
 Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für die Implementierung
 der UIs (User Interfaces), wobei beide Techniken zum gleichen Ergebnis führen. \\Die
@@ -146,17 +150,25 @@ Grund werden die grafischen Interfaces der ScanApp mit der Markupsprache Xaml be
 Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
 Xaml-Datei beschrieben) und der Funktionalität (in der an der Xaml-Datei gebundenen
 Viewmodel-C\#-Datei implementiert) erreicht.
-Diese Technik macht Wiederverwendbarkeit und Austauschbarkeit einer Ansicht möglich.
-Somit können Designer und Entwickler unabhängig voneinander arbeiten. \\Bei der Erstellung einer
-Xamarin.Forms ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt
-auch als "`Code-Behind-Datei"', angelegt (siehe Abb. \ref{fig:abb21}).
+Diese Technik macht Wiederverwendbarkeit und Austauschbarkeit einer Ansicht möglich und Designer und
+Entwickler können unabhängig voneinander arbeiten. \\Bei der Erstellung einer Xamarin.Forms
+ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt auch als "`Code-Behind-Datei"', angelegt (siehe Abb. \ref{fig:abb21}).
 Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
 \emph{InitializeComponent()} Methode im Konstruktor und der bereits erwähnten Methoden, die
 Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
 Es ist möglich, dass die Funktionalität eines Viewmodels in der Code-Behind-Datei einer Ansicht
 untergebracht wird. Das entspricht, allerdings, nicht dem MVVM-Architekturmuster. Dadurch
 würde eine sehr enge Kopplung zwischen View und Funktionalität entstehen und die Ansichten wären
-nicht mehr austauschbar. 
+nicht mehr austauschbar.\\Durch Xamarin.Forms kann man die ganze Benutzungsoberfläche im gemeinsamen
+Projekt implementieren. D.h. jede Erweiterung oder Änderung einer Ansicht kann zentral, an einer
+Stelle, durchgeführt werden. Sollte man zu einem späteren Zeitpunkt Design-Änderungen vornehmen
+möchten, müsste man es dann nur einmal implementieren.\\Da der gemeinsame Code zu nativem
+Maschinencode kompiliert wird und die Steuerelemente die gleiche Funktionalität haben, sieht die
+Android-Benutzungsoberfläche nicht unbedingt gleich wie die von iOS oder eventuell die von Windows
+Phone aus.\\Ein Eingriff in die plattformspezifischen Projekte, ist nur in den Fällen notwendig,
+wenn die von Xamarin.Forms angebotenen Steuerelemente sich nicht so verhalten wie der Entwickler bzw. der Designer der App es sich vorstellt. Dann werden sogenannte
+"`Custom Renderer"' Klassen in die plattformspezifischen Projekten benötigt. In denen kann man
+Änderungen vornehmen, wie z.B. das Definieren von runden Buttons. 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
@@ -246,9 +258,19 @@ bereits ein Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nic
    \#endif}
 \end{itemize} 
 Es muss noch beachtet werden, dass auch wenn die Navigation "`modal"' ist, hat man bei Android
-immernoch die Möglichkeit zurück zu der Login-Ansicht zu navigieren, indem man den physischen
+immer noch die Möglichkeit zurück zu der Login-Ansicht zu navigieren, indem man den physischen
 "`Back"'-Button des Android-Geräts drückt. Das muss programmatisch deaktiviert werden und zwar nur
-für Android, also "`nicht cross-plattform"'.
+für Android, also "`nicht cross-plattform"'.\\Mit der bereits erwähnten Compiler-Direktive "`\#if"'
+lässt sich plattformspezifisches Verhalten im gemeinsamen Code implementieren. Obwohl  hier eine
+Fallunterscheidung zu beobachten ist, also kein gemeinsamer Code, erleichtert es die Wartung des
+Codes. Es befindet sich in einer gemeinsamen Datei. Beim Kompilieren des Codes werden Codeabschnitte
+ignoriert, wenn die nicht für das jeweilige Betriebssystem vorgesehen worden sind.\\Compiler
+Direktiven kann man nicht nur um zwischen Android und iOs zu unterscheiden, sondern auch um zwischen
+den verschiedenen Versionen von Android. Man kann explizit angeben, "`\textcolor{gray}{\#if
+\textunderscore\textunderscore ANDROID\textunderscore21\textunderscore\textunderscore \ldots \#endif}"'
+und der Code wird nur für Android API 21 kompiliert.
+Auf diese Weise kann man mit Problemen umgehen, die die große Vielfalt von Android APIs mit sich
+bringen.
 \subsubsection{Steuerung des Menüs mit MasterDetailPage}
 % In der Abb.\ref{fig:abb31} sieht man das aufgeklappte Menü der Menüsteuerungsseite der ScanApp. 
 Die Xamarin.Forms.MasterDetailPage hat zwei wichtige Properties von Typ Page:
@@ -268,14 +290,16 @@ automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
 \subsection{Barcodescanners}
 Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen ein Eingriff in
 die plattformspezifischen Projekte notwendig ist. Sowie zum ScanApp.iOS als auch zum ScanApp.Droid
-muss die Komponente ZXing.Net.Mobile hinzugefügt werden. Im gemeinsamen Projekt wird das Interface
-IScanner.cs definiert (Abb. \ref{fig:abb28}). In beiden plattformspezifischen Projekte wird je eine
-Klasse Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
+muss die Komponente ZXing.Net.Mobile hinzugefügt werden. Diese Komponenete greift auf native APIs,
+wei die Nutzung der Kamera des Geräts, um die Scanner-Funktion zu ermöglichen Im gemeinsamen Projekt
+wird das Interface IScanner.cs definiert (Abb.
+\ref{fig:abb28}).
+In beiden plattformspezifischen Projekte wird je eine Klasse Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
 man auf die plattformspezifische Scanner.cs Klassen mit:\\
 \textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}} zugreifen.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale = 0.4]{graphics/IScanner.png}
+\includegraphics[scale = 0.7]{graphics/IScanner.png}
 \caption{Das Interface IScanner}
 \label{fig:abb28}
 \end{figure}
@@ -342,3 +366,10 @@ plattformspezifischen Projekten hinzugefügt werden.
 \end{itemize}
 Es gibt eine große Vielfalt an Xamarin Komponenten und NuGet Packages. Somit kann eine
 Xamarin Applikation mit mehreren Features angereichert werden. 
+\subsection{Fazit}
+Mit Xamarin.Forms lässt sich nicht nur die ganze App-Logik im einem Gemeinsamen Projekt
+implementieren, sondern auch fast die ganze Benutzungsoberfläche der App. Daraus resultieren zwei
+(oder sogar drei, wenn auch eine Windows Phone als Zielplattform erwünscht ist) Versionen der
+Anwendung, die alle das native "`Look and Feel"' der jeweiligen Plattform haben. Die gemeinsame
+Codebasis erleichtert nicht nur den Entwurf, sondern auch das Fixen von Bugs und die Wartung der
+App.
