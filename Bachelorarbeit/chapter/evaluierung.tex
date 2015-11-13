@@ -1,17 +1,16 @@
 \chapter{Evaluierung inkl. Bewertungskriterien}
-Die beste Art und Weise ein Cross-Plattform-Entwicklungsframework zu bewerten ist, die Qualität
-eines Software-Produkts, das mit dieser Technologie entwickelt wurde zu bewerten. Im vorliegenden
+Ein Cross-Plattform-Entwicklungsframework lässt sich am besten beurteilen, indem die Qualität
+eines Software-Produkts, das mit dieser Technologie entwickelt wurde, bewertet wird. Im vorliegenden
 Fall ist es die Scan-App.\\\textbf{ISO/IEC 9126} definiert Software-Qualität als:\\ \emph{
 Gesamtheit von Merkmalen und Merkmalswerten eines Software-Produkts, die sich auf dessen Eignung
 beziehen, festgelegte oder vorausgesetzte Erfordernisse zu erfüllen}.
 \\Um die Qualität eines
 Software-Produkts bewerten zu können, werden möglichst objektive prüfbare Kriterien benötigt.
-
-
 \section{Bewertungskriterien nach ISO-Norm 9126}
-Im Folgenden werden Qualitätsmerkmale nach \textbf{ISO-Norm 9126} vorgestellt. Anhand dieser
-Kriterien wird die App bewertet. In Abb.\ref{fig:abb38} werden die ISO-Norm 9126
-Softwarequalitätsmerkmale abgebildet.
+Im Folgenden werden Qualitätsmerkmale nach \textbf{ISO-Norm 9126} vorgestellt (siehe
+Abb.\ref{fig:abb38}). Anhand dieser Kriterien wird die App bewertet. 
+% In Abb.\ref{fig:abb38} werden die ISO-Norm 9126
+% Softwarequalitätsmerkmale abgebildet.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.805]{graphics/ISO_9126_Grafik.png}
@@ -21,11 +20,14 @@ Softwarequalitätsmerkmale abgebildet.
 \subsection{Funktionalität}
 \subsubsection{Interoperabilität}
 Die Kommunikation zwischen der App und dem Server wurde auf verschiedene Szenarien getestet. Es
-wurde sichergestellt, dass die App nicht abstürzt, wenn der Server nicht erreichbar ist.
+wurde sichergestellt, dass die App nicht abstürzt, wenn der Server nicht erreichbar ist. Die
+benötigten Mechanismen um eine Verbindung mit einem Server herzustellen und zu pflegen, werden von
+Xamarin zur Verfügung gestellt.
 \subsubsection{Sicherheit}
 Für eine sichere Kommunikation mit dem Backend, generiert die App mithilfe des
 Verschlüsselungsalgorithmus SHA-256 einen Adresszusatz für die Web Services URI. Darüber hinaus wird
-das Https Protokol benutzt.
+das Https Protokol benutzt. Einer der größten Vorteile der Benutzung von einer mächtigen
+Programmiersprache, wie C\# lässt sich in diesem Fall beobachten, Kriterium erfüllt.
 \subsubsection{Richtigkeit}
 %Sind alle geforderten Funktionen implementiert worden?
 Im vorangegangenen Kapitel wurden Anforderungen an die App spezifiziert und anschließend
@@ -37,31 +39,43 @@ Vielfalt an Android-Smartphones wurde besonders bei der Android Version darauf g
 App auf möglichst vielen Geräten getestet wird. Es wurden unterschiedliche Szenarien durchgespielt,
 die eventuell zum Absturz der App führen könnten. Es wurde das Verhalten der Anwendung beobachtet,
 wenn bspw. die Internetverbindung während einer Anfrage an den Server unterbrochen wird, oder bei
-einem unerwarteten Ausschalten des Telefons, durften keine keine zuvor
+einem unerwarteten Ausschalten des Telefons. Es durften keine keine zuvor
 gespeicherten Daten verloren gehen. Da die iOS- und die Android-Version der App die Tests
-erfolgreich abgeschlossen haben, lässt sich schließen, dass das Kriterium Zuverlässigkeit erfüllt
-ist.
+erfolgreich abgeschlossen haben, kann das Kriterium Zuverlässigkeit als erfüllt
+vermerkt werden.
 \subsection{Benutzbarkeit}
 Für die Scan-App wurde eine intuitive Benutzbarkeit angestrebt. Für die Menüpunkten wurden
-aussagekräftigen Namen ausgewählt, so dass für die Benutzung der Anwendung keine Schulung
-vorausgesetzt wird.
+aussagekräftigen Namen ausgewählt und an vielen Stellen werden Hinweistexte angezeigt, in Form von
+Popup Fenster, so dass für die Benutzung der Anwendung keine Schulung vorausgesetzt wird.
 \subsection{Effizienz}
 Die mobilen Geräte werden immer leistungsfähiger, allerdings aufgrund der großen hochauflösenden
-Displays halten die Akkus nicht besonders lange. Aus diesem Grund werden Anwendungen, die zu viel
-Akku im Hintergrund verbrauchen, oft von den Benutzern abgelehnt, auch wenn die App sonst prima
-funktioniert.\\Xamarin.Forms bietet die Möglichkeit die Methoden \textit{onStart(), onSleep() und
-onResume()} zu überschreiben und somit lässt sich das Verhalten der App steuern, wenn die Anwendung
+Displays halten die Akkus nicht besonders lange. Aus diesem Grund werden Anwendungen, die zu viele
+Ressourcen und dadurch Akku im Hintergrund verbrauchen, oft von den Benutzern abgelehnt, auch wenn
+die App sonst fehlerfrei funktioniert.\\Xamarin.Forms bietet die Möglichkeit die Methoden
+\textit{onStart(), onSleep() und onResume()} zu überschreiben und somit lässt sich das Verhalten der App steuern, wenn die Anwendung
 im Hintergrund gerät.\\Bei der Entwicklung der App wurde explizit darauf geachtet, dass die
 Kommunikation mit dem Server in separaten Threads ausgeführt wird, so dass die App nicht "`hängen
-bleibt"', wenn die Internetverbindung langsam ist oder gar nicht da ist.
+bleibt"', wenn die Internetverbindung langsam ist oder gar nicht da ist. Wie im vorangegangenen
+Kapitel bereits erörtert, gibt Xamarin die Möglichkeit zwischen verschiedenen Arten von mobilen
+Internetverbindungen zu unterscheiden, dadurch lassen sich Ressourcen sparen. \\Es lässt sich
+zusammenfassen, dass Xamarin die benötigten Mechanismen bietet, damit Entwickler dieses Kriterium erfüllen können.
 \subsection{Änderbarkeit}
-Die "`Hamburger"'-Menüführung der App erlaubt eine Erweiterung oder Änderung des Menüs um beliebig
-viele neue Menüpositionen.
+Ein besonders wichtiges Kriterium im Hinsicht plattformübergreifender App-Entwicklung. Der Sinn,
+mobile Anwendungen "`cross platform"' zu entwickeln, ist es die Aufwände zu minimieren, und zwar
+nicht nur während der Entwicklungsphase, sondern auch während der Wartung. Die App Pflege soll
+möglichst plattformübergreifend erfolgen. Dasselbe gilt für die Erweiterung der Anwendung,
+Änderungen sollen an einer zentralen Stelle vorgenommen werden und trotzdem die gewünschten
+plattformspezifischen Auswirkungen haben.\\Die "`Hamburger"'-Menüführung der App erlaubt
+eine Änderung oder Erweiterung des Menüs um beliebig viele neue Menüpositionen.
 Aufgrund der gemeinsamen Logik lassen sich Änderungen und Fehlerkorrekturen der App mit möglichst
-wenig Aufwand im gemeinsamen Projekt vornehmen. Kriterium erfüllt.
+wenig Aufwand im gemeinsamen Projekt vornehmen. Wie bereits erwähnt werden die Layouts der Ansichten
+automatisch an die Bildschirmgröße des konkreten Smartphones angepasst. Durch die lose Kopplung zwischen View und
+Viewmodel beim MVVM-Muster lässt sich eine Ansicht mit minimalem Aufwand durch eine
+andere austauschen, und zwar plattformübergreifend.
+Es lässt sich schließen, dass die Scan-App und dadurch Xamarin.Forms dieses Kriterium erfüllt.
 \subsection{Übertragbarkeit}
 Durch die Distribution der ScanApp in die entsprechenden App-Stores (Apples App Store und
-Androids Google Play Store) kann die Scan-App auf die übliche Art und Weise
+Androids Google Play Store) kann die Scan-App auf die für mobile Anwendungen übliche Art und Weise
 verbreitet werden. Kriterium erfüllt.
 \section{Weitere Bewertungskriterien}
 Ausser der ISO Standards sind im vorliegenden Fall auch folgende Bewertungskriterien sinnvoll:
