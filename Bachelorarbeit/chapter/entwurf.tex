@@ -274,6 +274,12 @@ und der Code wird nur für Android API 21 kompiliert.
 Auf diese Weise kann man mit Problemen umgehen, die die große Vielfalt von Android APIs mit sich
 bringen.
 \subsubsection{Steuerung des Menüs mit MasterDetailPage}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.7]{graphics/ScanApp_Navigation.png}
+\caption{Navigation zwischen den Ansichten}
+\label{fig:abb39}
+\end{figure}
 % In der Abb.\ref{fig:abb31} sieht man das aufgeklappte Menü der Menüsteuerungsseite der ScanApp. 
 Die Xamarin.Forms.MasterDetailPage hat zwei wichtige Properties von Typ Page:
 \begin{itemize}
@@ -289,12 +295,13 @@ Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
 \}}}
 \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
 automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
-\subsection{Barcodescanners}
+\subsection{Hardwarenahe Funktionalität: Barcodescanner}
 Die Implementierung des Barcodescanners ist einer der wenigen Punkten, bei denen ein Eingriff in
 die plattformspezifischen Projekte notwendig ist. Sowie zum ScanApp.iOS als auch zum ScanApp.Droid
-muss die Komponente ZXing.Net.Mobile hinzugefügt werden. Diese Komponenete greift auf native APIs,
-wei die Nutzung der Kamera des Geräts, um die Scanner-Funktion zu ermöglichen Im gemeinsamen Projekt
-wird das Interface IScanner.cs definiert (Abb.
+muss die Komponente ZXing.Net.Mobile hinzugefügt werden. Diese Komponenete greift auf native APIs
+zu, wie die API zur Steuerung der Kamera des Geräts, um die Scanner-Funktion zu
+ermöglichen.
+Im gemeinsamen Projekt wird das Interface IScanner.cs definiert (Abb.
 \ref{fig:abb28}).
 In beiden plattformspezifischen Projekte wird je eine Klasse Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
 man auf die plattformspezifische Scanner.cs Klassen mit:\\
