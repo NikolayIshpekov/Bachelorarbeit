@@ -1,88 +1,113 @@
-%\newpage
 \section{Entwurf für die Entwicklung mit Xamarin}
 In diesem Abschnitt wird der Entwurf der Scan-App mit Xamarin.Forms beschrieben. 
-Es wird das für Xamarin übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei alternative
-Methoden zum Code-Sharing:
+Es wird das für Xamarin.Forms übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei
+alternative Methoden zum Code-Sharing:
  Shared Projects und Portable Class Libraries (PCL). Da im vorliegenden Fall Code-Sharing nur
  innerhalb der Applikation vorgesehen wurde, wird Shared Projects gewählt (der PCL
  Ansatz wird für den Fall empfohlen, wenn ein Entwickler seinen Code für andere Developer in Form
  einer DLL Bibliothek bereitstellen möchte).
-Beim Erstellen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
+Beim Anlegen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
 erstellt, so dass folgende Projekte entstehen:
 \begin{itemize}
   \item ScanApp - das gemeinsame, plattformübergreifende Projekt.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
-Der Großteil des Codes befindet sich im plattformübergreifenden Projekt, ScanApp. In die Projekte
-ScanApp.Droid und ScanApp.iOS gehören App-Ressourcen wie bspw. Icons, sowie
-benutzerdefinierte Renderer. Die sogenannten "`Custom Renderer"' werden für die Implementierung und
-Gestaltung von benutzerdefinierten Steuerelementen und Ansichten benötigt, die mit den von
-Xamarin.Forms zur Verfügung gestellten Werkzeugen nicht zu realisieren sind. \\Sollte eine
-Anforderung nicht plattformübergreifend zu gewährleisten sein, muss diese Funktionalität in den
-plattformspezifischen Projekten implementiert werden. Im gemeinsamen Projekt wird ein Interface
-definiert, das von den dafür zuständigen Klassen in ScanApp.Droid und ScanApp.iOS implementiert
-werden muss.
+Abb. \ref{fig:abb40} veranschaulicht die Verteilung der Projekten.
+Der Großteil des Codes befindet sich im plattformübergreifenden Projekt, ScanApp. In diesem
+"`shared"' Projekt wird typischerweise die gesamte App-Logik, inklusive Gestaltung der
+Benutzungsoberfläche, ausgelagert. Xamarin.Forms ist eine Art Abstraktionsschicht, mit derer Hilfe
+sich die Benutzungsoberfläche in diesem gemeinsamen, plattformübergreifenden Projekt gestalten
+lässt.
+D.h. die Ansichten werden komplett plattformunabhängig definiert. 
+Beim Kompilieren werden die Xamarin.Forms Steuerelemente je nach Plattform in
+das native Pedant(ListView bei Android und UITableView bei iOS) übersetzt.\\In die Projekte
+ScanApp.Droid und ScanApp.iOS gehören App-Ressourcen wie bspw.
+Icons, sowie eventuell benutzerdefinierte Renderer. Die sogenannten "`Custom Renderer"' werden für
+die Implementierung von benutzerdefinierten Steuerelementen und Ansichten benötigt, die mit den von
+Xamarin.Forms zur Verfügung gestellten Werkzeugen nicht zu realisieren sind. Allerdings
+muss es angemerkt werden, dass die von Xamarin.Forms angebotenen Steuerelemente meistens
+ausreichend sind, so dass ein benutzerdefinierter Renderer selten benötigt wird. Die
+Hintergrundfarbe einer markierten Zeile eines ListViews ist bspw. blau bei der Android Version und grau bei der iOS Version der App. Obwohl die Ansichten im "`shared"' Projekt erstellt worden sind, sehen sie nicht gleich aus. Da der gemeinsame Code zum nativen Code kompiliert wird, tragen die auf diese Weise erzeugten
+Steuerelemente spezifische Merkmale der jeweiligen Plattform.
+Sollte die Hintergrundfarbe bei Android auch grau sein, wäre ein Custom Renderer im
+plattformspezifischen Droid-Projekt nötig. An die plattformspezifischen Projekte lassen zwei
+Arten von "`open source"' Bibliotheken einbinden: Xamarin Komponenten und NuGet Packages. Eine
+solche Xamarin Komponente ist bspw. die ZXing-Komponente zum Scannen von Barcodes, die im
+vorliegenden Fall eine zentralle Rolle in der App spielt. Das ebenso in der ScanApp eingebundene
+NuGet Package "`DeviceInfo"' bietet eine API, mit der Entwickler Informationen über das
+Smartphone gewinnen können. 
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.435]{graphics/ScanAppProjekt.png}
+\caption{ScanApp - Entwurf}
+\label{fig:abb40}
+\end{figure}
+% \\Sollte eine
+% Anforderung nicht plattformübergreifend zu gewährleisten sein, muss diese Funktionalität in den
+% plattformspezifischen Projekten implementiert werden. Im gemeinsamen Projekt wird ein Interface
+% definiert, das von den dafür zuständigen Klassen in ScanApp.Droid und ScanApp.iOS implementiert
+% werden muss.
 % Die angeforderte Funktionalität wird in den plattformspezifischen Projekten implementiert. Dieses
 % Interface muss von den jeweiligen Klassen, die die Funktionalität gewährleisten, der plattformspezifischen Projekte implementiert.
-Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
-\textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
-\subsection{Umsetzung des MVVM-Architekturmusters}
-Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
-zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
-\begin{itemize}
-  \item \textbf{Model} - Im Ordner Model werden typischerweise Klassen defniert, die
-  anwendungsspezifische Datentypen beschreiben. Das sind Klassen zur Speicherung und
-  Verarbeitung von Daten, die dafür sorgen, dass die Daten konsistent gehalten
-  werden.
-  \item \textbf{View} - Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page oder
-Xamarin.Forms.View sind oder von diesen Klassen erben) gehören in den Ordner View.
-  \item \textbf{Viewmodel} - In den Viewmodel-Ordner kommen die Viewmodel-Klassen (C\#-Klassen,
-  die das Interface \textbf{\textit{INotifyPropertChanged}} implementieren). 
-\end{itemize}
-Jede Ansicht wird an ein Viewmodel gebunden. Das wird durch das sogenannte "`Data
-Binding"' (in Deutsch Datenbindung) realisiert.
-% In Abb.\ref{fig:abb23} sieht man eine typische
-% Xaml-Datei, die eine Ansicht beschreibt und sich im Ordner View befindet. Diese Ansicht wird
-% von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
-% abgeleitet wird.
- In einer C\#-Klasse, genannt Base\_Page, werden Eigenschaften und Methoden definiert, die für die
- meisten Ansichten gemeinsam sind. Bspw. das Navigationsheader-Logo oder Methoden für die Steuerung
-der Navigation. Diese Klasse wird von der Klasse Xamarin.Forms.Page abgeleitet.
-% \\Eine der wichtigsten Klassenvariablen der Klasse Xamarin.Forms.Page ist das Property
-% \textit{BindingContext}.
-% Mithilfe dieser Eigenschaft wird ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
-% \ref{fig:abb23}, Zeile 23-25).
-% \\In Zeile 12 findet eine typische Datenbindung ("`data binding"') statt.
-% Das Text-Property eines Entry-Textfeldes wird an das Property \textit{Name} gebunden, das im
-% Viewmodel definiert wird (siehe Abb.\ref{fig:abb33}).
-% Sobald der Text des Textfelds sich ändert, wird das Viewmodel darüber informiert. Diese Bindung
-% funktioniert in beiden Richtungen, d.h. Änderungen, die im Viewmodel vorgenommen werden, werden in
-% der Ansicht angezeigt.\\In Abbildung \ref{fig:abb23}, Zeile 20 ist die Definition eines
-% Toolbarbuttons zu sehen. Sobald dieser Button gedrückt wird, wird ein Command ausgeführt, das an
-% das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
-% löst den Aufruf einer Methode in der Viewmodel-Klasse auf.\\Das Ganze veranschaulicht, welche
-% Vorteile das MVVM-Architekturmuster mit sich bringt.
-Durch die Datenbindung entsteht eine lose Kopplung zwischen View und ViewModel. Da das Viewmodel die
-Views nicht kennt, lässt sich eine Ansicht problemlos durch eine andere austauschen. Die neue
-Ansicht muss lediglich an das Viewmodel gebunden werden.
-\\Ein ViewModel muss zwingend das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
-Dadurch können sogenannte "`Bindable Properties"` definiert werden
-%  (siehe Abb.\ref{fig:abb33})
-. Bei jeder Änderung wird die OnPropertyChanged()-Methode mit dem Property-Name als String-Parameter
-aufgerufen und dadurch wird ein PropertyChangedEventHandler ausgelöst.
-\\Wie bei den meisten Applikationen, sind auch für die Scan-Anwendung mehrere Ansichten
-erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um
-zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse \textit{NavigationPage}
-benötigt: \textit{new NavigationPage(new Page())}. 
-\\Jede Xamarin.Forms.Page-Klasse hat über das Property \textbf{\textit{Navigation}} Zugriff auf das
-NavigationPage: \textit{this.Navigation.PushAsync(new Page())}.\\Nach dem MVVM-Muster sollten sich
-die Viewmodel-Klassen um die Navigation kümmern.
-Allerdings ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
-dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
-kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
-abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
-Seite gewechselt werden soll.
+% Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
+% \textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
+% \subsection{Umsetzung des MVVM-Architekturmusters}
+% Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
+% zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
+% \begin{itemize}
+%   \item \textbf{Model} - Im Ordner Model werden typischerweise Klassen defniert, die
+%   anwendungsspezifische Datentypen beschreiben. Das sind Klassen zur Speicherung und
+%   Verarbeitung von Daten, die dafür sorgen, dass die Daten konsistent gehalten
+%   werden.
+%   \item \textbf{View} - Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page oder
+% Xamarin.Forms.View sind oder von diesen Klassen erben) gehören in den Ordner View.
+%   \item \textbf{Viewmodel} - In den Viewmodel-Ordner kommen die Viewmodel-Klassen (C\#-Klassen,
+%   die das Interface \textbf{\textit{INotifyPropertChanged}} implementieren). 
+% \end{itemize}
+% Jede Ansicht wird an ein Viewmodel gebunden. Das wird durch das sogenannte "`Data
+% Binding"' (in Deutsch Datenbindung) realisiert.
+% % In Abb.\ref{fig:abb23} sieht man eine typische
+% % Xaml-Datei, die eine Ansicht beschreibt und sich im Ordner View befindet. Diese Ansicht wird
+% % von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
+% % abgeleitet wird.
+%  In einer C\#-Klasse, genannt Base\_Page, werden Eigenschaften und Methoden definiert, die für die
+%  meisten Ansichten gemeinsam sind. Bspw. das Navigationsheader-Logo oder Methoden für die Steuerung
+% der Navigation. Diese Klasse wird von der Klasse Xamarin.Forms.Page abgeleitet.
+% % \\Eine der wichtigsten Klassenvariablen der Klasse Xamarin.Forms.Page ist das Property
+% % \textit{BindingContext}.
+% % Mithilfe dieser Eigenschaft wird ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
+% % \ref{fig:abb23}, Zeile 23-25).
+% % \\In Zeile 12 findet eine typische Datenbindung ("`data binding"') statt.
+% % Das Text-Property eines Entry-Textfeldes wird an das Property \textit{Name} gebunden, das im
+% % Viewmodel definiert wird (siehe Abb.\ref{fig:abb33}).
+% % Sobald der Text des Textfelds sich ändert, wird das Viewmodel darüber informiert. Diese Bindung
+% % funktioniert in beiden Richtungen, d.h. Änderungen, die im Viewmodel vorgenommen werden, werden in
+% % der Ansicht angezeigt.\\In Abbildung \ref{fig:abb23}, Zeile 20 ist die Definition eines
+% % Toolbarbuttons zu sehen. Sobald dieser Button gedrückt wird, wird ein Command ausgeführt, das an
+% % das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
+% % löst den Aufruf einer Methode in der Viewmodel-Klasse auf.\\Das Ganze veranschaulicht, welche
+% % Vorteile das MVVM-Architekturmuster mit sich bringt.
+% Durch die Datenbindung entsteht eine lose Kopplung zwischen View und ViewModel. Da das Viewmodel die
+% Views nicht kennt, lässt sich eine Ansicht problemlos durch eine andere austauschen. Die neue
+% Ansicht muss lediglich an das Viewmodel gebunden werden.
+% \\Ein ViewModel muss zwingend das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
+% Dadurch können sogenannte "`Bindable Properties"` definiert werden
+% %  (siehe Abb.\ref{fig:abb33})
+% . Bei jeder Änderung wird die OnPropertyChanged()-Methode mit dem Property-Name als String-Parameter
+% aufgerufen und dadurch wird ein PropertyChangedEventHandler ausgelöst.
+% \\Wie bei den meisten Applikationen, sind auch für die Scan-Anwendung mehrere Ansichten
+% erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um
+% zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse \textit{NavigationPage}
+% benötigt: \textit{new NavigationPage(new Page())}. 
+% \\Jede Xamarin.Forms.Page-Klasse hat über das Property \textbf{\textit{Navigation}} Zugriff auf das
+% NavigationPage: \textit{this.Navigation.PushAsync(new Page())}.\\Nach dem MVVM-Muster sollten sich
+% die Viewmodel-Klassen um die Navigation kümmern.
+% Allerdings ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
+% dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
+% kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
+% abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
+% Seite gewechselt werden soll.
 
 % \begin{itemize}
 %   \item Das Framework MVVM-Light
@@ -106,32 +131,31 @@ Seite gewechselt werden soll.
 % \label{fig:abb33}
 % \end{figure}
 \subsection{Datenpersistenz mit SQLite}
-Für die Persistenz der Appdaten wird die open-source Datenbank SQLite eingesetzt.\\SQLite ist gut
+Für die Persistenz der Appdaten wird die "`open-source"' Datenbank SQLite eingesetzt.\\SQLite ist gut
 geeignet für Cross-Plattform-Entwicklung, weil:
 \begin{itemize}
   \item die Datenbank klein, schnell und leicht portierbar ist;
   \item der Fileformat leicht zu benutzen und plattformübergreifend ist;
   \item SQLite die meisten SQL92 Standards implementiert.
 \end{itemize}
-Da
-beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
-SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
-benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
-\\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
-der Datenbank File zu finden ist (es ist abhängig vom
-Ziel-Plattform unterschiedlich). Für iOs und Android kann man "`Environment class"' benutzen um einen
-validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
-spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
-auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
-benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
-Datenbankzugriffe sind mit demselben "`lock"' gekapselt, wobei hier Vorsicht geboten ist. Es könnten
-Deadlocks entstehen! 
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.4]{graphics/SQLitePath.png}
-\caption{SQLite Pfad}
-\label{fig:abb27}
-\end{figure}
+% Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
+% SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
+% benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
+% \\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
+% der Datenbank File zu finden ist (es ist abhängig vom
+% Ziel-Plattform unterschiedlich). Für iOs und Android kann man "`Environment class"' benutzen um einen
+% validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
+% spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
+% auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
+% benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
+% Datenbankzugriffe sind mit demselben "`lock"' gekapselt, wobei hier Vorsicht geboten ist. Es könnten
+% Deadlocks entstehen! 
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.4]{graphics/SQLitePath.png}
+% \caption{SQLite Pfad}
+% \label{fig:abb27}
+% \end{figure}
 
 \subsection{GUI}
 Die Benutzungsoberfläche (in English: graphical user interface (GUI)) soll den Designvorgaben der
