@@ -6,40 +6,55 @@ alternative Methoden zum Code-Sharing:
  innerhalb der Applikation vorgesehen wurde, wird Shared Projects gewählt (der PCL
  Ansatz wird für den Fall empfohlen, wenn ein Entwickler seinen Code für andere Developer in Form
  einer DLL Bibliothek bereitstellen möchte).
-Beim Anlegen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
-erstellt, so dass folgende Projekte entstehen:
+ Der Sinn von Xamarin.Forms ist es, dass man mit einer gemeinsamen Codebasis, mehrere Versionen
+ einer App erstellen kann (im vorliegenden Fall sind es iOS- und Android-Version der Anwendung.
+ Mit einem Xamarin Business Account wäre auch eine Windows Phone-Version möglich).
+ Beim Anlegen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte erstellt, so dass folgende Projekte entstehen:
 \begin{itemize}
   \item ScanApp - das gemeinsame, plattformübergreifende Projekt.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
 Abb. \ref{fig:abb40} veranschaulicht die Verteilung der Projekten.
-Der Großteil des Codes befindet sich im plattformübergreifenden Projekt, ScanApp. In diesem
+Der Großteil des Codes wird sich im plattformübergreifenden Projekt, ScanApp befinden. In diesem
 "`shared"' Projekt wird typischerweise die gesamte App-Logik, inklusive Gestaltung der
 Benutzungsoberfläche, ausgelagert. Xamarin.Forms ist eine Art Abstraktionsschicht, mit derer Hilfe
 sich die Benutzungsoberfläche in diesem gemeinsamen, plattformübergreifenden Projekt gestalten
 lässt.
 D.h. die Ansichten werden komplett plattformunabhängig definiert. 
 Beim Kompilieren werden die Xamarin.Forms Steuerelemente je nach Plattform in
-das native Pedant(ListView bei Android und UITableView bei iOS) übersetzt.\\In die Projekte
+das native Pendant (ListView bei Android und UITableView bei iOS) übersetzt.\\In die Projekte
 ScanApp.Droid und ScanApp.iOS gehören App-Ressourcen wie bspw.
 Icons, sowie eventuell benutzerdefinierte Renderer. Die sogenannten "`Custom Renderer"' werden für
 die Implementierung von benutzerdefinierten Steuerelementen und Ansichten benötigt, die mit den von
 Xamarin.Forms zur Verfügung gestellten Werkzeugen nicht zu realisieren sind. Allerdings
 muss es angemerkt werden, dass die von Xamarin.Forms angebotenen Steuerelemente meistens
-ausreichend sind, so dass ein benutzerdefinierter Renderer selten benötigt wird. Die
-Hintergrundfarbe einer markierten Zeile eines ListViews ist bspw. blau bei der Android Version und grau bei der iOS Version der App. Obwohl die Ansichten im "`shared"' Projekt erstellt worden sind, sehen sie nicht gleich aus. Da der gemeinsame Code zum nativen Code kompiliert wird, tragen die auf diese Weise erzeugten
-Steuerelemente spezifische Merkmale der jeweiligen Plattform.
+ausreichend sind, so dass ein benutzerdefinierter Renderer selten benötigt wird. Ein Beispiel
+wäre die Hintergrundfarbe einer markierten Zeile eines ListViews. Sie ist bspw. blau bei Android und
+grau bei der iOS Version einer mit Xamarin.Forms erstellter App.
+Obwohl die Ansichten im "`shared"' Projekt erstellt worden sind, sehen sie auf den Zielplattformen
+nicht gleich aus. Grund dafür ist die Tatsache, dass der gemeinsame Code aus dem "`shared"' Projekt
+zum nativen Code kompiliert wird. D.h. es entstehen native Steuerelemente, die spezifische Merkmale
+der jeweiligen Plattform tragen.
 Sollte die Hintergrundfarbe bei Android auch grau sein, wäre ein Custom Renderer im
-plattformspezifischen Droid-Projekt nötig. An die plattformspezifischen Projekte lassen zwei
-Arten von "`open source"' Bibliotheken einbinden: Xamarin Komponenten und NuGet Packages. Eine
-solche Xamarin Komponente ist bspw. die ZXing-Komponente zum Scannen von Barcodes, die im
-vorliegenden Fall eine zentralle Rolle in der App spielt. Das ebenso in der ScanApp eingebundene
-NuGet Package "`DeviceInfo"' bietet eine API, mit der Entwickler Informationen über das
-Smartphone gewinnen können. 
+plattformspezifischen Droid-Projekt nötig. D.h. das native Android-Steuerelement soll überschrieben
+werden.\\Außer als Container für benutzerdefinierte Renderer und App-Ressourcen, werden in den
+plattformspezifischen Projekte noch Einstellungen vorgenommen, wie Info.plist im iOS-Projekt oder
+AndroidManifest.xml bei Android. 
+Wie aus Abb. \ref{fig:abb40} ersichtlich, lassen sich beim "`Shared Projects"'-Ansatz keine "`open
+source"' Bibliotheken, wie NuGet Packages oder Xamarin Komponenten direkt an das gemeinsame Projekt anbinden.
+Das erfolgt in den plattformspezifischen Projekte. Darüber hinaus lassen sich zwei Arten von "`open
+source"' Eine solche Xamarin Komponente ist bspw. die ZXing-Komponente zum Scannen von Barcodes, die
+eine zentrale Rolle in der App spielt. Das ebenso in der ScanApp eingebundene NuGet Package
+"`DeviceInfo"' bietet eine API, mit der Entwickler Informationen über das Smartphone bekommen
+können. Am Ende dieses Kapitels werden die für die ScanApp benötigten NuGut Packages und Xamarin
+Komponenten näher vorgestellt. \\Der Entwurf der ScanApp bezieht sich fast ausschließlich auf das
+"`shared"' Projekt. Wie bereits angesprochen, ist der Sinn von "`Cross-Plattform-Entwicklung"', dass
+alles, was sich auslagern lässt in das gemeinsame Projekt gehört und die plattformspezifischen
+Projekte sollten möglichst "`leer"' bleiben.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale = 0.435]{graphics/ScanAppProjekt.png}
+\includegraphics[scale = 0.7]{graphics/ScanAppProjekt.png}
 \caption{ScanApp - Entwurf}
 \label{fig:abb40}
 \end{figure}
@@ -130,14 +145,49 @@ Smartphone gewinnen können.
 % \caption{Definition von Bindable Property}
 % \label{fig:abb33}
 % \end{figure}
-\subsection{Datenpersistenz mit SQLite}
-Für die Persistenz der Appdaten wird die "`open-source"' Datenbank SQLite eingesetzt.\\SQLite ist gut
-geeignet für Cross-Plattform-Entwicklung, weil:
+\subsection{Datenpersistenz und Backend-Kommunikation}
+Fast jede mobile Anwendung braucht einen Mechanismus, der eine dauerhafte Speicherung der
+Appdaten erlaubt.
+Die "`open-source"' Datenbank SQLite ist gut geeignet für das Persistieren der Daten von mobilen
+Applikationen, weil:
 \begin{itemize}
   \item die Datenbank klein, schnell und leicht portierbar ist;
   \item der Fileformat leicht zu benutzen und plattformübergreifend ist;
   \item SQLite die meisten SQL92 Standards implementiert.
 \end{itemize}
+Ein weiterer wichtiger und häufig vorkommender Punkt bei der Entwicklung von mobielen
+Applikationen, ist die Kommunikation mit dem Backend. Web Services kommen in den folgenden Fällen
+zum Einsatz:
+\begin{itemize}
+  \item Bei der einmaligen Registrierung eines Benutzers.
+  \item Beim Überprüfen eines Barcodes.
+  \item Beim Abschließen einer Bestellung.
+\end{itemize} 
+Im gemeinsamen Projekt wird für diesen Zweck eine Klasse mit jeweils eine Methode für die oben
+genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen Http-Client der
+Xamarin Komponente \textbf{ModernHttpClient}.
+% \\  
+% \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
+% ModernHttpClient.NativeMessageHandler())}}.
+\\Wie bei jeder App muss man hier beachten, dass mobile Geräte nicht selten einen schlechten oder
+gar keinen Empfang haben. Abhängig vom Netzwerktyp kann die Geschwindigkeit einer Internetverbindung
+stark variieren. Aus diesem Grund ist es wichtig, dass alle Serveranfragen in einem
+separaten Thread ausgeführt werden, so dass der Ablauf der App nicht durch eine schlechte oder
+fehlende Verbindung beeinträchtigt wird. Außerdem kann je nach Tarif der mobile Datenvolumen
+begrenzt oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von verbrauchten MB pro Monat erreicht
+wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
+erkennen. D.h. ob die Verbindung über WLAN oder über das mobile Internet erfolgt. Xamarin.Android
+bietet einen Mechanismus für diesen Zweck - durch die Klasse \textbf{NetworkInfo}. Mithilfe dieser Klasse
+kann die App auch erkennen ob Roaming eingeschaltet wurde (\cite{XamNetzwerkStatus}).\\Bei
+Xamarin.iOS gibt es einen ähnlichen Mechanismus.
+\\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
+darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
+Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
+plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten. Im Sinne
+von "`Cross-Plattform-Entwicklung"' wird für solche Fälle ein Interface im gemeinsamen Projekt
+definiert. Dieses Interface wird dann in den plattformspezifischen Projekten implementiert. Auf
+diese Weise lässt sich die Netzwerktyperkennung aus dem "`shared"' Projekt steuern und
+dementsprechend behandeln.
 % Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
 % SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
 % benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
@@ -337,36 +387,36 @@ man auf die plattformspezifische Scanner.cs Klassen mit:\\
 \label{fig:abb28}
 \end{figure}
 
-\subsection{Web Services für die Kommunikation mit dem Backend}
-Web Services kommen in den folgenden Fällen zum Einsatz:
-\begin{itemize}
-  \item Bei der einmaligen Registrierung eines Benutzers.
-  \item Beim Überprüfen eines Barcodes.
-  \item Beim Abschließen einer Bestellung.
-  \item Beim Anzeigen des Kundennamen nach der Eingabe einer Kundennummer (Nur im
-  Mitarbeiter-Modus).
-\end{itemize} 
-Im gemeinsamen Projekt wird für diesen Zweck eine Klasse mit jeweils eine Methode für die oben
-genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen Http-Client der
-Komponente \textbf{ModernHttpClient}:\\  
-\textcolor{gray}{\emph{HttpClient client = new HttpClient(new
-ModernHttpClient.NativeMessageHandler())}}.
-\\Wie bei jeder App muss man hier beachten, dass mobile Geräte nicht selten einen schlechten oder
-gar keinen Empfang haben. Abhängig vom Netzwerktyp kann die Geschwindigkeit einer Internetverbindung
-stark variieren. Aus diesem Grund ist es wichtig, dass alle Serveranfragen in einem
-separaten Thread ausgeführt werden, so dass der Ablauf der App nicht durch eine schlechte oder
-fehlende Verbindung beeinträchtigt wird. Außerdem kann je nach Tarif der mobile Datenvolumen
-begrenzt oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von verbrauchten MB pro Monat erreicht
-wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
-erkennen. D.h. ob die Verbindung über WLAN oder über das mobile Internet erfolgt. Xamarin.Android
-bietet einen Mechanismus für diesen Zweck - durch die Klasse \textbf{NetworkInfo}. Mithilfe dieser Klasse
-kann die App auch erkennen ob Roaming eingeschaltet wurde (\cite{XamNetzwerkStatus}).\\Bei
-Xamarin.iOS gibt es einen ähnlichen Mechanismus.
-\\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
-darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
-Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
-plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten.
-\subsection{Xamarin Komponenten (Components) und NuGet Packages}
+%\subsection{Web Services für die Kommunikation mit dem Backend}
+% Web Services kommen in den folgenden Fällen zum Einsatz:
+% \begin{itemize}
+%   \item Bei der einmaligen Registrierung eines Benutzers.
+%   \item Beim Überprüfen eines Barcodes.
+%   \item Beim Abschließen einer Bestellung.
+%   \item Beim Anzeigen des Kundennamen nach der Eingabe einer Kundennummer (Nur im
+%   Mitarbeiter-Modus).
+% \end{itemize} 
+% Im gemeinsamen Projekt wird für diesen Zweck eine Klasse mit jeweils eine Methode für die oben
+% genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen Http-Client der
+% Komponente \textbf{ModernHttpClient}:\\  
+% \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
+% ModernHttpClient.NativeMessageHandler())}}.
+% \\Wie bei jeder App muss man hier beachten, dass mobile Geräte nicht selten einen schlechten oder
+% gar keinen Empfang haben. Abhängig vom Netzwerktyp kann die Geschwindigkeit einer Internetverbindung
+% stark variieren. Aus diesem Grund ist es wichtig, dass alle Serveranfragen in einem
+% separaten Thread ausgeführt werden, so dass der Ablauf der App nicht durch eine schlechte oder
+% fehlende Verbindung beeinträchtigt wird. Außerdem kann je nach Tarif der mobile Datenvolumen
+% begrenzt oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von verbrauchten MB pro Monat erreicht
+% wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
+% erkennen. D.h. ob die Verbindung über WLAN oder über das mobile Internet erfolgt. Xamarin.Android
+% bietet einen Mechanismus für diesen Zweck - durch die Klasse \textbf{NetworkInfo}. Mithilfe dieser Klasse
+% kann die App auch erkennen ob Roaming eingeschaltet wurde (\cite{XamNetzwerkStatus}).\\Bei
+% Xamarin.iOS gibt es einen ähnlichen Mechanismus.
+% \\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
+% darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
+% Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
+% plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten.
+\subsection{Xamarin Komponenten (Components) und NuGet Packages} \label{nuGetPackages}
 Die Möglichkeit, Komponenten und NuGet Packages an ein Projekt anzubinden, ist eine der
 größten Stärken von Xamarin.
 Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen (shared) Projekt
