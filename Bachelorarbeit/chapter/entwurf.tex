@@ -48,10 +48,14 @@ source"' Eine solche Xamarin Komponente ist bspw. die ZXing-Komponente zum Scann
 eine zentrale Rolle in der App spielt. Das ebenso in der ScanApp eingebundene NuGet Package
 "`DeviceInfo"' bietet eine API, mit der Entwickler Informationen über das Smartphone bekommen
 können. Am Ende dieses Kapitels werden die für die ScanApp benötigten NuGut Packages und Xamarin
-Komponenten näher vorgestellt. \\Der Entwurf der ScanApp bezieht sich fast ausschließlich auf das
-"`shared"' Projekt. Wie bereits angesprochen, ist der Sinn von "`Cross-Plattform-Entwicklung"', dass
-alles, was sich auslagern lässt in das gemeinsame Projekt gehört und die plattformspezifischen
-Projekte sollten möglichst "`leer"' bleiben.
+Komponenten näher vorgestellt. 
+% \\Der Entwurf der ScanApp bezieht sich fast ausschließlich auf das
+% "`shared"' Projekt (siehe Abb. \ref{fig:abb40}). 
+\\Wie bereits angesprochen, ist der Sinn von
+"`Cross-Plattform-Entwicklung"', dass alles, was sich auslagern lässt, in das gemeinsame Projekt
+gehört. Die plattformspezifischen Projekte sollten möglichst "`leer"' bleiben.
+Im Folgenden wird einen Einblick in die Strukturen der drei Projekte gegeben, beginnend beim
+"`shared"' ScanApp Projekt (siehe Abb. \ref{fig:abb41}).
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/ScanAppProjekt.png}
@@ -152,26 +156,48 @@ Projekte sollten möglichst "`leer"' bleiben.
 % \label{fig:abb33}
 % \end{figure}
 \subsection{Datenpersistenz und Backend-Kommunikation}
-Fast jede mobile Anwendung braucht einen Mechanismus, der eine dauerhafte Speicherung der
-Appdaten erlaubt.
-Die "`open-source"' Datenbank SQLite ist gut geeignet für das Persistieren der Daten von mobilen
+Fast jede mobile Anwendung braucht einen Mechanismus, der eine dauerhafte lokale Speicherung der
+Appdaten erlaubt. Das gilt besonders für die Kategorie der Business Apps, zu der die zu entwickelnde
+ScanApp auch zählt.Typischerweise wird für diesen Zweck eine leichtgewichtige Datenbank, namens
+SQLite benutzt.
+Die "`open-source"' Datenbank SQLite ist gut geeignet für das Persistieren von Daten bei mobilen
 Applikationen, weil:
 \begin{itemize}
   \item die Datenbank klein, schnell und leicht portierbar ist;
   \item der Fileformat leicht zu benutzen und plattformübergreifend ist;
   \item SQLite die meisten SQL92 Standards implementiert.
 \end{itemize}
-Ein weiterer wichtiger und häufig vorkommender Punkt bei der Entwicklung von mobielen
-Applikationen, ist die Kommunikation mit dem Backend. Web Services kommen in den folgenden Fällen
-zum Einsatz:
+Darüber hinaus ist SQLite die Standardlösung bei der nativen Android-App-Entwicklung und sehr
+verbreitet bei der iOS-App-Entwicklung.
+Xamarin.Forms unterstützt die Anbindung von SQLite und zwar cross-plattform. In den plattformspezifischen Projekte
+muss lediglich jeweils eine SQLite-Datei zu den Ressourcen hinzugefügt werden. Im gemeinsamen
+Projekt müssen die Pfade zu den jeweiligen SQL-Datenbanken angegeben werden, einmal für Android und
+einmal für iOS. Die Zugriffe auf die Datenbank erfolgen plattformübergreifend.
+
+Ein weiterer wichtiger und häufig vorkommender Punkt bei der Entwicklung von Apps, ist die
+Kommunikation mit dem Backend. Ähnlich wie die Anforderung für dauerhafte lokale Speicherung der App
+Daten, müssen viele Apps (vor allem Business Apps) mit einem Server über das Internet kommunizieren.
+Diese Kommunikation erfolgt über sogenannte Web Services.
+\\Stellvertretend für die meisten Apps dieser Kategorie, kommt es bei der ScanApp in den
+folgenden Fällen zum Einsatz von Web Services:
 \begin{itemize}
   \item Bei der einmaligen Registrierung eines Benutzers.
   \item Beim Überprüfen eines Barcodes.
   \item Beim Abschließen einer Bestellung.
 \end{itemize} 
-Im gemeinsamen Projekt wird für diesen Zweck eine Klasse mit jeweils eine Methode für die oben
-genannten vier Fällen erstellt. Alle Methoden der Klasse benutzen den gleichen Http-Client der
-Xamarin Komponente \textbf{ModernHttpClient}.
+Das sind drei typische Interaktionen zwischen App und Backend. Im Prinzip ist es belanglos,
+wofür konkret Web Services eingesetzt werden, weil die immer nach dem gleichen Muster funktionieren.
+Die App sendet eine Anfrage, im vorliegenden Fall in Form eines Json-Objekts (oft werden auch XML-Dateien zwischen App
+und Server ausgetauscht, wobei bei XML der Overhead größer ist) und der Server antwortet
+mit einer Datei desselben Formats. Damit die Kommunikation gelingt, müssen sich Server und Client an
+einem Vertrag halten. In diesem Vertrag wird die Struktur des Json-Objekts definiert. D.h.
+die App muss in der Lage sein, dieses Objekt zu parsen, um die Antwort vom Server verstehen zu
+können. Für das Parsen eines Json-Objekts wird das NuGet Package \textbf{Newtonsoft.Json} in 
+die Projekte ScanApp.iOS und ScanApp.Droid eingebunden. Die Kommunikation erfolgt mit dem
+Http-Client der Xamarin Komponente \textbf{ModernHttpClient}, die ebenso in die
+plattformspezifischen Projekte eingebunden werden muss.\\Die Implementierung ist
+plattformübergreifend, im gemeinsamen Projekt wird eine Klasse (siehe Abb. \ref{fig:abb41}, die
+Klassse HttpBackend) mit jeweils eine Methode für die oben genannten drei Fällen erstellt.
 % \\  
 % \textcolor{gray}{\emph{HttpClient client = new HttpClient(new
 % ModernHttpClient.NativeMessageHandler())}}.
@@ -188,12 +214,12 @@ kann die App auch erkennen ob Roaming eingeschaltet wurde (\cite{XamNetzwerkStat
 Xamarin.iOS gibt es einen ähnlichen Mechanismus.
 \\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
 darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
-Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
-plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten. Im Sinne
-von "`Cross-Plattform-Entwicklung"' wird für solche Fälle ein Interface im gemeinsamen Projekt
-definiert. Dieses Interface wird dann in den plattformspezifischen Projekten implementiert. Auf
+Verbindung besteht (\cite{XamNetzwerkStatusIOS}). \\Die Netzwerktyperkennung lässt sich nicht
+plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten. Im Sinne von "`Cross-Plattform-Entwicklung"' wird für solche Fälle ein Interface im gemeinsamen Projekt definiert. Dieses Interface wird dann in den plattformspezifischen Projekten implementiert. Auf
 diese Weise lässt sich die Netzwerktyperkennung aus dem "`shared"' Projekt steuern und
-dementsprechend behandeln.
+dementsprechend behandeln. Da bei der ScanApp eine Übertragung von
+größeren Dateien, wie bspw. Bilder nicht vorgesehen ist, ist eine Netzwerktyperkennung unnötig und
+es wurde darauf verzichtet.
 % Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
 % SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
 % benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
@@ -212,6 +238,10 @@ dementsprechend behandeln.
 % \caption{SQLite Pfad}
 % \label{fig:abb27}
 % \end{figure}
+\subsection{Model}
+\subsection{View}
+\subsection{ViewModel}
+\subsection{Util}
 
 \subsection{GUI}
 Die Benutzungsoberfläche (in English: graphical user interface (GUI)) soll den Designvorgaben der
@@ -226,7 +256,7 @@ Xamarin lässt Entwicklern die Wahl zwischen der Markupsprache Xaml und C\# für d
 der UIs (User Interfaces), wobei beide Techniken zum gleichen Ergebnis führen. \\Die
 Positionierung der Steuerelemente und deren Funktionalität lassen sich in einer C\#-Datei
 implementieren, allerdings ist der Code schwer lesbar und nicht wiederverwendbar.\\Aus diesem
-Grund werden die grafischen Interfaces der ScanApp mit der Markupsprache Xaml beschrieben.
+Grund werden die grafischen Interfaces der Scan-App mit der Markupsprache Xaml beschrieben.
 Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
 Xaml-Datei beschrieben) und der Funktionalität (in der an der Xaml-Datei gebundenen
 Viewmodel-C\#-Datei implementiert) erreicht.
