@@ -155,6 +155,46 @@ Im Folgenden wird einen Einblick in die Strukturen der drei Projekte gegeben, be
 % \caption{Definition von Bindable Property}
 % \label{fig:abb33}
 % \end{figure}
+
+% Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
+% SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
+% benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
+% \\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
+% der Datenbank File zu finden ist (es ist abhängig vom
+% Ziel-Plattform unterschiedlich). Für iOs und Android kann man "`Environment class"' benutzen um einen
+% validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
+% spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
+% auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
+% benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
+% Datenbankzugriffe sind mit demselben "`lock"' gekapselt, wobei hier Vorsicht geboten ist. Es könnten
+% Deadlocks entstehen! 
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.4]{graphics/SQLitePath.png}
+% \caption{SQLite Pfad}
+% \label{fig:abb27}
+% \end{figure}
+\subsection{Shared ScanApp Projekt}
+In Abb. \ref{fig:abb40} wird der grobe Entwurf der ScanApp abgebildet. Wie schon angemerkt, passiert
+das wesentliche im gemeinsamen Projekt (Shared Projekt). Abb. \ref{fig:abb41} bildet die Struktur
+des Shared ScanApp Projekts ab. Im Folgenden wird einen Einblick in die Komponenten dieses Projekts
+gegeben.
+\subsubsection{Model}
+Zum Model gehören die eigentlichen Daten der Anwendung. Hier werden Klassen, wie Barcode, UserData,
+Order, OrderItem etc. definiert. Hier wird noch eine Klasse definiert, die
+Methoden für "`CRUD"'-Operationen (Create Read Update Delete) für das Persistieren der Modeldaten
+bietet.
+\subsubsection{View}
+\subsubsection{ViewModel}
+\subsubsection{Util}
+In dieser Komponente werden einige nützliche Klassen definiert: 
+\begin{itemize}
+  \item UtilKlasse mit mehreren statischen Methoden, die von den Klassen des Viewmodels benutzt
+  werden.
+  \item Klasse mit App-Konstanten. Hier werden üblicherweise vorwiegend Strings ausgelagert.
+  \item HttpBackend
+\end{itemize}
+
 \subsection{Datenpersistenz und Backend-Kommunikation}
 Fast jede mobile Anwendung braucht einen Mechanismus, der eine dauerhafte lokale Speicherung der
 Appdaten erlaubt. Das gilt besonders für die Kategorie der Business Apps, zu der die zu entwickelnde
@@ -220,28 +260,6 @@ diese Weise lässt sich die Netzwerktyperkennung aus dem "`shared"' Projekt steue
 dementsprechend behandeln. Da bei der ScanApp eine Übertragung von
 größeren Dateien, wie bspw. Bilder nicht vorgesehen ist, ist eine Netzwerktyperkennung unnötig und
 es wurde darauf verzichtet.
-% Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
-% SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
-% benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
-% \\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
-% der Datenbank File zu finden ist (es ist abhängig vom
-% Ziel-Plattform unterschiedlich). Für iOs und Android kann man "`Environment class"' benutzen um einen
-% validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
-% spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
-% auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
-% benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
-% Datenbankzugriffe sind mit demselben "`lock"' gekapselt, wobei hier Vorsicht geboten ist. Es könnten
-% Deadlocks entstehen! 
-% \begin{figure}[!h]
-% \centering
-% \includegraphics[scale = 0.4]{graphics/SQLitePath.png}
-% \caption{SQLite Pfad}
-% \label{fig:abb27}
-% \end{figure}
-\subsection{Model}
-\subsection{View}
-\subsection{ViewModel}
-\subsection{Util}
 
 \subsection{GUI}
 Die Benutzungsoberfläche (in English: graphical user interface (GUI)) soll den Designvorgaben der
