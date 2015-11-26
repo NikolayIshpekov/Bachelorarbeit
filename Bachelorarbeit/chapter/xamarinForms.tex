@@ -108,7 +108,19 @@ dadurch lassen sich Apps erstellen, die spezielle Interaktionen erfordern. Solch
 die Funktionalität und die Leistung einer nativen Anwendung.\\Hingegen ist der Ansatz von
 Xamarin.Forms besonders gut für Apps geeignet, die wenig plattformspezifische Funktionalität
 aufweisen oder solche, bei denen keine spezielleren Benutzeroberflächen erfordert
-werden.\\Zusammengefasst bedeutet das, dass Anwendungen, bei denen die Geschäftslogik höher
+werden.
+Die von Xamarin.Forms angebotenen Steuerelemente sind meistens
+ausreichend, so dass ein benutzerdefinierter Renderer selten benötigt wird. Ein Beispiel
+wäre die Hintergrundfarbe einer markierten Zeile eines ListViews. Sie ist bspw. blau bei Android und
+grau bei der iOS Version einer mit Xamarin.Forms erstellter App.
+Obwohl die Ansichten plattformübergreifend im "`shared"' Projekt erstellt werden, werden sie auf
+den Zielplattformen nicht gleich aussehen. Grund dafür ist die Tatsache, dass der gemeinsame Code
+aus dem "`shared"' Projekt zum nativen Code kompiliert wird. D.h. es entstehen native Steuerelemente, die spezifische Merkmale
+der jeweiligen Plattform tragen.
+Sollte die Hintergrundfarbe bei Android auch grau sein, wäre ein Custom Renderer im
+plattformspezifischen Droid-Projekt nötig. D.h. das native Android-Steuerelement soll überschrieben
+werden.
+\\Zusammengefasst bedeutet das, dass Anwendungen, bei denen die Geschäftslogik höher
 priorisiert wird als optische Effekte der Benutzeroberfläche, sich ganz bequem mit Xamarin.Forms
 erstellen lassen können. Unter diese Kategorie fallen die sogenannten
 Business(Enterprise)-Anwendungen.

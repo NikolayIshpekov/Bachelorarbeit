@@ -14,18 +14,25 @@ Xamarin Studio. Xamarin Studio bietet mehrere Solution-Templates an
 \label{fig:abb36}
 \end{figure}
 \subsection{Umsetzung des MVVM-Architekturmusters}
-Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
-zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
-\begin{itemize}
-  \item \textbf{Model} - Im Ordner Model werden typischerweise Klassen defniert, die
-  anwendungsspezifische Datentypen beschreiben. Das sind Klassen zur Speicherung und
-  Verarbeitung von Daten, die dafür sorgen, dass die Daten konsistent gehalten
-  werden.
-  \item \textbf{View} - Alle Ansichten (Xaml-Datein, die vom Typ Xamarin.Forms.Page oder
-Xamarin.Forms.View sind oder von diesen Klassen erben) gehören in den Ordner View.
-  \item \textbf{Viewmodel} - In den Viewmodel-Ordner kommen die Viewmodel-Klassen (C\#-Klassen,
-  die das Interface \textbf{\textit{INotifyPropertChanged}} implementieren). 
-\end{itemize}
+% Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
+% zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
+% \begin{itemize}
+%   \item \textbf{Model} 
+%   \item \textbf{View} 
+%   \item \textbf{Viewmodel} 
+% \end{itemize}
+Bei der Erstellung einer Xamarin.Forms
+ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt auch als
+"`Code-Behind-Datei"', angelegt (siehe Abb. \ref{fig:abb21}).
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
+\caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
+\label{fig:abb21}
+\end{figure}
+Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
+\emph{InitializeComponent()} Methode im Konstruktor und eventuell Methoden, die
+Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
 Jede Ansicht wird an ein Viewmodel gebunden. Das wird durch das sogenannte "`Data
 Binding"' (in Deutsch Datenbindung) realisiert.
 % In Abb.\ref{fig:abb23} sieht man eine typische
@@ -122,26 +129,93 @@ der Ansicht angezeigt.\\In Abbildung \ref{fig:abb23}, Zeile 20 ist die Definitio
 Toolbarbuttons zu sehen. Sobald dieser Button gedrückt wird, wird ein Command ausgeführt, das an
 das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
 löst den Aufruf einer Methode in der Viewmodel-Klasse auf.
-\\Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw.
-den Text eines Labels oder die Textfarbe setzen.\\Analog ließen sich auch die anderen Ansichten der
-Scan App implementieren. Aus diesem Grund wird nicht näher ins Detail eingegangen.
-\\Sollte eine
-Funktionalität nicht plattformübergreifend zu realisieren sein, hat man mit Xamarin.Forms die
-Möglichkeit, diese Funktionalität in den plattformspezifischen Projekten zu implementieren.
-Im gemeinsamen Projekt wird ein Interface definiert, das von den dafür zuständigen Klassen in ScanApp.Droid und ScanApp.iOS implementiert
-werden muss.
-Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
-\textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
-% \\Das Ganze veranschaulicht, welche
-% Vorteile das MVVM-Architekturmuster mit sich bringt.
-
 \begin{figure}[!h]
 \centering
-\includegraphics[scale = 0.6]{graphics/Bindable_Property.png}
+\includegraphics[scale = 0.8]{graphics/Bindable_Property.png}
 \caption{Definition von Bindable Property}
 \label{fig:abb33}
 \end{figure}
-
+Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw.
+den Text eines Labels oder die Textfarbe setzen.\\Analog ließen sich auch die anderen Ansichten der
+Scan App implementieren. Aus diesem Grund wird nicht näher ins Detail eingegangen.
+\\Sollte eine Funktionalität nicht plattformübergreifend zu realisieren sein, hat man mit
+Xamarin.Forms die Möglichkeit, diese Funktionalität in den plattformspezifischen Projekten zu implementieren.
+Im gemeinsamen Projekt wird ein Interface definiert, das von den dafür zuständigen Klassen in ScanApp.Droid und ScanApp.iOS implementiert
+werden muss.
+% Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
+% \textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
+Beispiel dafür ist die Implementierung des Scanners.
+Im gemeinsamen Projekt wird das Interface IScanner.cs definiert (Abb.
+\ref{fig:abb28}).
+In beiden plattformspezifischen Projekte wird je eine Klasse Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
+man auf die plattformspezifische Scanner.cs Klassen mit:\\
+\textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}} zugreifen.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.8]{graphics/IScanner.png}
+\caption{Das Interface IScanner}
+\label{fig:abb28}
+\end{figure}
+% \\Das Ganze veranschaulicht, welche
+% Vorteile das MVVM-Architekturmuster mit sich bringt.
+\subsection{Implementierung der Navigation}
+Die Implementierung der Navigation der App erfolgt ausschließlich im gemeinsamen Projekt, ScanApp.
+\\In der Initialisierungsdatei der App, \emph{public class App}, wird in der Datenbank überprüft ob
+bereits ein Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es zwei mögliche Wege:
+\begin{itemize}
+  \item Im Falle, dass ein Datenbankeintrag mit einem Benutzer existiert, wird der User zu einer
+  Menü-Ansicht navigiert. Diese Menü-Ansicht ist vom Typ \textbf{MasterDetailPage}. An
+  dieser Stelle ist wichtig zu erwähnen, dass bei Xamarin.Adroid, die Benutzung von einer
+  MasterDetailPage in einer NavigationPage nicht möglich ist und die Anwendung abstürzt. Aus
+  diesem Grund wird hier folgende Compiler-Direktive zur Fallunterscheidung benutzt:
+  \textcolor{gray}{
+  \\ \#if \textunderscore\textunderscore iOS\textunderscore\textunderscore
+   \\MainPage = new NavigationPage( new MenuMasterDetailPage());\\ \#endif}\\Für Android sieht der
+   Code folgendermaßen aus:\\ \textcolor{gray}{\#if \textunderscore\textunderscore
+   Android\textunderscore\textunderscore \\ MainPage = new MenuMasterDetailPage();\\ \#endif}
+  \item Wenn noch kein Benutzer registriert wurde, wird eine \textbf{NavigationPage} erstellt und
+  der User wird zu der \textbf{Login-Ansicht}, vom Typ ContentPage, navigiert (siehe die Mockups in
+  Abb.\ref{fig:abb34}).
+   Auf der Login-Ansicht gibt der User seine Kundennummer und seine
+  Postleitzahl ein und die Daten werden zum Server gesendet. Im Falle einer erfolgreichen
+  Registrierung, wird zu der bereits erwähnten \textbf{MasterDetailPage} navigiert (siehe Mockup
+  Menüführung in Abb.\ref{fig:abb34}). Wegen der bekannten Problemen bei Xamarin.Android zwischen
+  NavigationPage und MasterDetailPage, muss hier wieder unterschieden werden zwischen iOS und
+  Android. Bei Android muss die Navigation von Typ "`modal"' sein (ohne Möglichkeit zurückzunavigieren).
+  \\\textcolor{gray}{\#if \textunderscore\textunderscore
+  Android\textunderscore\textunderscore \\this.Navigation.PushModalAsync(new MenuMasterDetailPage());\\
+   \#endif}
+\end{itemize} 
+Es muss noch beachtet werden, dass auch wenn die Navigation "`modal"' ist, hat man bei Android
+immer noch die Möglichkeit zurück zu der Login-Ansicht zu navigieren, indem man den physischen
+"`Back"'-Button des Android-Geräts drückt. Das muss programmatisch deaktiviert werden und zwar nur
+für Android, also "`nicht cross-plattform"'.\\Mit der bereits erwähnten Compiler-Direktive "`\#if"'
+lässt sich plattformspezifisches Verhalten im gemeinsamen Code implementieren. Obwohl  hier eine
+Fallunterscheidung zu beobachten ist, also kein gemeinsamer Code, erleichtert es die Wartung des
+Codes. Es befindet sich in einer gemeinsamen Datei. Beim Kompilieren des Codes werden Codeabschnitte
+ignoriert, wenn die nicht für das jeweilige Betriebssystem vorgesehen worden sind.\\Compiler
+Direktiven kann man nicht nur um zwischen Android und iOs zu unterscheiden, sondern auch um zwischen
+den verschiedenen Versionen von Android. Man kann explizit angeben, "`\textcolor{gray}{\#if
+\textunderscore\textunderscore ANDROID\textunderscore21\textunderscore\textunderscore \ldots \#endif}"'
+und der Code wird nur für Android API 21 kompiliert.
+Auf diese Weise kann man mit Problemen umgehen, die die große Vielfalt von Android APIs mit sich
+bringen.
+\subsubsection{Steuerung des Menüs mit MasterDetailPage}
+% In der Abb.\ref{fig:abb31} sieht man das aufgeklappte Menü der Menüsteuerungsseite der ScanApp. 
+Die Xamarin.Forms.MasterDetailPage hat zwei wichtige Properties von Typ Page:
+\begin{itemize}
+  \item Master - eine ContentPage mit einem Element, nämlich eine TableView, in der die
+  unterschiedlichen Navigationspunkte aufgelistet werden.
+  \item Detail - je nachdem, welcher Navigationspunkt geklickt wurde, wird eine neue NavigationPage
+  erstellt und der Benutzer wird zu der entsprechenden Ansicht (ContentPage) navigiert.
+\end{itemize}
+Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
+\\ \textcolor{gray}{\textsl{void onKontaktTapped(object sender, EventArgs e)\\ \{\\ this.Detail
+= new NavigationPage(new KontaktPage());\\this.isPresent = false;
+\\
+\}}}
+\\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
+automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
 \subsection{Test}
 Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es wird zwischen zwei Arten
 von Tests unterschieden, UI- und Unit-Tests. 
