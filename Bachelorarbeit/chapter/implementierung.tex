@@ -1,5 +1,5 @@
-\section{Implementierung und Test}
-In diesem Abschnitt werden kurz Feststellungen beschrieben, die während der konkreten Realisierung
+\chapter{Implementierung und Test}
+In diesem Kapitel werden kurz Feststellungen beschrieben, die während der konkreten Realisierung
 der Implementierung der ScanApp aufgefallen sind. Es werden noch typische Testvorgänge erläutert,
 vor allem den Dienst von Xamarin - die Xamarin Test Cloud.
 \\Die Benutzung von Xamarin mit Visual Studio erfordert einen Business-Account. Außerdem werden zwei
@@ -13,7 +13,6 @@ Xamarin Studio. Xamarin Studio bietet mehrere Solution-Templates an
 \caption{Xamarin Studio Solution Templates}
 \label{fig:abb36}
 \end{figure}
-\subsection{Umsetzung des MVVM-Architekturmusters}
 % Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
 % zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
 % \begin{itemize}
@@ -21,20 +20,20 @@ Xamarin Studio. Xamarin Studio bietet mehrere Solution-Templates an
 %   \item \textbf{View} 
 %   \item \textbf{Viewmodel} 
 % \end{itemize}
-Bei der Erstellung einer Xamarin.Forms
-ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt auch als
-"`Code-Behind-Datei"', angelegt (siehe Abb. \ref{fig:abb21}).
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
-\caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
-\label{fig:abb21}
-\end{figure}
-Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
-\emph{InitializeComponent()} Methode im Konstruktor und eventuell Methoden, die
-Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
-Jede Ansicht wird an einen Viewmodel gebunden. Das wird durch das sogenannte "`Data
-Binding"' (in Deutsch Datenbindung) realisiert.
+% Bei der Erstellung einer Xamarin.Forms
+% ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt auch als
+% "`Code-Behind-Datei"', angelegt (siehe Abb. \ref{fig:abb21}).
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
+% \caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
+% \label{fig:abb21}
+% \end{figure}
+% Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
+% \emph{InitializeComponent()} Methode im Konstruktor und eventuell Methoden, die
+% Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
+% Jede Ansicht wird an einen Viewmodel gebunden. Das wird durch das sogenannte "`Data
+% Binding"' (in Deutsch Datenbindung) realisiert.
 % In Abb.\ref{fig:abb23} sieht man eine typische
 % Xaml-Datei, die eine Ansicht beschreibt und sich im Ordner View befindet. Diese Ansicht wird
 % von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
@@ -56,27 +55,8 @@ Binding"' (in Deutsch Datenbindung) realisiert.
 % das Property \textit{SaveUserDataCommand} des Viewmodels gebunden ist. D.h. dieses Klick-Event
 % löst den Aufruf einer Methode in der Viewmodel-Klasse auf.\\Das Ganze veranschaulicht, welche
 % Vorteile das MVVM-Architekturmuster mit sich bringt.
-Durch die Datenbindung entsteht eine lose Kopplung zwischen View und ViewModel. Da das Viewmodel die
-Views nicht kennt, lässt sich eine Ansicht problemlos durch eine andere austauschen. Die neue
-Ansicht muss lediglich an das Viewmodel gebunden werden.
-\\Ein ViewModel muss zwingend das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
-Dadurch können sogenannte "`Bindable Properties"` definiert werden
-%  (siehe Abb.\ref{fig:abb33})
-. Bei jeder Änderung wird die OnPropertyChanged()-Methode mit dem Property-Name als String-Parameter
-aufgerufen und dadurch wird ein PropertyChangedEventHandler ausgelöst.
-\\Wie bei den meisten Applikationen, sind auch für die Scan-Anwendung mehrere Ansichten
-erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um
-zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse \textit{NavigationPage}
-benötigt: \textit{new NavigationPage(new Page())}. 
-\\Jede Xamarin.Forms.Page-Klasse hat über das Property \textbf{\textit{Navigation}} Zugriff auf das
-NavigationPage: \textit{this.Navigation.PushAsync(new Page())}.\\Nach dem MVVM-Muster sollten sich
-die Viewmodel-Klassen um die Navigation kümmern.
-Allerdings ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
-dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
-kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
-abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
-Seite gewechselt werden soll.
-\subsection{Anbindung der SQLite Datenbank}
+
+\section{Anbindung der SQLite Datenbank}
 Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
 SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt (in der Model-Komponente
 Persistenz, die in Abb. \ref{fig:abb41} abgebildet ist) kopieren.
@@ -96,17 +76,31 @@ Deadlocks entstehen!
 \caption{SQLite Pfad}
 \label{fig:abb27}
 \end{figure}
-\subsection{Gestaltung der Ansichten}
+\section{Umsetzung des MVVM-Architekturmusters}
 Beim Erstellen einer neuen Datei bietet Xamarin Studio außer
-Standarddateien C\#-Dateien, wie "`Empty Class"', "`Empty Interface"' usw., noch vorgefertigte
+Standard C\#-Dateien, wie "`Empty Class"', "`Empty Interface"' usw., noch vorgefertigte
 Xamarin.Forms-Dateien, wie "`Forms ContentPage"', "`Forms ContentPage Xaml"', "`Forms Content View"'
 oder "`Forms ContentView Xaml"' an. \\Wie bereits im \ref{View} erläutert, werden die
 Ansichten der App in Xaml implementiert.
-Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich.
-Es gibt ein Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine
-übersichtliche Hierarchie der Elemente.
+Beim Anlegen einer Xamarin.Forms
+ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt auch als
+"`Code-Behind-Datei"', erzeugt (siehe Abb. \ref{fig:abb21}).
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.7]{graphics/XamlDateiPlusCSDatei.png}
+\caption{Xaml-Datei und die zugrundeliegende C\#-Datei}
+\label{fig:abb21}
+\end{figure}
+Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
+\emph{InitializeComponent()} Methode im Konstruktor und eventuell Methoden, die
+Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
+Jede Ansicht wird an einen Viewmodel gebunden. Das wird durch das sogenannte "`Data
+Binding"' (in Deutsch Datenbindung) realisiert.
 % Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
 % Text eines Labels oder die Textfarbe setzen. 
+\\Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich.
+Es gibt ein Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine
+übersichtliche Hierarchie der Elemente.
 In Abb. \ref{fig:abb23} sieht man eine typische
 Xaml-Datei, die die in Abb. \ref{fig:abb34} dargestellte "`Persönliche Daten Ansicht"' beschreibt und
 sich in der View-Komponente (siehe Abb. \ref{fig:abb41}) befindet.
@@ -138,11 +132,33 @@ löst den Aufruf einer Methode in der Viewmodel-Klasse auf.
 \label{fig:abb33}
 \end{figure}
 Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw.
-den Text eines Labels oder die Textfarbe setzen.\\Analog ließen sich auch die anderen Ansichten der
-Scan App implementieren. Aus diesem Grund wird nicht näher ins Detail eingegangen.
+den Text eines Labels oder die Textfarbe setzen.
+\\Durch die Datenbindung entsteht eine lose Kopplung zwischen View und ViewModel. Da der Viewmodel
+die Views nicht kennt, lässt sich eine Ansicht problemlos durch eine andere austauschen. Der
+Viewmodel muss lediglich an die neue View gebunden werden.
+\\Ein ViewModel muss zwingend das Interface \textbf{\textit{INotifyPropertChanged}} implementieren.
+Dadurch können sogenannte "`Bindable Properties"` definiert werden
+%  (siehe Abb.\ref{fig:abb33})
+. Bei jeder Änderung wird die OnPropertyChanged()-Methode mit dem Property-Name als String-Parameter
+aufgerufen und dadurch wird ein PropertyChangedEventHandler ausgelöst.
+\\Wie bei den meisten Applikationen, sind auch für die Scan-Anwendung mehrere Ansichten
+erforderlich. Es stellt sich die Frage, wie wird zwischen den verschiedenen Seiten gewechselt?\\Um
+zwischen den Ansichten navigieren zu können, wird eine Instanz der Klasse \textit{NavigationPage}
+benötigt: \textit{new NavigationPage(new Page())}. 
+\\Jede Xamarin.Forms.Page-Klasse hat über das Property \textbf{\textit{Navigation}} Zugriff auf das
+NavigationPage: \textit{this.Navigation.PushAsync(new Page())}.\\Nach dem MVVM-Muster sollten sich
+die Viewmodel-Klassen um die Navigation kümmern.
+Allerdings ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
+dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
+kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
+abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
+Seite gewechselt werden soll.
+\\Analog lassen sich auch die anderen Ansichten der
+Scan App und die dazugehörigen ViewModels implementieren. Aus diesem Grund wird
+nicht näher ins Detail eingegangen.
 % \\Das Ganze veranschaulicht, welche
 % Vorteile das MVVM-Architekturmuster mit sich bringt.
-\subsection{Implementierung der Navigation}
+\section{Implementierung der Navigation}
 Die Implementierung der Navigation der App erfolgt ausschließlich im gemeinsamen Projekt, ScanApp.
 \\In der Initialisierungsdatei der App, \emph{public class App}, wird in der Datenbank überprüft ob
 bereits ein Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es zwei mögliche Wege:
@@ -184,7 +200,7 @@ den verschiedenen Versionen von Android. Man kann explizit angeben, "`\textcolor
 und der Code wird nur für Android API 21 kompiliert.
 Auf diese Weise kann man mit Problemen umgehen, die die große Vielfalt von Android APIs mit sich
 bringen.
-\subsubsection{Steuerung des Menüs mit MasterDetailPage}
+\subsection{Steuerung des Menüs mit MasterDetailPage}
 % In der Abb.\ref{fig:abb31} sieht man das aufgeklappte Menü der Menüsteuerungsseite der ScanApp. 
 Die Xamarin.Forms.MasterDetailPage hat zwei wichtige Properties von Typ Page:
 \begin{itemize}
@@ -200,7 +216,7 @@ Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
 \}}}
 \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
 automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
-\subsection{Implementierung von hardwarenahen Funktionalitäten}
+\section{Implementierung von hardwarenahen Funktionalitäten}
 Sollte eine Funktionalität nicht plattformübergreifend zu realisieren sein, hat man mit
 Xamarin.Forms die Möglichkeit, diese Funktionalität in den plattformspezifischen Projekten zu implementieren.
 Im gemeinsamen Projekt wird ein Interface definiert, das von den dafür zuständigen Klassen in
@@ -257,7 +273,8 @@ jeweilige Implementierung je nach Plattform auf.
 % \caption{Callback-Methode des ViewModels, die aus dem Scanner-Thread aufgerufen wird}
 % \label{fig:abb45}
 % \end{figure}
-\subsection{Test}
+\newpage
+\section{Test}
 Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es wird zwischen zwei Arten
 von Tests unterschieden, UI- und Unit-Tests. 
 Während Unit-Tests die App-Logik testen, wird bei UI-Tests sichergestellt, dass die App so aussieht

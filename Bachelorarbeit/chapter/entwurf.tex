@@ -1,4 +1,4 @@
-\section{Entwurf für die Entwicklung mit Xamarin}
+\chapter{Entwurf für die Entwicklung mit Xamarin}
 In diesem Abschnitt wird der Entwurf der Scan-App mit Xamarin.Forms beschrieben. 
 Es wird das für Xamarin.Forms übliche MVVM-Muster angewendet.\\Bei Xamarin.Forms gibt es zwei
 alternative Methoden zum Code-Sharing:
@@ -172,13 +172,13 @@ Im Folgenden wird einen Einblick in die Strukturen der drei Projekte gegeben, be
 % \caption{SQLite Pfad}
 % \label{fig:abb27}
 % \end{figure}
-\subsection{Shared ScanApp Projekt}
+\section{Shared ScanApp Projekt}
 In Abb. \ref{fig:abb40} wird der grobe Entwurf der ScanApp abgebildet. Wie schon angemerkt, passiert
 das wesentliche im gemeinsamen Projekt (Shared Projekt). Abb. \ref{fig:abb41} bildet die Struktur
 des Shared ScanApp Projekts ab. Im Folgenden wird einen Einblick in die Komponenten dieses Projekts
 gegeben. Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
 zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
-\subsubsection{Model}
+\subsection{Model}
 In der Komponente Model werden typischerweise Klassen definiert, die
   anwendungsspezifische Datentypen beschreiben. Das sind Klassen zur Speicherung und
   Verarbeitung von Daten, die dafür sorgen, dass die Daten konsistent gehalten
@@ -187,7 +187,7 @@ D.h. zum Model gehören die eigentlichen Daten der Anwendung. Hier werden Klassen
 UserData, Order, OrderItem etc. definiert.\\Im Model wird noch eine Klasse definiert, die
 Methoden für "`CRUD"'-Operationen (Create Read Update Delete) für das Persistieren der Modeldaten in
 die Datenbank bietet, die in \ref{PersistenzBackend} vorgestellt wird.
-\subsubsection{View}\label{View}
+\subsection{View}\label{View}
 In der View-Komponente werden die Ansichten der Bedienungsoberfläche der App definiert. 
 Die grafischen Interfaces der Scan-App werden mit der Markupsprache Xaml
 beschrieben. Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
@@ -218,7 +218,7 @@ Ansichten abgeleitet.
 \caption{GUI Mockups}
 \label{fig:abb34}
 \end{figure}
-\subsubsection{ViewModel}
+\subsection{ViewModel}
 In der Viewmodel-Komponente kommen die Viewmodel-Klassen (C\#-Klassen, die das Interface
 \textbf{\textit{INotifyPropertChanged}} implementieren). Jede der in der Komponente View definierten
 Ansichten, wird an eine ViewModel-Klasse gebunden. Während eine Xaml-Datei, eine reine
@@ -230,7 +230,7 @@ gewährleisten und sind auch für die Navigation zwischen der App-Seiten, die im
 \ref{Navigation} beschrieben wird, zuständig. Da nach MVVM die View den ViewModel kennt, nicht aber
 andersrum, kann eine ViewModel-Klasse ausschließlich durch das \textbf{\textit{Xamarin.Forms Messaging Center}} mit der entsprechende View-Klasse
 "`kommunizieren"'.
-\subsubsection{Util}
+\subsection{Util}
 In dieser Komponente werden einige nützliche Klassen definiert: 
 \begin{itemize}
   \item UtilKlasse mit mehreren statischen Methoden, die von den Klassen des Viewmodels benutzt
@@ -256,7 +256,7 @@ wenn die von Xamarin.Forms angebotenen Steuerelemente sich nicht so verhalten wi
 Änderungen vornehmen, wie z.B. das Definieren von runden Buttons. \\Die Layouts der  mit
 Xamarin.Forms erstellten Ansichten passen sich dynamisch an die Größe des Bildschirms an.
 Bei den vielen verschiedenen Geräten ist das eine wesentliche Erleichterung für den Entwickler.
-\subsection{Datenpersistenz und Backend-Kommunikation}\label{PersistenzBackend}
+\section{Datenpersistenz und Backend-Kommunikation}\label{PersistenzBackend}
 Fast jede mobile Anwendung braucht einen Mechanismus, der eine dauerhafte lokale Speicherung der
 Appdaten erlaubt. Das gilt besonders für die Kategorie der Business Apps, zu der die zu entwickelnde
 ScanApp auch zählt. Typischerweise wird zu diesem Zweck eine leichtgewichtige Datenbank, namens
@@ -421,7 +421,7 @@ es wurde darauf verzichtet.
 % \label{fig:abb25}
 % \end{figure}
 
-\subsection{Entwurf der Seiten-Navigation}\label{Navigation} 
+\section{Entwurf der Seiten-Navigation}\label{Navigation} 
 Beim erstmaligen Starten der App, wird ein Login-Screen angezeigt (siehe Abb. \ref{fig:abb34}) und der
 Benutzer wird aufgefordert sich zu registrieren. Im Falle einer erfolgreichen Registrierung, wird zu der Startansicht
 navigiert, nämlich die Menüführung Ansicht. Nachdem der Benutzer sich einmal registriert hat, wird
@@ -461,7 +461,7 @@ navigiert werden, in der die einzelnen Bestellungspositionen angezeigt werden. M
 \caption{Navigation zwischen den Ansichten}
 \label{fig:abb39}
 \end{figure}
-\subsection{Hardwarenahe Funktionalität: Barcodescanner}
+\section{Hardwarenahe Funktionalität: Barcodescanner}
 Die Struktur der App wurde im "`shared"' Projekt definiert. 
 Xamarin.Forms ist eine Art Abstraktionsschicht, man kann es als die Schnittmenge aller
 Funktionalitäten betrachten, die sich im gemeinsamen "`shared"' Projekt implementieren lassen. Die
@@ -515,13 +515,13 @@ Thread gestartet werden und erst wenn eine Barcodenummer erkannt wurde, soll es 
 % darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
 % Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
 % plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten.
-\subsection{Xamarin Komponenten (Components) und NuGet Packages} \label{nuGetPackages}
+\section{Xamarin Komponenten (Components) und NuGet Packages} \label{nuGetPackages}
 Die Möglichkeit, Komponenten und NuGet Packages an ein Projekt anzubinden, ist eine der
 größten Stärken von Xamarin.
 Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen Projekt
 hinzugefügt werden können, müssen die benötigten Komponenten zu den
 plattformspezifischen Projekten hinzugefügt werden (siehe Abb. \ref{fig:abb40}).
-\subsubsection{Xamarin Components}
+\subsection{Xamarin Components}
 \begin{itemize}
         \item \textbf{ModernHttpClient} - Für die Kommunikation mit dem Backend wird ein Http-Client
         benötigt. Es gibt mehrere ähnliche Komponenten und NuGet Packages. \\Für die vorliegende
@@ -534,7 +534,7 @@ plattformspezifischen Projekten hinzugefügt werden (siehe Abb. \ref{fig:abb40}).
         Blitzlichtes, zu kümmern. Diese Funktionalität, sowie die Erkennung des Barcodes wird von der
         ZXing-Komponente bereitgestellt. 
 \end{itemize}
-\subsubsection{NuGet Packages}
+\subsection{NuGet Packages}
 \begin{itemize}
         \item \textbf{Newtonsoft.Json} - Für die Kommunikation mit dem Backend werden Json-Objekte
         benutzt.
@@ -548,7 +548,7 @@ plattformspezifischen Projekten hinzugefügt werden (siehe Abb. \ref{fig:abb40}).
 \end{itemize}
 Es gibt eine große Vielfalt an Xamarin Komponenten und NuGet Packages. Somit kann eine
 Xamarin Applikation mit mehreren Features angereichert werden. 
-\subsection{Fazit}
+\section{Fazit}
 Mit Xamarin.Forms lässt sich nicht nur die ganze App-Logik im einem Gemeinsamen Projekt
 implementieren, sondern auch fast die ganze Benutzungsoberfläche der App. Daraus resultieren zwei
 (oder sogar drei, wenn auch eine Windows Phone als Zielplattform erwünscht ist) Versionen der
