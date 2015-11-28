@@ -33,15 +33,15 @@ ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bek
 Diese Code-Behind-Datei sollte bei einer sauberen Umsetzung des MVVM-Patterns außer des Aufrufs der
 \emph{InitializeComponent()} Methode im Konstruktor und eventuell Methoden, die
 Viewmodelnachrichten abonnieren und die Navigation steuern, komplett leer sein.
-Jede Ansicht wird an ein Viewmodel gebunden. Das wird durch das sogenannte "`Data
+Jede Ansicht wird an einen Viewmodel gebunden. Das wird durch das sogenannte "`Data
 Binding"' (in Deutsch Datenbindung) realisiert.
 % In Abb.\ref{fig:abb23} sieht man eine typische
 % Xaml-Datei, die eine Ansicht beschreibt und sich im Ordner View befindet. Diese Ansicht wird
 % von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
 % abgeleitet wird.
- In einer C\#-Klasse, genannt Base\_Page, werden Eigenschaften und Methoden definiert, die für die
- meisten Ansichten gemeinsam sind. Bspw. das Navigationsheader-Logo oder Methoden für die Steuerung
-der Navigation. Diese Klasse wird von der Klasse Xamarin.Forms.Page abgeleitet.
+%  In einer C\#-Klasse, genannt Base\_Page, werden Eigenschaften und Methoden definiert, die für die
+%  meisten Ansichten gemeinsam sind. Bspw. das Navigationsheader-Logo oder Methoden für die Steuerung
+% der Navigation. Diese Klasse wird von der Klasse Xamarin.Forms.Page abgeleitet.
 % \\Eine der wichtigsten Klassenvariablen der Klasse Xamarin.Forms.Page ist das Property
 % \textit{BindingContext}.
 % Mithilfe dieser Eigenschaft wird ein Viewmodel (in diesem Fall das HeaderDataEditViewModel) an der Page-Klasse gebunden (Siehe
@@ -78,12 +78,13 @@ abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert,
 Seite gewechselt werden soll.
 \subsection{Anbindung der SQLite Datenbank}
 Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
-SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt kopieren. Dieser C\#-File
-benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
+SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt (in der Model-Komponente
+Persistenz, die in Abb. \ref{fig:abb41} abgebildet ist) kopieren.
+Dieser C\#-File benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
 \\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
 der Datenbank File zu finden ist (es ist abhängig vom
-Ziel-Plattform unterschiedlich). Für iOs und Android kann man "`Environment class"' benutzen um einen
-validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
+Ziel-Plattform unterschiedlich). Für iOS und Android kann man "`Environment class"' benutzen um
+einen validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
 spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
 auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
 benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
@@ -99,16 +100,17 @@ Deadlocks entstehen!
 Beim Erstellen einer neuen Datei bietet Xamarin Studio außer
 Standarddateien C\#-Dateien, wie "`Empty Class"', "`Empty Interface"' usw., noch vorgefertigte
 Xamarin.Forms-Dateien, wie "`Forms ContentPage"', "`Forms ContentPage Xaml"', "`Forms Content View"'
-oder "`Forms ContentView Xaml"' an. \\Wie bereits im vorherigen Kapitel erläutert, werden die
+oder "`Forms ContentView Xaml"' an. \\Wie bereits im \ref{View} erläutert, werden die
 Ansichten der App in Xaml implementiert.
 Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich.
 Es gibt ein Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine
 übersichtliche Hierarchie der Elemente.
 % Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw. den
 % Text eines Labels oder die Textfarbe setzen. 
-In Abb.\ref{fig:abb23} sieht man eine typische
-Xaml-Datei, die eine Ansicht beschreibt und sich im Entwurf beschriebene Ordner View befindet. Diese
-Ansicht wird von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
+In Abb. \ref{fig:abb23} sieht man eine typische
+Xaml-Datei, die die in Abb. \ref{fig:abb34} dargestellte "`Persönliche Daten Ansicht"' beschreibt und
+sich in der View-Komponente (siehe Abb. \ref{fig:abb41}) befindet.
+Diese Ansicht wird von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
 abgeleitet wird.
 \begin{figure}[!h]
 \centering
@@ -138,24 +140,6 @@ löst den Aufruf einer Methode in der Viewmodel-Klasse auf.
 Durch das Attribut x:Name könnte man auf das Element aus der Code-Behind-Datei zugreifen und bspw.
 den Text eines Labels oder die Textfarbe setzen.\\Analog ließen sich auch die anderen Ansichten der
 Scan App implementieren. Aus diesem Grund wird nicht näher ins Detail eingegangen.
-\\Sollte eine Funktionalität nicht plattformübergreifend zu realisieren sein, hat man mit
-Xamarin.Forms die Möglichkeit, diese Funktionalität in den plattformspezifischen Projekten zu implementieren.
-Im gemeinsamen Projekt wird ein Interface definiert, das von den dafür zuständigen Klassen in ScanApp.Droid und ScanApp.iOS implementiert
-werden muss.
-% Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
-% \textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
-Beispiel dafür ist die Implementierung des Scanners.
-Im gemeinsamen Projekt wird das Interface IScanner.cs definiert (Abb.
-\ref{fig:abb28}).
-In beiden plattformspezifischen Projekte wird je eine Klasse Scanner.cs erstellt, die dieses Interface implementiert. Im Projekt ScanApp kann
-man auf die plattformspezifische Scanner.cs Klassen mit:\\
-\textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}} zugreifen.
-\begin{figure}[!h]
-\centering
-\includegraphics[scale = 0.8]{graphics/IScanner.png}
-\caption{Das Interface IScanner}
-\label{fig:abb28}
-\end{figure}
 % \\Das Ganze veranschaulicht, welche
 % Vorteile das MVVM-Architekturmuster mit sich bringt.
 \subsection{Implementierung der Navigation}
@@ -216,6 +200,63 @@ Beispielsweise sieht die Navigation zu der Kontakt-Seite folgendermaßen aus:
 \}}}
 \\Die Zeile \textcolor{gray}{\textit{this.isPresent = false;}}, sorgt dafür, dass das Menü
 automatisch zugeklappt wird, nachdem die ausgewählte Seite aufgemacht wurde.
+\subsection{Implementierung von hardwarenahen Funktionalitäten}
+Sollte eine Funktionalität nicht plattformübergreifend zu realisieren sein, hat man mit
+Xamarin.Forms die Möglichkeit, diese Funktionalität in den plattformspezifischen Projekten zu implementieren.
+Im gemeinsamen Projekt wird ein Interface definiert, das von den dafür zuständigen Klassen in
+ScanApp.Droid und ScanApp.iOS implementiert werden muss.
+% Der Zugriff aus dem plattformübergreifenden Projekt erfolgt folgendermaßen:\\
+% \textcolor{gray}{\emph{DependencyService.Get<InterfaceName>().PlattformSpecificMethodName()}}.
+Beispiel dafür ist die Implementierung des Scanners.
+Im gemeinsamen Projekt wird das Interface IScanner.cs definiert (Abb.
+\ref{fig:abb28}).
+\\In beiden plattformspezifischen Projekte wird je eine Klasse Scanner.cs erstellt, die dieses
+Interface implementiert(siehe Abb. \ref{fig:abb44} für die Scanner-Klasse im ScanApp.iOS und
+\ref{fig:abb43} für die Android Version der Scanner-Klasse).
+% Im Projekt ScanApp wird auf die plattformspezifische Scanner.cs Klassen mit:\\
+% \textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}} zugegriffen. 
+\\In Abb. \ref{fig:abb42} ist ein Ausschnitt aus der ViewModel-Klasse der Scan-Ansicht zu sehen.
+Sobald auf den Scan-Button geklickt wird, wird die Scan-Methode ausgeführt. Mit dem Befehl:
+\textcolor{gray}{\emph{DependencyService.Get<IScanner>().Scan()}} wird je nach Plattform die iOS-
+oder die Android-Implementierung der Scan-Methode ausgeführt. In beiden Implementierungen wird der
+Scanner in einem separaten Thread gestartet und wenn der Scanner fertig ist, wird die
+SetScannerResult-Methode des ViewModels aufgerufen, so dass der ViewModel den weiteren Verlauf der
+App steuern kann.\\Analog werden alle Fälle behandelt, wenn eine Funktionalität plattformspezifisch
+implementiert werden muss. Es wird ein Interface im "`shared"' Projekt definiert. Dieses Interface
+muss in den plattformspezifischen Projekten implementiert werden und mit dem Befehl:
+\textcolor{gray}{\emph{DependencyService.Get<InterfaceName>()}} ruft Xamarin automatisch die
+jeweilige Implementierung je nach Plattform auf.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.8]{graphics/I_Scanner.png}
+\caption{Das Interface IScanner}
+\label{fig:abb28}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/ScanViewModel.png}
+\caption{Aufruf der ScanClicked-Methode aus dem ViewModel im "`shared"' Projekt}
+\label{fig:abb42}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/Scanner_iOS.png}
+\caption{iOS - plattformspezifische Implementierung der Scan-Methode}
+\label{fig:abb44}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale = 0.5]{graphics/Scanner_Android.png}
+\caption{Android - plattformspezifische Implementierung der Scan-Methode}
+\label{fig:abb43}
+\end{figure}
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.5]{graphics/SetScanResult.png}
+% \caption{Callback-Methode des ViewModels, die aus dem Scanner-Thread aufgerufen wird}
+% \label{fig:abb45}
+% \end{figure}
 \subsection{Test}
 Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es wird zwischen zwei Arten
 von Tests unterschieden, UI- und Unit-Tests. 
