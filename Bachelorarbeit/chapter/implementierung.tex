@@ -257,13 +257,14 @@ jeweilige Implementierung je nach Plattform auf.
 \end{figure}
 \begin{figure}[!h]
 \centering
-\includegraphics[scale = 0.5]{graphics/Scanner_iOS.png}
+\includegraphics[scale = 0.53]{graphics/Scanner_iOS.png}
 \caption{iOS - plattformspezifische Implementierung der Scan-Methode}
 \label{fig:abb44}
 \end{figure}
+
 \begin{figure}[!h]
 \centering
-\includegraphics[scale = 0.5]{graphics/Scanner_Android.png}
+\includegraphics[scale = 0.55]{graphics/Scanner_Android.png}
 \caption{Android - plattformspezifische Implementierung der Scan-Methode}
 \label{fig:abb43}
 \end{figure}
@@ -275,16 +276,16 @@ jeweilige Implementierung je nach Plattform auf.
 % \end{figure}
 \newpage
 \section{Test}
-Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es wird zwischen zwei Arten
-von Tests unterschieden, UI- und Unit-Tests. 
-Während Unit-Tests die App-Logik testen, wird bei UI-Tests sichergestellt, dass die App so aussieht
-und sich so verhält, wie man es erwartet, also es wird das Optische getestet.\\Wichtig zu beachten
-ist, dass für alle Punkte aus \ref{Anforderungsanalyse} getestet werden, so dass am
-Ende sichergestellt wird, dass die Anforderungen erfüllt sind. \\Ein typischer Weg, eine App zu
+Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es gibt mehrere Arten
+von Tests, wie bspw. UI- und Unit-Tests, Usability (zu Deutsch Benutzerfreundlichkeit) Tests oder
+Compatibility (Kompatibilität) Tests.
+Während Unit-Tests die App-Logik testen, werden bei UI-Tests Funktionstests der UI
+Steuerelemente durchgeführt. Somit wird sichergestellt, dass die App, einschließlich
+Bedienoberfläche ordnungsgemäß funktioniert.\\Ein typischer Weg, eine App zu
 testen ist die Anwendung zu starten und zu benutzen.
 Im besten Fall tut die App genau das was sie tun soll - funktioniert korrekt und stürzt nicht ab. Erfahrungsgemäß ist das so
-gut wie nie der Fall. Diese Art von Testen, indem man die App auf einem realen Gerät nutzt, wird als UI
-Acceptance Testing bezeichnet.
+gut wie nie der Fall. Diese Art von Testen, indem ein Mensch die App auf einem realen Gerät nutzt,
+wird als UI Acceptance Testing bezeichnet.
 Die zur Verfügung gestellten Simulatoren erleichtern wesentlich den
 Testprozess, allerdings um sicher zu gehen, dass eine App wirklich fehlerfrei funktioniert, kommt man an Tests auf reale Geräte nicht
 herum.
@@ -298,7 +299,42 @@ folgende Geräte lokal getestet:
   \item Samsung Galaxy S6 (Android 5.1.1 API Level 22)
   \item Google Nexus 7 (Android 4.4.4 API Level 19)
 \end{itemize}
-Da es vor allem bei Android eine große Vielfalt an Geräten gibt, kann das sehr mühsam sein.
+Bei der Auswahl der Testgeräte wurde darauf geachtet, dass ein möglichst großes Spektrum von
+Smartphones umfasst wird. Bspw. wurden bei den iPhones gezielt ein Gerät mit einem relativ kleinen
+und schmalen Bildschirm (iPhone 5) und ein Vertreter der iPhones mit dem größten Bildschirm (iPhone
+6 Plus) ausgewählt. Analog zu den iOS Geräten wurde darauf geachtet, dass die Android Testgeräte
+repräsentativ für die meisten Klassen von Android Smartphones sind, wobei nicht nur die unterschiedliche
+Bildschirmgröße (es wurde mit einem Tablett Nexus 7 und einem der kleinsten Android Geräten,
+Samsung Galaxy S2 getestet) ausschlaggebend für die Wahl war, sondern auch die unterschiedlichen
+Versionen von Android Betriebssystemen (Android 4.4.4, Android 5.0, Android 5.1.1). 
+\subsection{Ableitung der Testfälle}
+Wichtig zu beachten ist, dass für alle Punkte aus
+\ref{Anforderungsanalyse} getestet werden, so dass am Ende sichergestellt wird, dass die Anforderungen erfüllt sind.
+Die Implementierung jedes Anwendungsfalls aus \ref{Anwendungsfälle} sollte in mindestens einem Test
+geprüft werden. Es wird mit dem Erfolgsszenario begonnen und danach werden die Sonderfälle ebenfalls
+geprüft. In Tabelle \ref{table2} ist zu sehen, wie aus dem Anwendungsfall "`Einmalige
+Registrierung"' aus \ref{Registrierung}, zwei Testfälle abgeleitet wurden. Einmal für den
+Erfolgsszenario und einem für den Sonderfall, wenn die Eingaben falsch sind. Analog wurden die
+Testfälle aus den anderen Anwendungsfällen abgeleitet.
+
+\begin{table}
+\begin{tabular}{|l|l|l|l|l|}\hline
+ & Anfangszustand & Eingabe/Aktion & Soll-Reaktion der App\\\hline 
+1 & User mit Kundenummer 1111  & Eingabe Kd-Nr [1111] & App meldet  \\
+ & und PLZ 21107. & Eingabe PLZ [21107]  & "`Ihre Registrierung  \\
+ & Die App zeigt den Login Screen an  & [Registrieren] & war erfolgreich"' \\ \hline
+2 & User mit Kundenummer 1111  & Eingabe Kd-Nr [2222]  & App meldet \\
+ & und PLZ 21107  & Eingabe PLZ [21107]  & "`Ihre Registrierung \\
+ & Die App zeigt den Login Screen an  & [Registrieren] & war nicht erfolgreich"' \\ \hline
+\hline
+\end{tabular}
+\caption{Testfälle für den Anwendungsfall "`Einmalige Registrierung"' (\ref{Registrierung})}
+\label{table2}
+\end{table}
+
+\subsection{Xamarin Test Cloud}
+Da es vor allem
+bei Android eine große Vielfalt an Geräten gibt, kann das sehr mühsam sein.
 Softwarehersteller müssen nicht selten Apps auf dutzende sogar hunderte Geräte installieren und
 testen.\\Die meisten Developer verzichten auf systematisches Testen, weil die verfügbaren Tools und
 Dienste zu kompliziert und schwer zu benutzen sind und nur auf einem Gerät bzw. Simulator ausgeführt
