@@ -460,9 +460,10 @@ API die Funktionalität des Scanners implementiert wird.
 \\Der Programmablauf wird im gemeinsamen Projekt gesteuert. Im "`shared"' Projekt wird zu
 diesem Zweck ein Interface definiert, das von den Scanner-Klassen der plattformspezifischen Projekte
 implementiert wird. Der für die Scan-Ansicht zuständige ViewModel führt die Methode
-ScanClicked() aus, wenn auf den Scan-Button geklickt wird. Der Scanner wird in einem separaten
-Thread gestartet. Erst wenn eine Barcodenummer erkannt wurde, wird die Barcodenummer dem Main-Thread
-übergeben und der Scanner-Thread wird geschlossen.
+ScanClicked() aus, wenn auf den Scan-Button geklickt wird. 
+% Der Scanner wird in einem separaten
+% Thread gestartet. Erst wenn eine Barcodenummer erkannt wurde, wird die Barcodenummer dem Main-Thread
+% übergeben und der Scanner-Thread wird geschlossen.
 
 %\subsection{Web Services für die Kommunikation mit dem Backend}
 % Web Services kommen in den folgenden Fällen zum Einsatz:
@@ -532,5 +533,8 @@ implementieren, sondern auch fast die ganze Benutzungsoberfläche der App. Daraus
 (oder sogar drei, wenn auch eine Windows Phone als Zielplattform erwünscht ist) Versionen der
 Anwendung, die alle das native "`Look and Feel"' der jeweiligen Plattform haben. Die gemeinsame
 Codebasis erleichtert nicht nur den Entwurf, sondern auch das Fixen von Bugs und die Wartung der
-App.
+App. Als negative Feststellung kann an dieser angemerkt werden, dass NuGet Packages und Xamarin
+Components nicht zum geteilten Projekt hinzugefügt werden können und dadurch entsteht doppelten
+Aufwand (Bei dem Xamarin.Forms PCL-Ansatz ist das allerdings nicht der Fall. Da werden "`open
+source"' Bibliotheken zum gemeinsamen Projekt hinzugefügt).
 

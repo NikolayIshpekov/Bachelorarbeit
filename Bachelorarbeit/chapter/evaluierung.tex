@@ -6,9 +6,28 @@ Gesamtheit von Merkmalen und Merkmalswerten eines Software-Produkts, die sich au
 beziehen, festgelegte oder vorausgesetzte Erfordernisse zu erfüllen}.
 \\Um die Qualität eines
 Software-Produkts bewerten zu können, werden möglichst objektive prüfbare Kriterien benötigt.
+\section{Goal-Question-Metric}
+% Als immaterielles Gut scheint Software nicht fassbar zu sein.
+Während bspw. bei der Kaufentscheidung
+für ein materielles Produkt gemessene oder prognostizierte Werte herangezogen werden können, gibt es
+bei Software keine solche Werte. Nach \cite{SE} werden quantifizierte Aussagen über Produkte oder
+Entwicklungsprozesse als Metriken bezeichnet. Es ist allerdings keine einfache Aufgabe, geeignete
+Metriken zu identifizieren.
+Nach dem Goal-Question-Metric Ansatz (GQM) werden die zu erhebenden Metriken aus den Problemen,
+Zielen und Fragen abgeleitet (\cite[321]{SE}). Dieser Ansatz besteht aus drei Schritten:
+\begin{itemize}
+  \item[1] Definition von Relevanten Ziele.
+  \item[2] Aus jedem Ziel werden Fragen abgeleitet, mit derer Hilfe überprüft werden kann ob das
+  Ziel erreicht ist.
+  \item[3] Für jede Frage werden Metriken festgelegt, die dazu beitragen, die Antworten zu finden.
+\end{itemize}
+Mithilfe dieses Ansatzes werden Metriken abgeleitet, die die Messung der Software
+Qualität der Scan-App und damit die Evaluierung von Xamarin als Cross-Plattform-Entwicklungstool erleichtern
+können.
 \section{Bewertungskriterien nach ISO-Norm 9126}
 Im Folgenden werden Qualitätsmerkmale nach \textbf{ISO-Norm 9126} vorgestellt (siehe
-Abb.\ref{fig:abb38}). Anhand dieser Kriterien wird die App bewertet. 
+Abb.\ref{fig:abb38}). Anhand dieser Kriterien wird die App bewertet.
+ 
 % In Abb.\ref{fig:abb38} werden die ISO-Norm 9126
 % Softwarequalitätsmerkmale abgebildet.
 \begin{figure}[!h]
@@ -18,6 +37,19 @@ Abb.\ref{fig:abb38}). Anhand dieser Kriterien wird die App bewertet.
 \label{fig:abb38}
 \end{figure}
 \subsection{Funktionalität}
+Für die Bewertung der Funktionalität lassen sich folgende Metriken ableiten:
+  \\\textbf{Ziel}: UI-Konzept - die von der Entwicklungsplattform bereitgestellten UI-Tools,
+  sollen die Funktionalität einer nativ entwickelten App gewährleisten können.
+  \\\textbf{Frage}: Wie viele angeforderten Funktionalitäten konnten nicht erfüllt werden,
+  aufgrund fehlende APIs? 
+  \\\textbf{Metrik}: Anzahl der Funktionen, die nicht unterstützt wurden. 
+  \\ Wert der Metrik: 0. Alle angeforderten Funktionalitäten konnten umgesetzt werden.
+   \\
+ \\\textbf{Ziel}:Das Framework soll Zugriff auf native Elemente, wie bspw. die Kamera eines
+ Smartphones ermöglichen.
+  \\\textbf{Frage}: Wie oft wird auf die Kamera zugegriffen?
+  \\\textbf{Metrik}: Die Anzahl der Zugriffe auf die Kamera des Smartphones. \\Wert: 1. Es
+  wird einmal auf die Kamerafunktion zugegriffen, nämlich beim Scannen.
 \subsubsection{Interoperabilität}
 Die Kommunikation zwischen der App und dem Server wurde auf verschiedene Szenarien getestet. Es
 wurde sichergestellt, dass die App nicht abstürzt, wenn der Server nicht erreichbar ist. Die
@@ -47,6 +79,14 @@ vermerkt werden.
 Für die Scan-App wurde eine intuitive Benutzbarkeit angestrebt. Für die Menüpunkten wurden
 aussagekräftigen Namen ausgewählt und an vielen Stellen werden Hinweistexte angezeigt, in Form von
 Popup Fenster, so dass für die Benutzung der Anwendung keine Schulung vorausgesetzt wird.
+Mit dem GQM Ansatz lässt sich folgende Metrik ableiten:
+\\
+  \\\textbf{Ziel}: Eine "`cross-plattform"' entwickelte App soll nicht deutlich langsamer als
+  eine native Referenz Applikation sein.
+  \\\textbf{Frage}: Wie lange braucht der Scanner von ScanApp um eine Barcodenummer zu erfassen?
+  \\\textbf{Metrik}: Die Zeit in Sekunden, die der Scanner braucht um einen Barcode zu scannen
+  im Vergleich zu der Zeit, die eine native Scanner-App braucht. \\Wert: ca 1. Die Xamarin
+  Scan-App braucht zwischen 2 - 5 Sekunden, eine native Scanner App ist unwesentlich schneller (2 bis 4 Sekunden).
 \subsection{Effizienz}
 Die mobilen Geräte werden immer leistungsfähiger, allerdings aufgrund der großen hochauflösenden
 Displays halten die Akkus nicht besonders lange. Aus diesem Grund werden Anwendungen, die zu viele
@@ -57,7 +97,8 @@ im Hintergrund gerät.\\Bei der Entwicklung der App wurde explizit darauf geachte
 Kommunikation mit dem Server in separaten Threads ausgeführt wird, so dass die App nicht "`hängen
 bleibt"', wenn die Internetverbindung langsam ist oder gar nicht da ist. Wie im vorangegangenen
 Kapitel bereits erörtert, gibt Xamarin die Möglichkeit zwischen verschiedenen Arten von mobilen
-Internetverbindungen zu unterscheiden, dadurch lassen sich Ressourcen sparen. \\Es lässt sich
+Internetverbindungen zu unterscheiden, dadurch lassen sich Ressourcen sparen. 
+\\Es lässt sich
 zusammenfassen, dass Xamarin die benötigten Mechanismen bietet, damit Entwickler dieses Kriterium erfüllen können.
 \subsection{Änderbarkeit}
 Ein besonders wichtiges Kriterium im Hinsicht plattformübergreifender App-Entwicklung. Der Sinn,
@@ -72,71 +113,45 @@ wenig Aufwand im gemeinsamen Projekt vornehmen. Wie bereits erwähnt werden die L
 automatisch an die Bildschirmgröße des konkreten Smartphones angepasst. Durch die lose Kopplung zwischen View und
 Viewmodel beim MVVM-Muster lässt sich eine Ansicht mit minimalem Aufwand durch eine
 andere austauschen, und zwar plattformübergreifend.
-Es lässt sich schließen, dass die Scan-App und dadurch Xamarin.Forms dieses Kriterium erfüllt.
+% Es lässt sich schließen, dass die Scan-App und dadurch Xamarin.Forms dieses Kriterium erfüllt.
+\\
+\\\textbf{Ziel}: Es soll eine plattformübergreifende Programmiersprache benutzt werden.
+\\\textbf{Frage}: Wie viele Programmiersprachen wurde für die
+ Implementierung der iOS-Version, für die Android-Version der App und für die Implementierung des
+ gemeinsamen plattformübergreifenden Teils?
+\\\textbf{Metrik}: Die Anzahl der verwendeten Programmiersprachen.\\Der Wert dieser Metrik ist 1. Es
+wurde lediglich C\# angewendet (Für die Beschreibung der GUI wird auch XAML angewendet, allerdings lässt sich die GUI
+auch komplett in C\# definieren).
+\\
+  \\\textbf{Ziel}: Geschäftslogik soll einmal in dem gemeinsamen Projekt implementiert werden
+  und nicht in den plattformspezifischen Projekten.
+  \\\textbf{Frage}: Für die Realisierung von wie viele Features mussten "`Custom Renderer"'
+  benutzt werden? 
+  \\\textbf{Metrik}: Anzahl der "`Custom Renderer"'. \\Der Wert ist gleich: 0. Die ganze
+  App-Logik und Gestaltung der GUI wurde im gemeinsamen Projekt definiert und es wurden keine benutzerdefinierte Renderer in die
+  plattformspezifischen Projekten benötigt.
+  \\
+  \\\textbf{Ziel}: Der Großteil des Codes soll im gemeinsamen Projekt sein.
+  \\\textbf{Frage}: Wie viel Prozent des Codes befinden sich im plattformübergreifenden Projekt?
+  \\\textbf{Metrik}: Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
+  von allen drei Projekte gesamt. \\Wert der Metrik: über 90\%.
 \subsection{Übertragbarkeit}
 Durch die Distribution der ScanApp in die entsprechenden App-Stores (Apples App Store und
 Androids Google Play Store) kann die Scan-App auf die für mobile Anwendungen übliche Art und Weise
 verbreitet werden. Kriterium erfüllt.
-\section{Goal-Question-Metric}
-Es ist keine einfache Aufgabe, geeignete Metriken zu identifizieren.
-Nach dem Goal-Question-Metric Ansatz (GQM) werden die zu erhebende Metriken aus den Problemen,
-Zielen und Fragen abgeleitet (\cite[321]{SE}). Dieser Ansatz besteht aus drei Schritten:
-\begin{itemize}
-  \item[1] Definition von Relevanten Ziele.
-  \item[2] Aus jedem Ziel werden Fragen abgeleitet, mit derer Hilfe überprüft werden kann ob das
-  Ziel erreicht ist.
-  \item[3] Für jede Frage werden Metriken festgelegt, die dazu beitragen, die Antworen zu finden.
-\end{itemize}
- Ziel: Es soll eine plattformübergreifende Programmiersprache benutzt werden.
- \\Frage: Wie viele Programmiersprachen wurde für die
- Implementierung der iOS-Version, für die Android-Version der App und für die Implementierung des
- gemeinsamen plattformübergreifenden Teils?
-\\Metrik: Die Anzahl der verwendeten Programmiersprachen. Die Antwort ist 1. Es wurde lediglich C\#
-angewendet (Für die Beschreibung der GUI wird auch XAML angewendet, allerdings lässt sich die GUI
-auch komplett in C\# definieren).
 \\
- \\Ziel: Gute Unterstützung durch Xamarin Studio bzw. Visual Studio.
- \\Frage: Verfügt die IDE über "`Autocomplete"'-Funktion?
- \\Antwort: Ja.
- \\
- \\Ziel:Das Framework soll Zugriff auf native Elemente, wie bspw. die Kamera eines Smartphones
-  ermöglichen.
-  \\Frage: Wie oft wurde auf die Kamera zugegriffen?
-  \\Metrik: Die Anzahl der Zugriffe auf die Kamera des Smartphones. Antwort: Einmal beim Scannen.
-  \\
-  \\Ziel: Geschäftslogik soll einmal in dem gemeinsamen Projekt implementiert werden und nicht in den
-  plattformspezifischen Projekten.
-  \\Frage: Für die Realisierung von wie viele Features mussten "`Custom Renderer"' benutzt werden?
-  \\Metrik: Anzahl der "`Custom Renderer"'. Antwort: 0, die ganze App-Logik und Gestaltung der GUI
-  wurde im gemeinsamen Projekt definiert und es wurden keine benutzerdefinierte Renderer in die
-  plattformspezifischen Projekten benötigt.
-  \\
-  \\Ziel: Der Großteil des Codes soll im gemeinsamen Projekt sein.
-  \\Frage: Wie viel Prozent des Codes befinden sich im plattformübergreifenden Projekt?
-  \\Metrik: Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
-  von allen drei Projekte gesamt. Antwort: Über 90\%.
-  \\
-  \\Ziel: UI-Konzept - die von der Entwicklungsplattform bereitgestellten UI-Tools, sollen die
-  Funktionalität einer nativ entwickelten App gewährleisten können.
-  \\Frage: Wie viele angeforderten Funktionalitäten konnten nicht erfüllt werden, aufgrund fehlende
-  APIs? 
-  \\Metrik: Anzahl der Funktionen, die nicht unterstützt wurden. Antwort: 0.
-   \\
-  \\Ziel: Eine "`cross-plattform"' entwickelte App soll nicht deutlich langsamer als eine native
-  Referenz Applikation sein.
-  \\Frage: Wie lange braucht der Scanner von ScanApp um eine Barcodenummer zu erfassen?
-  \\Metrik: Die Zeit in Sekunden, die der Scanner braucht um einen Barcode zu scannen im Vergleich
-  zu der Zeit, die eine native Scanner-App braucht. Antworten: Die Xamarin Scan-App braucht zwischen
-  2 - 5 Sekunden, eine native Scanner App ist unwesentlich schneller (2 bis 4 Sekunden).
-\\
-  \\Ziel: Die Distribution einer mit Xamarin entwickelten Anwendung in die entsprechenden App-Stores
-  soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
-  \\Frage: Wie viel Zeit nimmt das Hochladen einer Xamarin App in den App Store und
+  \\\textbf{Ziel}: Die Distribution einer mit Xamarin entwickelten Anwendung in die
+  entsprechenden App-Stores soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
+  \\\textbf{Frage}: Wie viel Zeit nimmt das Hochladen einer Xamarin App in den App Store und
   Google Play Store in Anspruch?
-  \\Metrik: Für die Konfigurierung der benötigten Einstellungen und die Erstellung einer Android
-  APK-Datei und einer iOS IPA-Datei durch Xamarin Studio werden typischerweise je 15 bis 30 Minuten
+  \\\textbf{Metrik}: Benötigte Zeit für die Distribution einer Xamarin App in Apples App Store und
+  Androids Google Play Store.\\
+  Wert der Metrik:
+  ca 30 Minuten bis 1 Stunde.
+  Für die Konfigurierung der benötigten Einstellungen und die Erstellung einer Android APK-Datei und einer iOS IPA-Datei durch Xamarin Studio werden typischerweise je 15 bis 30 Minuten
   gebraucht. Das anschließende Hochladen in die jeweiligen Stores unterscheidet sich nicht von dem
-  Hochladen einer nativen iOS oder Android App und wird ebenso innerhalb 15 bis 30 Minuten erledigt.
+  Hochladen einer nativen iOS oder Android App und wird ebenso innerhalb 15 bis 30 Minuten
+  erledigt.
 % \begin{itemize}
 %   \item Es soll eine plattformübergreifende Programmiersprache benutzt werden.
 %   \item Gute Unterstützung durch IDE.
@@ -159,10 +174,19 @@ auch komplett in C\# definieren).
 % \end{itemize}
 \section{Feststellungen}
 \subsection{Positive Feststellungen}
-Es muss erwähnt werden, dass das Team von Xamarin sich große Mühe für die Weiterentwicklung des
-Frameworks gibt.
-Bspw.
-wenn Apple neue APIs vorstellt, können die innerhalb weniger Stunden mit Xamarin verwendet werden. 
+Es lässt sich zusammenfassen, dass Xamarin als Cross Plattform Entwicklungstool, bzw. Xamarin Studio
+als Entwicklungsumgebung (IDE) sich kaum von den herkömmlichen Entwicklungsumgebungstools, wie
+Eclipse oder Xcode unterscheidet. Mit Xamarin.UITest verfügt Xamarin mit einem integrierten Werkzeug zum
+Ausführen und Auswertung von automatisierten UI-Tests. Darüber hinaus lassen sich "`open source"'
+Bibliotheken, wie Xamarin Components oder NuGet Packages hinzufügen. Wie es sich für eine gute
+Entwicklungsumgebung gehört, verfügt die IDE über "`Autocomplete"'- und "`Debug"'-Funktionen.
+Für Xamarin.iOS und Xamarin.Android gibt es ähnlich wie bei Eclipse und Xcode einen Designer für
+die Erstellung der Bedienoberfläche, allerdings ist Xamarin noch nicht soweit einen
+Cross-Plattform-Designer anzubieten.
+\\Es muss erwähnt werden, dass das Team von Xamarin sich
+große Mühe für die Weiterentwicklung des Frameworks gibt.
+Wenn Apple, bspw. neue APIs vorstellt, können sie innerhalb weniger Stunden mit Xamarin verwendet
+werden.
 Es finden regelmäßige Updates und Bugfixes statt.
 \subsection{Negative Feststellungen}
 \subsubsection{MVVM}
@@ -186,6 +210,10 @@ Fall nicht über http sondern über https erfolgen soll. Diese Schwächen sind kaum
 dokumentiert und es kann lange dauern bis der Entwickler auf die Fehlerquelle kommt.
 \subsubsection{Die Größe der IPA-Datei}
 Die Datei ist größer als die IPA-Datei einer nativ entwickelten iOS-App.
+\subsubsection{Xamarin Studio}
+Es wurde beobachtet, dass bei Debuggen über einen längeren Zeitraum, Xamarin Studio stehen geblieben
+ist und neugestartet werden musste. Allerdings muss angemerkt werden, das dies sehr selten
+vorgekommen ist.
 \section{Grenzen der Cross-Plattform-Entwicklung}
 Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
 .NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den

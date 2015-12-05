@@ -316,7 +316,14 @@ von Tests, wie bspw. UI- und Unit-Tests, Usability (zu Deutsch Benutzerfreundlic
 Compatibility (Kompatibilität) Tests.
 Während Unit-Tests die App-Logik testen, werden bei UI-Tests Funktionstests der UI
 Steuerelemente durchgeführt. Somit wird sichergestellt, dass die App, einschließlich
-Bedienoberfläche ordnungsgemäß funktioniert.
+Bedienoberfläche ordnungsgemäß funktioniert. \\Das MVVM Architekturmuster ist besonders gut für
+automatisierte Unit Tests geeignet. Da die App-Logik in den ViewModels gekapselt ist, lassen sich
+Unit Tests für jeden ViewModel entwickeln. Auf diese Weise kann die Funktionalität eines ViewModel
+getestet werden, ohne die View kennen zu müssen.\\ Wie bei jeder mobilen Applikation steht
+Interaktion mit dem Benutzer im Vordergrund bei der Scan-App. Viel interessanter für die App
+Entwicklung sind die UI-Tests, da mit einem UI Test ein Use Case
+nachgestellt werden kann und dadurch kann die App Funktionalität nach Korrektheit getestet werden.
+Aus diesem Grund liegt der Fokus auf die Planung, Erstellung und Auswertung von UI Tests.
 \subsection{Ableitung der Testfälle}
 Nach \cite[498]{SE} sollte man versuchen mit einer
 möglichst kleinen Menge von Testfällen, möglichst viele Fehler zu entdecken. Um das zu erreichen
