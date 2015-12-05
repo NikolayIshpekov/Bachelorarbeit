@@ -1,12 +1,23 @@
 \chapter{Implementierung und Test}
-In diesem Kapitel werden kurz Feststellungen beschrieben, die während der konkreten Realisierung
-der Implementierung der ScanApp aufgefallen sind. Es werden noch typische Testvorgänge erläutert,
+In diesem Kapitel wird die konkrete Realisierung
+der Implementierung der ScanApp beschrieben. Es werden noch typische Testvorgänge erläutert,
 vor allem den Dienst von Xamarin - die Xamarin Test Cloud.
 \\Die Benutzung von Xamarin mit Visual Studio erfordert einen Business-Account. Außerdem werden zwei
 Rechner benötigt - ein Mac-Rechner als Build-Server  und ein Windows-PC auf dem Visual Studio läuft.
 Aus diesem Grund fiel die Entwicklungsumgebungswahl für die Implementierung der Scan-App auf
 Xamarin Studio. Xamarin Studio bietet mehrere Solution-Templates an
 (siehe \ref{fig:abb36}).
+\\Beim Anlegen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
+erstellt, so dass folgende Projekte entstehen:
+\begin{itemize}
+  \item ScanApp - das gemeinsame, plattformübergreifende Projekt.
+  \item ScanApp.Droid - plattformspezifisches Projekt für Android.
+  \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
+\end{itemize}
+Wie bereits im vorangegangenen Kapitel erläutert wurde, befindet sich die gesamte App-Logik im
+gemeinsamen, plattformübergreifenden ScanApp Projekt und die zwei plattformspezifische Projekte
+werden eher als Container für App-Ressourcen und Einstellungen benötigt.\\Im Folgenden werden die
+wichtigsten Implementierungsschritte vorgestellt.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.435]{graphics/XamarinStudioTemplate.png}
@@ -57,17 +68,24 @@ Xamarin Studio. Xamarin Studio bietet mehrere Solution-Templates an
 % Vorteile das MVVM-Architekturmuster mit sich bringt.
 
 \section{Anbindung der SQLite Datenbank}
-Da beim gemeinsamen ScanApp Projekt keine Bibliotheken eingebunden werden können, muss man einen
-SQLite.cs File aus Github herunterladen und in das gemeinsame Projekt (in der Model-Komponente
-Persistenz, die in Abb. \ref{fig:abb41} abgebildet ist) kopieren.
-Dieser C\#-File benutzt Compiler Direktiven um mehrere Plattformen in derselben Codebasis zu unterstützen.
-\\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss man angeben, wo
-der Datenbank File zu finden ist (es ist abhängig vom
-Ziel-Plattform unterschiedlich). Für iOS und Android kann man "`Environment class"' benutzen um
-einen validen Pfad zu konstruieren (siehe Abb. \ref{fig:abb27}). Mittels Compiler Direktiven lassen sich
-spezielle Pfade für jede Plattform generieren.\\Um sicher zu gehen, dass der Code nicht versucht,
-auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen wird manuel ein "`lock"'
-benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
+In beiden plattformspezifischen Projekten (ScanApp.iOS und ScanApp.Droid) wurde je eine
+SQLite-Datenbankdatei hinzugefügt. Damit die Persistierung der App-Daten aus dem gemeinsamen
+Projekt, also "`cross plattform"', gesteuert werden kann, wurde eine C\#-Datei aus Github
+heruntergeladen und in das gemeinsame Projekt "`shared"' ScanApp (in die Model-Komponente
+Persistenz, die in Abb. \ref{fig:abb41} abgebildet ist) eingefügt. 
+% In diesem File wird eine C\#-Klasse definiert, die Compiler Direktiven benutzt um mehrere
+% Plattformen in derselben Codebasis zu unterstützen.
+% \\Um SQLite in einer Xamarin.iOS oder Android Applikation benutzen zu können, muss der Pfad zu der
+% Datenbank angegeben werden. 
+Die jeweiligen Pfade (im vorliegenden Fall sind es zwei Pfade, einmal für die Datenbank, die
+in die Ressourcen des plattformspezifischen Projekt ScanApp.iOS hinzugefügt wurde und einmal zu der
+Datenbank in der Ressourcen des ScanApp.Droid Projekts) lassen sich mittels Compiler Direktiven und
+mithilfe der Klasse \textcolor{gray}{System.Environment} für jede Plattform generieren.
+In Abb.
+\ref{fig:abb27} ist ein Ausschnitt der Implementierung der Datenbankverbindung zu
+sehen. \\Um sicher zu gehen, dass der Code nicht versucht,
+auf die SQLite Datenbank aus verschiedenen "`multiple Threads"' zuzugreifen, wird manuell ein
+"`lock"' benutzt. Z.B.\\object locker = new object();\\lock(locker)\{ Datenbankquery \};\\Alle
 Datenbankzugriffe sind mit demselben "`lock"' gekapselt, wobei hier Vorsicht geboten ist. Es könnten
 Deadlocks entstehen! 
 \begin{figure}[!h]
@@ -159,7 +177,8 @@ nicht näher ins Detail eingegangen.
 % \\Das Ganze veranschaulicht, welche
 % Vorteile das MVVM-Architekturmuster mit sich bringt.
 \section{Implementierung der Navigation}
-Die Implementierung der Navigation der App erfolgt ausschließlich im gemeinsamen Projekt, ScanApp.
+Die Implementierung der im \ref{Navigation} beschriebenen Navigation der App erfolgt ausschließlich
+im gemeinsamen Projekt, ScanApp.
 \\In der Initialisierungsdatei der App, \emph{public class App}, wird in der Datenbank überprüft ob
 bereits ein Benutzer registriert wurde. Je nachdem, ob das der Fall ist oder nicht, gibt es zwei mögliche Wege:
 \begin{itemize}
@@ -276,80 +295,74 @@ jeweilige Implementierung je nach Plattform auf.
 % \end{figure}
 \newpage
 \section{Test}
-Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Es gibt mehrere Arten
+Ein wichtiger Schritt im Entwicklungszyklus einer App ist das Testen. Wie bei jeder Anwendung muss
+sichergestellt werden, dass die in der Spezifikation festgelegten Anforderungen erfüllt worden sind.
+Zu diesem Zweck müssen Testfälle aus den Anforderungen abgeleitet werden. Die Testergebnisse müssen
+dementsprechend protokolliert und ausgewertet werden. 
+% Es gibt mehrere Arten
+% von Tests, wie bspw. UI- und Unit-Tests, Usability (zu Deutsch Benutzerfreundlichkeit) Tests oder
+% Compatibility (Kompatibilität) Tests.
+% Während Unit-Tests die App-Logik testen, werden bei UI-Tests Funktionstests der UI
+% Steuerelemente durchgeführt. Somit wird sichergestellt, dass die App, einschließlich
+% Bedienoberfläche ordnungsgemäß funktioniert.
+\subsection{Testarten}
+Ein typischer Weg, eine App zu
+testen ist die Anwendung zu starten und zu benutzen.
+Im besten Fall tut die App genau das, was sie tun soll - funktioniert korrekt und stürzt nicht ab.
+Erfahrungsgemäß ist das so gut wie nie der Fall. Diese Art von Testen, indem ein Mensch die App auf einem realen Gerät nutzt,
+wird als UI Acceptance Testing bezeichnet.
+Es gibt mehrere Arten
 von Tests, wie bspw. UI- und Unit-Tests, Usability (zu Deutsch Benutzerfreundlichkeit) Tests oder
 Compatibility (Kompatibilität) Tests.
 Während Unit-Tests die App-Logik testen, werden bei UI-Tests Funktionstests der UI
 Steuerelemente durchgeführt. Somit wird sichergestellt, dass die App, einschließlich
-Bedienoberfläche ordnungsgemäß funktioniert.\\Ein typischer Weg, eine App zu
-testen ist die Anwendung zu starten und zu benutzen.
-Im besten Fall tut die App genau das was sie tun soll - funktioniert korrekt und stürzt nicht ab. Erfahrungsgemäß ist das so
-gut wie nie der Fall. Diese Art von Testen, indem ein Mensch die App auf einem realen Gerät nutzt,
-wird als UI Acceptance Testing bezeichnet.
-Die zur Verfügung gestellten Simulatoren erleichtern wesentlich den
-Testprozess, allerdings um sicher zu gehen, dass eine App wirklich fehlerfrei funktioniert, kommt man an Tests auf reale Geräte nicht
-herum.
-\\Während der Implementierung wurde die Scan-App durchgehend auf
-folgende Geräte lokal getestet:
-\begin{itemize}
-  \item iPhone 5 (iOS 9)
-  \item iPhone 6 Plus (iOS 9.2)
-  \item Samsung Galaxy S2 (Android 4.4.4 API Level 19)
-  \item Samsung Galaxy S5 (Android 5.0 API Level 21)
-  \item Samsung Galaxy S6 (Android 5.1.1 API Level 22)
-  \item Google Nexus 7 (Android 4.4.4 API Level 19)
-\end{itemize}
-Bei der Auswahl der Testgeräte wurde darauf geachtet, dass ein möglichst großes Spektrum von
-Smartphones umfasst wird. Bspw. wurden bei den iPhones gezielt ein Gerät mit einem relativ kleinen
-und schmalen Bildschirm (iPhone 5) und ein Vertreter der iPhones mit dem größten Bildschirm (iPhone
-6 Plus) ausgewählt. Analog zu den iOS Geräten wurde darauf geachtet, dass die Android Testgeräte
-repräsentativ für die meisten Klassen von Android Smartphones sind, wobei nicht nur die unterschiedliche
-Bildschirmgröße (es wurde mit einem Tablett Nexus 7 und einem der kleinsten Android Geräten,
-Samsung Galaxy S2 getestet) ausschlaggebend für die Wahl war, sondern auch die unterschiedlichen
-Versionen von Android Betriebssystemen (Android 4.4.4, Android 5.0, Android 5.1.1). 
+Bedienoberfläche ordnungsgemäß funktioniert.
 \subsection{Ableitung der Testfälle}
-Wichtig zu beachten ist, dass für alle Punkte aus
-\ref{Anforderungsanalyse} getestet werden, so dass am Ende sichergestellt wird, dass die Anforderungen erfüllt sind.
-Die Implementierung jedes Anwendungsfalls aus \ref{Anwendungsfälle} sollte in mindestens einem Test
-geprüft werden. Es wird mit dem Erfolgsszenario begonnen und danach werden die Sonderfälle ebenfalls
-geprüft. In Tabelle \ref{table2} ist zu sehen, wie aus dem Anwendungsfall "`Einmalige
-Registrierung"' aus \ref{Registrierung}, zwei Testfälle abgeleitet wurden. Einmal für den
-Erfolgsszenario und einem für den Sonderfall, wenn die Eingaben falsch sind. Analog wurden die
-Testfälle aus den anderen Anwendungsfällen abgeleitet.
+Nach \cite[498]{SE} sollte man versuchen mit einer
+möglichst kleinen Menge von Testfällen, möglichst viele Fehler zu entdecken. Um das zu erreichen
+sollten die Testfälle idealerweise folgende drei Eigenschaften aufweisen:
+\begin{itemize}
+  \item[-] Ein Testfall sollte \textcolor{gray}{repräsentativ} sein, d.h.,
+  stellvertretend für viele andere Testfälle sein.
+  \item[-] Ein Testfall sollte \textcolor{gray}{fehlersensitiv} sein, d.h., die
+  Wahrscheinlichkeit, einen Fehler anzuzeigen, soll hoch sein.
+  \item[-] Ein Testfall sollte \textcolor{gray}{redundanzarm} sein, d.h., es soll vermieden
+  werden, dass Testfälle Sachen prüfen, die schon von einem anderen Testfall geprüft worden sind.
+\end{itemize}
+% Wichtig zu beachten ist, dass alle Punkte aus
+% \ref{Anforderungsanalyse} getestet werden, so dass am Ende sichergestellt wird, dass die Anforderungen erfüllt sind.
+ Die Implementierung jedes Anwendungsfalls aus
+\ref{Anwendungsfälle} sollte in mindestens einem Test geprüft werden. Es wird mit dem Erfolgsszenario
+begonnen und danach werden die Sonderfälle ebenfalls geprüft. Eine Dokumentierung der Testfälle erleichtert die Wiederverwendung. Wichtig ist, dass
+der Anfangszustand der Umgebung und eventuell des Prüflings exakt beschrieben wird. Werte der
+Eingabedaten und die entsprechende Interaktion müssen ebenso beschrieben werden. Für die Auswertung
+des Tests ist eine exakte Definition der erwarteten Ausgaben notwendig. In Tabelle \ref{table2} ist zu sehen,
+wie aus dem Anwendungsfall "`Einmalige Registrierung"' aus \ref{Registrierung}, zwei Testfälle
+abgeleitet wurden. Einmal für das Erfolgsszenario und einmal für den Sonderfall, wenn die Eingaben
+falsch sind (anstelle von "`555555"' wurde die Kundennummer "`555556"' eingegeben). Bei der
+Auswertung eines Testfalls werden die Ergebnisse mit den Soll-Resultaten verglichen. Wenn der Test Schritt für
+Schritt interaktiv durchgeführt wird, werden Ist- und Soll-Ergebnis für jeden Testfall sofort
+verglichen. 
+Bei automatisierten Tests, wird dieser Vergleich von einem speziellen Werkzeug durchgeführt. Im
+vorliegenden Fall erledigt das Xamarin.UITest Framework diese Aufgabe. Analog wurde es auch bei der
+Ableitung der Testfälle aus den anderen Anwendungsfällen vorgegangen.
 
 \begin{table}
 \begin{tabular}{|l|l|l|l|l|}\hline
  & Anfangszustand & Eingabe/Aktion & Soll-Reaktion der App\\\hline 
-1 & User mit Kundenummer 1111  & Eingabe Kd-Nr [1111] & App meldet  \\
- & und PLZ 21107. & Eingabe PLZ [21107]  & "`Ihre Registrierung  \\
+1 & User mit Kundenummer 555555  & Eingabe Kd-Nr [555555] & App meldet  \\
+ & und PLZ 33409. & Eingabe PLZ [33409]  & "`Ihre Registrierung  \\
  & Die App zeigt den Login Screen an  & [Registrieren] & war erfolgreich"' \\ \hline
-2 & User mit Kundenummer 1111  & Eingabe Kd-Nr [2222]  & App meldet \\
- & und PLZ 21107  & Eingabe PLZ [21107]  & "`Ihre Registrierung \\
+2 & User mit Kundenummer 555555  & Eingabe Kd-Nr [555556]  & App meldet \\
+ & und PLZ 33409  & Eingabe PLZ [33409]  & "`Ihre Registrierung \\
  & Die App zeigt den Login Screen an  & [Registrieren] & war nicht erfolgreich"' \\ \hline
 \hline
 \end{tabular}
 \caption{Testfälle für den Anwendungsfall "`Einmalige Registrierung"' (\ref{Registrierung})}
 \label{table2}
 \end{table}
-
-\subsection{Xamarin Test Cloud}
-Da es vor allem
-bei Android eine große Vielfalt an Geräten gibt, kann das sehr mühsam sein.
-Softwarehersteller müssen nicht selten Apps auf dutzende sogar hunderte Geräte installieren und
-testen.\\Die meisten Developer verzichten auf systematisches Testen, weil die verfügbaren Tools und
-Dienste zu kompliziert und schwer zu benutzen sind und nur auf einem Gerät bzw. Simulator ausgeführt
-werden können. \\Abhilfe kann man sich bei einem Dienst von Xamarin, genannt Xamarin Test Cloud,
-schaffen.\\Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro Monat. D.h. jeder Entwickler, der einen Xamarin Account hat,
-kann die Dienste der Xamarin Test Cloud in Anspruch nehmen.
-Xamarin verfügt über 1600 reale iOS- und Android-Smartphones und Tabletts. An dieser Stelle muss
-klargestellt werden, dass es allerdings nur iOS- und Android-Geräte sind, also die Test Cloud von
-Xamarin unterstützt noch nicht Windows Phone.
-Mit der Test Cloud kann man leicht visuelle Inkonsistenzen feststellen, indem man die Ergebnisse eines UI-Tests auf
-dutzende Geräten vergleicht. Der Entwickler hat die Möglichkeit Screenshots an beliebigen Stellen
-des Tests zu machen (siehe \ref{fig:abb35}).
-Darüber hinaus bietet der Service auch Videoaufnahme von Tests.
-Eine Geräte-Minute wird konsumiert, wenn der Test auf einem Gerät ausgeführt wird, wobei es keine
-Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgeführt werden.\\Beim
+\subsection{Xamarin.UITest}
+Beim
 Anlegen der Xamarin.Forms Solution, wurde außer des plattformübergreifenden Projekt und der
 plattformspezifischen Projekte noch ein weiteres Projekt angelegt - das
 ScanApp.UITests Projekt.
@@ -365,17 +378,8 @@ Der Xamarin Test Cloud Agent muss eingebettet in die iOS Applikationen sein, wen
 kompiliert wird. Bei Android Applikationen ist der TestCloud Agent eine separate Anwendung, die
 neben der zu testende App installiert wird. Die Tests interagieren mit der UI als würde ein Benutzer
 in Wirklichkeit Text ein ein Entry-Feld eintippen, irgendeine Geste durchführen, oder auf einen Button klicken usw.
-% Nachdem die Tests geschrieben worden sind, kann man die lokal ausführen und wenn die Tests
-% erfolgreich abgeschlossen wurden, kann man die auch in der Cloud ausführen lassen.
-Solche Tests können lokal ausgeführt werden und erleichtern die Entwicklung einer App. Die
-eigentliche Stärke von Xamarin.UITest ist, allerdings, die Möglichkeit, diese lokale Tests in die
-Xamarin Test Cloud hochzuladen. In der Cloud steht eine Vielzahl von realen Geräten (alle ohne
-Jailbreak) zur Verfügung. Xamarin Test Cloud generiert bei jedem Schritt eines Testfalls Screenshots von der App.
-Somit kann der Developer einen Vergleich zwischen den Darstellungen seiner App auf den verschiedenen
-Geräten ziehen. Screenshots können allerdings nicht alle Benutzereindrücke abbilden. Für diesen
-Zweck ist auch ein Screen Recording möglich.
-
-Typischerweise wird jeder UITest als eine Methode definiert. Die Klasse, die den Test enthält, wird als Test Fixture bezeichnet. Eine Text Fixture enthält entweder einen Test oder eine logische Gruppe von Tests. 
+\\Typischerweise wird jeder UITest als eine Methode definiert. Die Klasse, die den Test enthält,
+wird als Test Fixture bezeichnet. Eine Text Fixture enthält entweder einen Test oder eine logische Gruppe von Tests.
 Sie ist für Einstellungen und Bereingungen, die nach den Tests durchgeführt werden sollen zuständig.
 Jeder Test sollte dem "`arrange-act-assert"' Muster folgen (siehe Abb. \ref{fig:abb37}):
 \begin{itemize}
@@ -402,6 +406,101 @@ Um einen Xamarin.UITest zum laufen zu bringen, muss das NuGet Package Xamarin Te
 iOS-Projekt hinzugefügt werden. Bei Xamarin.Android ist das nicht erforderlich. Allerdings braucht
 man bei Android eine APK-Datei. D.h. JDK und Android SDK müssen installiert sein. In den meisten
 Fällen werden die aber mitinstalliert bei der Installation von Xamarin.Android (\cite{XamUITest}).
+\subsection{Testgeräte}
+Die von Android und Apple zur Verfügung gestellten Simulatoren erleichtern wesentlich den
+Testprozess, allerdings um sicher zu gehen, dass eine App wirklich fehlerfrei funktioniert, kommt
+man an Tests auf reale Geräte nicht herum.
+\\Während der Implementierung wurde die Scan-App durchgehend auf
+folgende Geräte lokal getestet:
+\begin{itemize}
+  \item iPhone 5 (iOS 9)
+  \item iPhone 6 Plus (iOS 9.2)
+  \item Samsung Galaxy S2 (Android 4.4.4 API Level 19)
+  \item Samsung Galaxy S5 (Android 5.0 API Level 21)
+  \item Samsung Galaxy S6 (Android 5.1.1 API Level 22)
+  \item Google Nexus 7 (Android 4.4.4 API Level 19)
+\end{itemize}
+Bei der Auswahl der Testgeräte wurde darauf geachtet, dass ein möglichst großes Spektrum von
+Smartphones umfasst wird. Bspw. wurden bei den iPhones gezielt ein Gerät mit einem relativ kleinen
+und schmalen Bildschirm (iPhone 5) und ein Vertreter der iPhones mit dem größten Bildschirm (iPhone
+6 Plus) ausgewählt. Analog zu den iOS Geräten wurde darauf geachtet, dass die Android Testgeräte
+repräsentativ für die meisten Klassen von Android Smartphones sind, wobei nicht nur die unterschiedliche
+Bildschirmgröße (es wurde mit einem Tablett Nexus 7 und mit einem der kleinsten Android Geräten,
+Samsung Galaxy S2 getestet) ausschlaggebend für die Wahl war, sondern auch die unterschiedlichen
+Versionen von Android Betriebssystemen (Android 4.4.4, Android 5.0, Android 5.1.1). 
+\subsection{Xamarin Test Cloud}
+Da es vor allem
+bei Android eine große Vielfalt an Geräten gibt, kann Testen sehr mühsam und zeitaufreibend sein.
+Softwarehersteller müssen nicht selten Apps auf dutzende sogar hunderte Geräte installieren und
+testen.
+% \\Die meisten Developer verzichten auf systematisches Testen, weil die verfügbaren Tools und
+% Dienste zu kompliziert und schwer zu benutzen sind und nur auf einem Gerät bzw. Simulator ausgeführt
+% werden können. 
+\\Abhilfe kann man sich bei einem Dienst von Xamarin, genannt Xamarin Test Cloud,
+schaffen.\\Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro
+Monat. D.h., jeder Entwickler, der einen Xamarin Account hat, kann die Dienste der Xamarin Test Cloud in Anspruch nehmen.
+Xamarin verfügt über 1600 reale iOS- und Android-Smartphones und Tabletts. An dieser Stelle muss
+klargestellt werden, dass es allerdings nur iOS- und Android-Geräte sind, also die Test Cloud von
+Xamarin unterstützt noch nicht Windows Phone.
+Mit der Test Cloud kann man leicht visuelle Inkonsistenzen feststellen, indem man die Ergebnisse eines UI-Tests auf
+dutzende Geräten vergleicht. Der Entwickler hat die Möglichkeit Screenshots an beliebigen Stellen
+des Tests zu machen (siehe \ref{fig:abb35}).
+Darüber hinaus bietet der Service auch Videoaufnahme von Tests.
+Eine Geräte-Minute wird konsumiert, wenn der Test auf einem Gerät ausgeführt wird, wobei es keine
+Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgeführt werden.
+% \\Beim
+% Anlegen der Xamarin.Forms Solution, wurde außer des plattformübergreifenden Projekt und der
+% plattformspezifischen Projekte noch ein weiteres Projekt angelegt - das
+% ScanApp.UITests Projekt.
+% In diesem vorgefertigten Projekt befinden sich die Klassen: AppInitializer.cs und Tests.cs.\\In
+% AppInitializer werden Konfigurierugen vorgenommen, wie Angabe des Pfads der Android APK Datei und
+% der iOS IPA Datei. In der Klasse Tests.cs werden die Tests implementiert. Eine sogenannte
+% TestFixture umfasst mehrere Test-Methoden. Auf diese Klasse wird später näher eingegangen.
+% \\Xamarin.UITest
+% basiert auf Calabash, eins der berühmtesten Frameworks für automatisiertes Testen von mobilen Apps.
+% Solche Tests setzen auf den Xamarin Test Cloud Agent auf, einen speziellen HTTP-Server, der mit der
+% zu testenden mobilen Applikation kommuniziert.
+% Der Xamarin Test Cloud Agent muss eingebettet in die iOS Applikationen sein, wenn die App
+% kompiliert wird. Bei Android Applikationen ist der TestCloud Agent eine separate Anwendung, die
+% neben der zu testende App installiert wird. Die Tests interagieren mit der UI als würde ein Benutzer
+% in Wirklichkeit Text ein ein Entry-Feld eintippen, irgendeine Geste durchführen, oder auf einen Button klicken usw.
+% Nachdem die Tests geschrieben worden sind, kann man die lokal ausführen und wenn die Tests
+% erfolgreich abgeschlossen wurden, kann man die auch in der Cloud ausführen lassen.
+Xamarin.UITests können lokal ausgeführt werden und erleichtern die Entwicklung einer App. Die
+eigentliche Stärke von Xamarin.UITest ist, allerdings, die Möglichkeit, diese lokale Tests in die
+Xamarin Test Cloud hochzuladen. In der Cloud steht eine Vielzahl von realen Geräten (alle ohne
+Jailbreak) zur Verfügung. Xamarin Test Cloud generiert bei jedem Schritt eines Testfalls Screenshots von der App.
+Somit kann der Developer einen Vergleich zwischen den Darstellungen seiner App auf den verschiedenen
+Geräten ziehen. Screenshots können allerdings nicht alle Benutzereindrücke abbilden. Für diesen
+Zweck ist auch ein Screen Recording möglich.
+
+% Typischerweise wird jeder UITest als eine Methode definiert. Die Klasse, die den Test enthält, wird als Test Fixture bezeichnet. Eine Text Fixture enthält entweder einen Test oder eine logische Gruppe von Tests. 
+% Sie ist für Einstellungen und Bereingungen, die nach den Tests durchgeführt werden sollen zuständig.
+% Jeder Test sollte dem "`arrange-act-assert"' Muster folgen (siehe Abb. \ref{fig:abb37}):
+% \begin{itemize}
+%   \item Vereinbarungen treffen (arranging) - Vorbereitungen für den Test. D.h. hier werden
+%   Bedingunen eingestellt und Initialisierungen durchgeführt, so dass der Test gestartet werden kann.
+%   \item Handeln (acting) - Interaktionen mit der App, wie Eintippen von Text, Klicken auf Buttons
+%   usw.
+%   \item Behauptungen überprüfen (asserting) - hier werden die Ergebnisse der Interaktionen auf
+%   Korrektheit überprüft
+% \end{itemize}
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[scale = 0.565]{graphics/XamarinUITest.png}
+% \caption{Xamarin.UITest}
+% \label{fig:abb37}
+% \end{figure}
+% Xamarin.UITests setzen auf Queries auf, um Views auf dem Screen zu lokalisieren. Diese Queries
+% benutzen Attributen der Views, wie Identifier, und nicht die physiche Position der Views auf dem
+% Screen. Dies ist eine sehr mächtige Technik, die es Xamarin.UITest erlaubt mit den Objekten zu
+% interagieren, unabhängig von Bildschirmgröße, Orientierung oder Layout. Xamarin.UITest bietet ein
+% REPL (read eval print loop) an, das sehr hilfreich beim Erstellen einer solchen Query sein kann.
+% REPL erlaubt Entwicklern, mit der Anwendung zu interagieren, während es läuft.
+% Um einen Xamarin.UITest zum laufen zu bringen, muss das NuGet Package Xamarin Test Cloud Agent zum
+% iOS-Projekt hinzugefügt werden. Bei Xamarin.Android ist das nicht erforderlich. Allerdings braucht
+% man bei Android eine APK-Datei. D.h. JDK und Android SDK müssen installiert sein. In den meisten
+% Fällen werden die aber mitinstalliert bei der Installation von Xamarin.Android (\cite{XamUITest}).
 % \begin{figure}[!h]
 % \centering
 % \includegraphics[scale = 0.35]{graphics/XamarinTestCloudSucceed.png}

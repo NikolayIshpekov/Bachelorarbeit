@@ -77,28 +77,86 @@ Es lässt sich schließen, dass die Scan-App und dadurch Xamarin.Forms dieses Krit
 Durch die Distribution der ScanApp in die entsprechenden App-Stores (Apples App Store und
 Androids Google Play Store) kann die Scan-App auf die für mobile Anwendungen übliche Art und Weise
 verbreitet werden. Kriterium erfüllt.
-\section{Weitere Bewertungskriterien}
-Ausser der ISO Standards sind im vorliegenden Fall auch folgende Bewertungskriterien sinnvoll:
+\section{Goal-Question-Metric}
+Es ist keine einfache Aufgabe, geeignete Metriken zu identifizieren.
+Nach dem Goal-Question-Metric Ansatz (GQM) werden die zu erhebende Metriken aus den Problemen,
+Zielen und Fragen abgeleitet (\cite[321]{SE}). Dieser Ansatz besteht aus drei Schritten:
 \begin{itemize}
-  \item Es soll eine plattformübergreifende Programmiersprache benutzt werden.
-  \item Gute Unterstützung durch IDE.
-  \item Das Framework soll Zugriff auf native Elemente, wie bspw. die Kamera eines Smartphones
-  ermöglichen.
-  \item Klare Trennung zwischen UI und Business Logik.
-  \item Code-Sharing: Der Code-Sharing Anteil soll mehr als 50\% des Gesamtcodes sein.
-  \item Geschäftslogik soll einmal in dem gemeinsamen Projekt implementiert werden und nicht in den
-  plattformspezifischen Projekten.
-  \item UI-Konzept - die von der Entwicklungsplattform bereitgestellten UI-Tools, sollen die
-  Funktionalität einer nativ entwickelten App gewährleisten können.
-  \item Persistieren der Daten (Datenbankanbindung) soll unterstützt werden.
-  \item Es sollen möglichst wenig Bugs während des Entwicklungsprozesses entstehen und deren
-  Behebung soll nicht mit viel Aufwand verbunden sein.
-  \item Die mit Xamarin entwickelte mobile Anwendung soll keine funktionale Unterschiede zu einer
-  nativen Applikation aufweisen.
-  \item Soll nicht deutlich langsamer als die Referenz Applikation sein.
-  \item Die Distribution einer mit Xamarin entwickelten Anwendung in die entsprechenden App-Stores
-  soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
+  \item[1] Definition von Relevanten Ziele.
+  \item[2] Aus jedem Ziel werden Fragen abgeleitet, mit derer Hilfe überprüft werden kann ob das
+  Ziel erreicht ist.
+  \item[3] Für jede Frage werden Metriken festgelegt, die dazu beitragen, die Antworen zu finden.
 \end{itemize}
+ Ziel: Es soll eine plattformübergreifende Programmiersprache benutzt werden.
+ \\Frage: Wie viele Programmiersprachen wurde für die
+ Implementierung der iOS-Version, für die Android-Version der App und für die Implementierung des
+ gemeinsamen plattformübergreifenden Teils?
+\\Metrik: Die Anzahl der verwendeten Programmiersprachen. Die Antwort ist 1. Es wurde lediglich C\#
+angewendet (Für die Beschreibung der GUI wird auch XAML angewendet, allerdings lässt sich die GUI
+auch komplett in C\# definieren).
+\\
+ \\Ziel: Gute Unterstützung durch Xamarin Studio bzw. Visual Studio.
+ \\Frage: Verfügt die IDE über "`Autocomplete"'-Funktion?
+ \\Antwort: Ja.
+ \\
+ \\Ziel:Das Framework soll Zugriff auf native Elemente, wie bspw. die Kamera eines Smartphones
+  ermöglichen.
+  \\Frage: Wie oft wurde auf die Kamera zugegriffen?
+  \\Metrik: Die Anzahl der Zugriffe auf die Kamera des Smartphones. Antwort: Einmal beim Scannen.
+  \\
+  \\Ziel: Geschäftslogik soll einmal in dem gemeinsamen Projekt implementiert werden und nicht in den
+  plattformspezifischen Projekten.
+  \\Frage: Für die Realisierung von wie viele Features mussten "`Custom Renderer"' benutzt werden?
+  \\Metrik: Anzahl der "`Custom Renderer"'. Antwort: 0, die ganze App-Logik und Gestaltung der GUI
+  wurde im gemeinsamen Projekt definiert und es wurden keine benutzerdefinierte Renderer in die
+  plattformspezifischen Projekten benötigt.
+  \\
+  \\Ziel: Der Großteil des Codes soll im gemeinsamen Projekt sein.
+  \\Frage: Wie viel Prozent des Codes befinden sich im plattformübergreifenden Projekt?
+  \\Metrik: Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
+  von allen drei Projekte gesamt. Antwort: Über 90\%.
+  \\
+  \\Ziel: UI-Konzept - die von der Entwicklungsplattform bereitgestellten UI-Tools, sollen die
+  Funktionalität einer nativ entwickelten App gewährleisten können.
+  \\Frage: Wie viele angeforderten Funktionalitäten konnten nicht erfüllt werden, aufgrund fehlende
+  APIs? 
+  \\Metrik: Anzahl der Funktionen, die nicht unterstützt wurden. Antwort: 0.
+   \\
+  \\Ziel: Eine "`cross-plattform"' entwickelte App soll nicht deutlich langsamer als eine native
+  Referenz Applikation sein.
+  \\Frage: Wie lange braucht der Scanner von ScanApp um eine Barcodenummer zu erfassen?
+  \\Metrik: Die Zeit in Sekunden, die der Scanner braucht um einen Barcode zu scannen im Vergleich
+  zu der Zeit, die eine native Scanner-App braucht. Antworten: Die Xamarin Scan-App braucht zwischen
+  2 - 5 Sekunden, eine native Scanner App ist unwesentlich schneller (2 bis 4 Sekunden).
+\\
+  \\Ziel: Die Distribution einer mit Xamarin entwickelten Anwendung in die entsprechenden App-Stores
+  soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
+  \\Frage: Wie viel Zeit nimmt das Hochladen einer Xamarin App in den App Store und
+  Google Play Store in Anspruch?
+  \\Metrik: Für die Konfigurierung der benötigten Einstellungen und die Erstellung einer Android
+  APK-Datei und einer iOS IPA-Datei durch Xamarin Studio werden typischerweise je 15 bis 30 Minuten
+  gebraucht. Das anschließende Hochladen in die jeweiligen Stores unterscheidet sich nicht von dem
+  Hochladen einer nativen iOS oder Android App und wird ebenso innerhalb 15 bis 30 Minuten erledigt.
+% \begin{itemize}
+%   \item Es soll eine plattformübergreifende Programmiersprache benutzt werden.
+%   \item Gute Unterstützung durch IDE.
+%   \item Das Framework soll Zugriff auf native Elemente, wie bspw. die Kamera eines Smartphones
+%   ermöglichen.
+%   \item Klare Trennung zwischen UI und Business Logik.
+%   \item Code-Sharing: Der Code-Sharing Anteil soll mehr als 50\% des Gesamtcodes sein.
+%   \item Geschäftslogik soll einmal in dem gemeinsamen Projekt implementiert werden und nicht in den
+%   plattformspezifischen Projekten.
+%   \item UI-Konzept - die von der Entwicklungsplattform bereitgestellten UI-Tools, sollen die
+%   Funktionalität einer nativ entwickelten App gewährleisten können.
+%   \item Persistieren der Daten (Datenbankanbindung) soll unterstützt werden.
+%   \item Es sollen möglichst wenig Bugs während des Entwicklungsprozesses entstehen und deren
+%   Behebung soll nicht mit viel Aufwand verbunden sein.
+%   \item Die mit Xamarin entwickelte mobile Anwendung soll keine funktionale Unterschiede zu einer
+%   nativen Applikation aufweisen.
+%   \item Soll nicht deutlich langsamer als die Referenz Applikation sein.
+%   \item Die Distribution einer mit Xamarin entwickelten Anwendung in die entsprechenden App-Stores
+%   soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
+% \end{itemize}
 \section{Feststellungen}
 \subsection{Positive Feststellungen}
 Es muss erwähnt werden, dass das Team von Xamarin sich große Mühe für die Weiterentwicklung des

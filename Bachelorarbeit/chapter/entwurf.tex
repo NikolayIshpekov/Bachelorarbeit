@@ -9,18 +9,13 @@ alternative Methoden zum Code-Sharing:
  Der Sinn von Xamarin.Forms ist es, dass man mit einer gemeinsamen Codebasis, mehrere Versionen
  einer App erstellen kann (im vorliegenden Fall sind es iOS- und Android-Version der Anwendung.
  Mit einem Xamarin Business Account wäre auch eine Windows Phone-Version möglich).
- Beim Anlegen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte erstellt, so dass folgende Projekte entstehen:
-\begin{itemize}
-  \item ScanApp - das gemeinsame, plattformübergreifende Projekt.
-  \item ScanApp.Droid - plattformspezifisches Projekt für Android.
-  \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
-\end{itemize}
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/ScanApp_Projekt.png}
 \caption{ScanApp - Entwurf}
 \label{fig:abb40}
 \end{figure}
+\newline
 Abb. \ref{fig:abb40} veranschaulicht die Verteilung der Projekten.
 Der Großteil des Codes wird sich im plattformübergreifenden Projekt, ScanApp befinden. In diesem
 "`shared"' Projekt wird typischerweise die gesamte App-Logik, inklusive Gestaltung der
@@ -28,14 +23,14 @@ Benutzungsoberfläche, ausgelagert.
 % Xamarin.Forms ist eine Art Abstraktionsschicht, mit derer Hilfe
 % sich die Benutzungsoberfläche in diesem gemeinsamen, plattformübergreifenden Projekt gestalten
 % lässt.
-Die Benutzungsoberfläche (in English: graphical user interface (GUI)) soll den Designvorgaben der
+Die Benutzungsoberfläche (in English: graphical user interface (GUI)) muss den Designvorgaben der
 unterschiedlichen Betriebssystemhersteller folgen, damit die App zu den entsprechenden App-Stores
 zugelassen wird.
 Der Entwickler soll sich, allerdings, nicht darum kümmern, diese Aufgabe erledigt Xamarin. Da der Xamarin-Code pro Plattform zu Maschinencode
-kompiliert wird, ist der App nicht anzusehen, dass die "`cross-plattform"' entwickelt wurde.
-Aus der Perspektive eines Benutzers fühlt sich eine Xamarin.iOS App wie jede native iOS App an und
-jede Xamarin.Android App.wie eine nativ entwickelte Android App. 
-Dank Xamarin.Forms werden die Ansichten komplett plattformunabhängig definiert. 
+kompiliert wird, ist der App nicht anzusehen, dass sie "`cross-plattform"' entwickelt wurde.
+Aus der Perspektive eines Benutzers fühlt sich eine Xamarin App wie jede native iOS bzw. Android App
+an. 
+\\Mittels Xamarin.Forms werden die Ansichten komplett plattformunabhängig definiert. 
 Die Xamarin.Forms Steuerelemente werden je nach Plattform in das native Pendant übersetzt.
 So wird ein "`Xamarin.Forms.ListView"' in "`ListView"' bei Android und in "`UITableView"' bei iOS übersetzt
 \\In die
@@ -55,11 +50,11 @@ können. Am Ende dieses Kapitels werden die für die ScanApp benötigten NuGut Pack
 Komponenten näher vorgestellt. 
 % \\Der Entwurf der ScanApp bezieht sich fast ausschließlich auf das
 % "`shared"' Projekt (siehe Abb. \ref{fig:abb40}). 
-\\Wie bereits angesprochen, wird mit
-"`Cross-Plattform-Entwicklung"' gezielt, dass alles, was sich auslagern lässt, in das gemeinsame
-Projekt gehört. Die plattformspezifischen Projekte sollten möglichst "`leer"' bleiben.
-Im Folgenden wird einen Einblick in die Strukturen der drei Projekte gegeben, beginnend beim
-"`shared"' ScanApp Projekt (siehe Abb. \ref{fig:abb41}).
+\\Es ist nahe liegend, dass bei einer
+"`Cross-Plattform-Entwicklung"' gezielt wird, dass alle Gemeinsamkeiten in das
+"`shared"' Projekt ausgelagert werden. Die plattformspezifischen Projekte sollten möglichst
+"`klein"' bleiben.
+Im Folgenden wird einen Einblick in den Entwurf der Anwendung gegeben.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.46]{graphics/SharedScanApp.png}
@@ -175,9 +170,11 @@ Im Folgenden wird einen Einblick in die Strukturen der drei Projekte gegeben, be
 \section{Shared ScanApp Projekt}
 In Abb. \ref{fig:abb40} wird der grobe Entwurf der ScanApp abgebildet. Wie schon angemerkt, passiert
 das wesentliche im gemeinsamen Projekt (Shared Projekt). Abb. \ref{fig:abb41} bildet die Struktur
-des Shared ScanApp Projekts ab. Im Folgenden wird einen Einblick in die Komponenten dieses Projekts
-gegeben. Wie bereits im Kapitel \ref{MVVM} erörtert, weist das MVVM-Pattern eine lose Kopplung
-zwischen View und Viewmodel auf. Um diese Trennung visuell zu gestalten, werden drei Ordner erstellt:
+des Shared ScanApp Projekts ab. 
+% Im Folgenden wird einen Einblick in die Komponenten dieses Projekts
+% gegeben. 
+Wie bereits im Kapitel \ref{MVVM} erläutert, weist das MVVM-Pattern eine lose Kopplung
+zwischen View und Viewmodel auf.\\Im Folgenden werden die Komponente des Projekts beschrieben.
 \subsection{Model}
 In der Komponente Model werden typischerweise Klassen definiert, die
   anwendungsspezifische Datentypen beschreiben. Das sind Klassen zur Speicherung und
@@ -186,7 +183,7 @@ In der Komponente Model werden typischerweise Klassen definiert, die
 D.h. zum Model gehören die eigentlichen Daten der Anwendung. Hier werden Klassen, wie Barcode,
 UserData, Order, OrderItem etc. definiert.\\Im Model wird noch eine Klasse definiert, die
 Methoden für "`CRUD"'-Operationen (Create Read Update Delete) für das Persistieren der Modeldaten in
-die Datenbank bietet, die in \ref{PersistenzBackend} vorgestellt wird.
+die Datenbank (die in \ref{PersistenzBackend} vorgestellt wird) bietet.
 \subsection{View}\label{View}
 In der View-Komponente werden die Ansichten der Bedienungsoberfläche der App definiert. 
 Die grafischen Interfaces der Scan-App werden mit der Markupsprache Xaml
@@ -207,11 +204,11 @@ Entwickler können unabhängig voneinander arbeiten.
 % In Abb. \ref{fig:abb34} werden die Mockups für die unterschiedelichen Ansichten der Scan-App
 % abgebildet.
 In Abb. \ref{fig:abb34} werden Mockups der zu definierenden Scan-App Ansichten dargestellt.
-Jede Ansicht wird in Form einer Xamarin.Forms.Page definiert und in einer Xaml-Datei gespeichert. 
-In einer C\#-Klasse, genannt Base\_Page, die von der Klasse Xamarin.Forms.Page abgeleitet wird,
-werden Eigenschaften definiert, die für die meisten Ansichten gemeinsam sind. Bspw. das
-Navigationsheader-Logo oder Methoden für die Steuerung der Navigation. Von dieser Klasse werden die
-Ansichten abgeleitet.
+% Jede Ansicht wird in Form einer Xamarin.Forms.Page definiert und in einer Xaml-Datei gespeichert. 
+% In einer C\#-Klasse, genannt Base\_Page, die von der Klasse Xamarin.Forms.Page abgeleitet wird,
+% werden Eigenschaften definiert, die für die meisten Ansichten gemeinsam sind. Bspw. das
+% Navigationsheader-Logo oder Methoden für die Steuerung der Navigation. Von dieser Klasse werden die
+% Ansichten abgeleitet.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.65]{graphics/MockUpsScanApp.png}
@@ -227,51 +224,32 @@ implementiert. Hier werden Properties und Methoden definiert, die durch "`Data B
 Steuerelemente des dazugehörenden Views gebunden werden. \\Die Klassen der ViewModel-Komponente
 greifen auf die Klassen der Util- und der Model-Komponente zu, um die Funktionalität der App zu
 gewährleisten und sind auch für die Navigation zwischen der App-Seiten, die im
-\ref{Navigation} beschrieben wird, zuständig. Da nach MVVM die View den ViewModel kennt, nicht aber
-andersrum, kann eine ViewModel-Klasse ausschließlich durch das \textbf{\textit{Xamarin.Forms Messaging Center}} mit der entsprechende View-Klasse
-"`kommunizieren"'.
+\ref{Navigation} beschrieben wird, zuständig. \\Da nach MVVM die View den ViewModel kennt und der
+ViewModel über keine Information über die View verfügt, kann eine ViewModel-Klasse
+ausschließlich durch das \textbf{\textit{Xamarin.Forms Messaging Center}} mit der entsprechenden
+View-Klasse "`kommunizieren"'.
 \subsection{Util}
-In dieser Komponente werden einige nützliche Klassen definiert: 
-\begin{itemize}
-  \item UtilKlasse mit mehreren statischen Methoden, die von den Klassen des Viewmodels benutzt
-  werden.
-  \item Klasse mit App-Konstanten. Hier werden üblicherweise vorwiegend Strings ausgelagert.
-  \item HttpBackend. Diese Klasse kapselt die Kommunikation mit dem Backend mittles Web Services.
-\end{itemize}
-
-Es ist möglich, dass die Funktionalität eines Viewmodels in der Code-Behind-Datei einer Ansicht
-untergebracht wird (Beim Erstellen einer Xaml-Datei wird automatisch auch die dazugehörende
-C\#-Code-Behind-Datei erstellt).
-Das entspricht, allerdings, nicht dem MVVM-Architekturmuster.
-Dadurch würde eine sehr enge Kopplung zwischen View und Funktionalität entstehen und die Ansichten wären
-nicht mehr austauschbar.\\Durch Xamarin.Forms kann man die ganze Benutzungsoberfläche im gemeinsamen
-Projekt implementieren. D.h. jede Erweiterung oder Änderung einer Ansicht kann zentral, an einer
-Stelle, durchgeführt werden. Sollte man zu einem späteren Zeitpunkt Design-Änderungen vornehmen
-möchten, müsste man es dann nur einmal implementieren.\\Da der gemeinsame Code zu nativem
-Maschinencode kompiliert wird und die Steuerelemente die gleiche Funktionalität haben, sieht die
-Android-Benutzungsoberfläche nicht unbedingt gleich wie die von iOS oder eventuell die von Windows
-Phone aus.\\Ein Eingriff in die plattformspezifischen Projekte, ist nur in den Fällen notwendig,
-wenn die von Xamarin.Forms angebotenen Steuerelemente sich nicht so verhalten wie der Entwickler bzw. der Designer der App es sich vorstellt. Dann werden sogenannte
-"`Custom Renderer"' Klassen in die plattformspezifischen Projekten benötigt. In denen kann man
-Änderungen vornehmen, wie z.B. das Definieren von runden Buttons. \\Die Layouts der  mit
-Xamarin.Forms erstellten Ansichten passen sich dynamisch an die Größe des Bildschirms an.
-Bei den vielen verschiedenen Geräten ist das eine wesentliche Erleichterung für den Entwickler.
+In dieser Komponente werden einige nützliche Klassen definiert, wie bspw.
+ eine UtilKlasse mit mehreren statischen Methoden, die von den Klassen des Viewmodels benutzt
+  werden oder auch Klassen, die die Kommunikation mit dem Backend mittels Web Services ermöglichen.
+  Ebenso wird hier noch eine Klasse mit App-Konstanten definiert. Hier werden üblicherweise
+  vorwiegend Strings ausgelagert.
 \section{Datenpersistenz und Backend-Kommunikation}\label{PersistenzBackend}
 Fast jede mobile Anwendung braucht einen Mechanismus, der eine dauerhafte lokale Speicherung der
 Appdaten erlaubt. Das gilt besonders für die Kategorie der Business Apps, zu der die zu entwickelnde
 ScanApp auch zählt. Typischerweise wird zu diesem Zweck eine leichtgewichtige Datenbank, namens
 SQLite benutzt.
-Die "`open-source"' Datenbank SQLite ist gut geeignet für das Persistieren von Daten von mobilen
+\\Die "`open-source"' Datenbank SQLite ist gut geeignet für das Persistieren von Daten von mobilen
 Applikationen, weil:
 \begin{itemize}
   \item die Datenbank klein, schnell und leicht portierbar ist;
   \item der Fileformat leicht zu benutzen und plattformübergreifend ist;
   \item SQLite die meisten SQL92 Standards implementiert.
 \end{itemize}
-Darüber hinaus ist SQLite die Standardlösung bei der nativen Android-App-Entwicklung und sehr
-verbreitet bei der iOS-App-Entwicklung.
-Xamarin.Forms unterstützt die Anbindung von SQLite und zwar cross-plattform. In den plattformspezifischen Projekte
-muss lediglich jeweils eine SQLite-Datei zu den Ressourcen hinzugefügt werden. Im gemeinsamen
+Darüber hinaus ist SQLite die Standardlösung für Datenpersistierung bei der nativen
+Android-App-Entwicklung und sehr verbreitet bei der iOS-App-Entwicklung.
+\\Xamarin.Forms unterstützt die Anbindung von SQLite und zwar cross-plattform. In den
+plattformspezifischen Projekte muss lediglich jeweils eine SQLite-Datei zu den Ressourcen hinzugefügt werden. Im gemeinsamen
 Projekt muss der Pfad zu der SQLite-Datenbank angegeben werden, einmal für Android und
 einmal für iOS. Die Zugriffe auf die Datenbank erfolgen plattformübergreifend (d.h. aus dem
 "`shared"' Projekt).
@@ -288,7 +266,7 @@ folgenden Fällen zum Einsatz von Web Services:
   \item Beim Abschließen einer Bestellung.
 \end{itemize} 
 Das sind drei typische Interaktionen zwischen App und Backend. Im Prinzip ist es belanglos,
-wofür konkret Web Services eingesetzt werden, weil die immer nach dem gleichen Muster funktionieren.
+wofür konkret Web Services eingesetzt werden, weil sie immer nach dem gleichen Muster funktionieren.
 Die App sendet eine Anfrage, im vorliegenden Fall in Form eines Json-Objekts (oft werden auch XML-Dateien zwischen App
 und Server ausgetauscht, wobei bei XML der Overhead größer ist) und der Server antwortet
 mit einer Datei desselben Formats. Damit die Kommunikation gelingt, müssen sich Server und Client an
@@ -465,7 +443,7 @@ navigiert werden, in der die einzelnen Bestellungspositionen angezeigt werden. M
 Die Struktur der App wurde im "`shared"' Projekt definiert. 
 Xamarin.Forms ist eine Art Abstraktionsschicht, man kann es als die Schnittmenge aller
 Funktionalitäten betrachten, die sich im gemeinsamen "`shared"' Projekt implementieren lassen. Die
-meisten Funktionalitäten lassen sich auf diese Weise kapseln und "`cross-plattform"'
+meisten Funktionalitäten lassen sich auf diese Weise "`cross-plattform"'
 implementieren, jedoch gibt es Situationen, in denen ein Feature nicht plattformübergreifend
 umgesetzt werden kann. Typischerweise sind es hardwarenahe Funktionalitäten, wie bspw. Zugriff auf
 spezielle Sensoren des Endgeräts.\\Im vorliegenden Fall ist die Implementierung des Barcodescanners
@@ -482,9 +460,9 @@ API die Funktionalität des Scanners implementiert wird.
 \\Der Programmablauf wird im gemeinsamen Projekt gesteuert. Im "`shared"' Projekt wird zu
 diesem Zweck ein Interface definiert, das von den Scanner-Klassen der plattformspezifischen Projekte
 implementiert wird. Der für die Scan-Ansicht zuständige ViewModel führt die Methode
-ScanClicked() aus, wenn auf den Scan-Button geklickt wird. Der Scanner soll in einem separaten
-Thread gestartet werden und erst wenn eine Barcodenummer erkannt wurde, soll es dem Main-Thread
-übergeben werden.
+ScanClicked() aus, wenn auf den Scan-Button geklickt wird. Der Scanner wird in einem separaten
+Thread gestartet. Erst wenn eine Barcodenummer erkannt wurde, wird die Barcodenummer dem Main-Thread
+übergeben und der Scanner-Thread wird geschlossen.
 
 %\subsection{Web Services für die Kommunikation mit dem Backend}
 % Web Services kommen in den folgenden Fällen zum Einsatz:
@@ -516,9 +494,9 @@ Thread gestartet werden und erst wenn eine Barcodenummer erkannt wurde, soll es 
 % Verbindung besteht (\cite{XamNetzwerkStatusIOS}). Die Netzwerktyperkennung lässt sich nicht
 % plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten.
 \section{Xamarin Komponenten (Components) und NuGet Packages} \label{nuGetPackages}
-Die Möglichkeit, Komponenten und NuGet Packages an ein Projekt anzubinden, ist eine der
-größten Stärken von Xamarin.
-Da bei Xamarin.Forms Shared Projects keine Komponenten zum gemeinsamen Projekt
+Wie in \ref{nugets} bereits erwähnt, ist die Möglichkeit, Xamarin Komponenten und NuGet Packages an
+ein Projekt anzubinden, eine der größten Stärken von Xamarin.
+Da zu Xamarin.Forms "`shared"' Projects keine Komponenten zum gemeinsamen Projekt
 hinzugefügt werden können, müssen die benötigten Komponenten zu den
 plattformspezifischen Projekten hinzugefügt werden (siehe Abb. \ref{fig:abb40}).
 \subsection{Xamarin Components}
