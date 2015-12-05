@@ -8,10 +8,10 @@ beziehen, festgelegte oder vorausgesetzte Erfordernisse zu erfüllen}.
 Software-Produkts bewerten zu können, werden möglichst objektive prüfbare Kriterien benötigt.
 \section{Goal-Question-Metric}
 % Als immaterielles Gut scheint Software nicht fassbar zu sein.
-Während bspw. bei der Kaufentscheidung
+Während bei der Kaufentscheidung
 für ein materielles Produkt gemessene oder prognostizierte Werte herangezogen werden können, gibt es
-bei Software keine solche Werte. Nach \cite{SE} werden quantifizierte Aussagen über Produkte oder
-Entwicklungsprozesse als Metriken bezeichnet. Es ist allerdings keine einfache Aufgabe, geeignete
+bei Software, als immaterielles Gut, keine solche Werte. Nach \cite{SE} werden quantifizierte
+Aussagen über Produkte oder Entwicklungsprozesse als Metriken bezeichnet. Es ist allerdings keine einfache Aufgabe, geeignete
 Metriken zu identifizieren.
 Nach dem Goal-Question-Metric Ansatz (GQM) werden die zu erhebenden Metriken aus den Problemen,
 Zielen und Fragen abgeleitet (\cite[321]{SE}). Dieser Ansatz besteht aus drei Schritten:
@@ -112,7 +112,8 @@ Aufgrund der gemeinsamen Logik lassen sich Änderungen und Fehlerkorrekturen der 
 wenig Aufwand im gemeinsamen Projekt vornehmen. Wie bereits erwähnt werden die Layouts der Ansichten
 automatisch an die Bildschirmgröße des konkreten Smartphones angepasst. Durch die lose Kopplung zwischen View und
 Viewmodel beim MVVM-Muster lässt sich eine Ansicht mit minimalem Aufwand durch eine
-andere austauschen, und zwar plattformübergreifend.
+andere austauschen, und zwar plattformübergreifend.\\Mit dem Ansatz vom GQM wurden folgende Metriken
+abgeleitet:
 % Es lässt sich schließen, dass die Scan-App und dadurch Xamarin.Forms dieses Kriterium erfüllt.
 \\
 \\\textbf{Ziel}: Es soll eine plattformübergreifende Programmiersprache benutzt werden.
@@ -175,14 +176,11 @@ verbreitet werden. Kriterium erfüllt.
 \section{Feststellungen}
 \subsection{Positive Feststellungen}
 Es lässt sich zusammenfassen, dass Xamarin als Cross Plattform Entwicklungstool, bzw. Xamarin Studio
-als Entwicklungsumgebung (IDE) sich kaum von den herkömmlichen Entwicklungsumgebungstools, wie
-Eclipse oder Xcode unterscheidet. Mit Xamarin.UITest verfügt Xamarin mit einem integrierten Werkzeug zum
-Ausführen und Auswertung von automatisierten UI-Tests. Darüber hinaus lassen sich "`open source"'
+als Entwicklungsumgebung (IDE), sich kaum von den herkömmlichen Entwicklungsumgebungstools, wie
+Eclipse oder Xcode unterscheidet. Mit Xamarin.UITest verfügt Xamarin über ein integriertes
+Werkzeug zum Ausführen und Auswertung von automatisierten UI-Tests. Darüber hinaus lassen sich "`open source"'
 Bibliotheken, wie Xamarin Components oder NuGet Packages hinzufügen. Wie es sich für eine gute
 Entwicklungsumgebung gehört, verfügt die IDE über "`Autocomplete"'- und "`Debug"'-Funktionen.
-Für Xamarin.iOS und Xamarin.Android gibt es ähnlich wie bei Eclipse und Xcode einen Designer für
-die Erstellung der Bedienoberfläche, allerdings ist Xamarin noch nicht soweit einen
-Cross-Plattform-Designer anzubieten.
 \\Es muss erwähnt werden, dass das Team von Xamarin sich
 große Mühe für die Weiterentwicklung des Frameworks gibt.
 Wenn Apple, bspw. neue APIs vorstellt, können sie innerhalb weniger Stunden mit Xamarin verwendet
@@ -214,6 +212,11 @@ Die Datei ist größer als die IPA-Datei einer nativ entwickelten iOS-App.
 Es wurde beobachtet, dass bei Debuggen über einen längeren Zeitraum, Xamarin Studio stehen geblieben
 ist und neugestartet werden musste. Allerdings muss angemerkt werden, das dies sehr selten
 vorgekommen ist.
+\subsubsection{Oberflächen-Designer}
+Für Xamarin.iOS und Xamarin.Android gibt es ähnlich wie bei Eclipse und Xcode einen Designer für
+die Erstellung der Bedienoberfläche, allerdings ist Xamarin noch nicht soweit, einen
+Cross-Plattform-Designer anzubieten und die Gestaltung der Ansichten erfolgt programmatisch,
+meistens mit der Hilfe der Beschreibungssprache Xaml.
 \section{Grenzen der Cross-Plattform-Entwicklung}
 Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
 .NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den
