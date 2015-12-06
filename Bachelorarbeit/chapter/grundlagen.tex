@@ -1,16 +1,16 @@
 \chapter{Grundlagen der mobilen App Entwicklung}
-Bei der App-Branche wird eine steile Wachstumskurve beobachtet (\cite{Statista}). Die Vielfalt von
+Bei der App-Branche wird eine steile Wachstumskurve beobachtet [\cite{Statista}]. Die Vielfalt von
 mobilen Anwendungen ist groß. Von der hochspezialisierten Business-App bis hin zu Game-Apps. 
 Für die meisten Unternehmen ist es mittlerweile zu einer Selbstverständlichkeit geworden, eine oder
-sogar mehrere Apps anzubieten (\cite{CompWoche}). Es entsteht die Frage, wie
+sogar mehrere Apps anzubieten [\cite{CompWoche}]. Es entsteht die Frage, wie
 wird eine mobile Anwendung erstellt?\\In diesem Kapitel werden die für das Verständnis notwendigen Grundlagen
 der App Entwicklung erläutert.
-Die Themen werden stark komprimiert und vereinfacht vorgestellt.
+% Die Themen werden stark komprimiert und vereinfacht vorgestellt.
 \section{Aktuelle mobile Plattformen}
 Mobile Betriebssysteme sind fest an ein bestimmtes Smartphone gebunden. Es ist nicht möglich
 fehlende Funktionen durch einen Betriebssystemwechsel zu erlangen.
 Die Kombination aus Smartphone und Betriebssystem kann als feste Einheit betrachtet werden.
-In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
+Im Folgenden werden die aktuellsten mobilen Betriebssystemen vorgestellt.
 \begin{itemize}
   \item \textbf{Android}\\Das von Google entwickelte, mobiles Betriebssystem Android wurde im
   November 2007 der Öffentlichkeit vorgestellt. Es besteht aus einem Betriebssystemkern, Middleware
@@ -66,7 +66,7 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   werden können, muss das Gerät explizit als Entwicklergerät freigeschaltet werden. Dazu muss man sich
   zuerst bei Microsoft als Entwickler registrieren, was 99 EUR im Jahr kostet. Das ist auch
   notwendig, wenn man Apps im Microsoft Market (vergleichbar mit App Store und Play Store)
-  veröffentlichen möchte. \cite[17]{AppsPhoneGap}
+  veröffentlichen möchte [\cite[17]{AppsPhoneGap}].
   \item \textbf{Blackberry OS}\\Das Betriebssystem wird von Research In Motion (RIM)  für die
   Nutzung auf Smartphones des Typs Blackberry hergestellt. Ähnlich wie bei iOS von Apple ist es nur
   für Blackberry-Smartphones vorgesehen. Da Blackberry-Smartphones vorwiegend auf
@@ -75,12 +75,12 @@ In Kürze werden die aktuellsten mobilen Betriebssystemen vorgestellt.
   auf einem Blackberry-Smartphone installieren und ausführen lassen, müssen diese zuvor von RIM
   digital signiert werden.
 \end{itemize}
-\cite[347]{MoApp1}
-\cite[98]{App4U}
+[\cite[347]{MoApp1}]
+[\cite[98]{App4U}]
 \\Laut International Data Corporation (IDC) ist Android das am weitesten verbreitete mobiles
 Betriebssystem mit einem Marktanteil von 78\%, es folgen iOS mit 18.3\%, Windows Phone mit 2.7\% und
 Blackberry OS mit 0.3\%. Allerdings hat Android ca 3\% Marktanteil verloren im Vergleich zum Vorjahr
-und iOS hat dagegen 3\% mehr (\cite{SmOSMaQ1}).\\Da Android und iOS einen enormen Vorsprung auf die
+und iOS hat dagegen 3\% mehr [\cite{SmOSMaQ1}].\\Da Android und iOS einen enormen Vorsprung auf die
 anderen mobilen Betriebssystemen haben, was die Verbreitung angeht, wird sich diese Arbeit stark auf diese zwei
 Betriebssystemen konzentrieren.
 \section{Mobile Applikationen}
@@ -90,7 +90,7 @@ Anwendung auf einem Betriebssystem sowie zur Ausführung auf mobilen Endgeräten e
 und neben der Berücksichtigung besonderer Endgeräteeigenschaften, die Nutzung kabelloser
 Übertragungstechniken voraussetzt."'\footnotemark[1]
 \end{quote}
-\footnotetext[1]{\cite[105]{App4U}}
+\footnotetext[1]{[\cite[105]{App4U}]}
 Der Begriff Applikation (App) hat sich in Bezug auf die mobile Nutzung und
 Anwendung als eigenständiger Begriff etabliert. Eine App wird als nativ bezeichnet, wenn sie 
 für eine bestimmte mobile Plattform entwickelt wurde und nur auf dieser Plattform installiert und
@@ -107,15 +107,15 @@ intuitiv steuerbare Applikationen. Immer mehr Unternehmen erkennen den daraus re
 Mehrwert und ermöglichen den Zugriff auf Dienstleistungen über mobile Anwendungen. Es entstehen
 Dienstleistungsangebote sowie im privaten als auch im geschäftlichen Bereich. Aus
 produktorientierter Sichtweise lassen sich vier Klassen mobiler Anwendungen
-identifizieren:\cite[102]{App4U}
+identifizieren:
 \begin{itemize} 
   \item \textbf{Informationsorientierte} Dienste (z.B. Reiseinformationen, Börseninformationen
   etc.)
   \item \textbf{Applikationsorientierte} Dienste (z.B. Computerspiele, Übersetzungsdienste etc.)
   \item \textbf{Transaktionsorientierte} Dienste (z.B. Bezahldienste, Reservierungsdienste etc.)
   \item \textbf{Kommunikationsorientierte} Dienste (z.B. E-Mail, Chat oder soziale Netzwerke)
-\end{itemize}
-Mobile Applikationen werden in drei unterschiedliche Komplexitätsstufen eingeteilt:
+\end{itemize}[\cite[102]{App4U}]
+\\Mobile Applikationen werden in drei unterschiedliche Komplexitätsstufen eingeteilt:
  \begin{itemize}
    \item \textbf{Einfache Apps} zeichnen sich durch wenig Logik, keinen Backendzugriff,
    minimalistisches Design und die überwiegende Verwendung von Standardkomponenten aus.
@@ -146,10 +146,10 @@ Komplexe Anwendung & 2011  & 6000  & 79000 & 520000 \\
 Komplexe Anwendung & 2013  & 802  & 48804 & 382215 \\ \hline
 \hline
 \end{tabular}
-\caption{Durchschnittspreise für App Entwicklung in Deutschland.\cite[31]{App4U}}
+\caption{Durchschnittspreise für App Entwicklung in Deutschland.[\cite[31]{App4U}]}
 \label{table1}
 \end{table}
-(\cite[31]{App4U})
+[\cite[31]{App4U}]
 \footnotetext[2]{Alle Preise sind in Euro}
 \newpage
 \section{Software Architekturmuster für mobilen Anwendungen}
@@ -165,15 +165,14 @@ Daten, Interaktionsentwurf, visuellem Entwurf, Konnektivität, Multithreading, Si
 Internationalisierung, Überprüfung, Komponententests und etc. sein. In Anbetracht der Tatsache, dass
 eine Benutzeroberfläche eng mit dem zugrunde liegenden System verbunden ist und die nicht immer
 voraussagbaren stilistischen Ansprüche ihrer Benutzer entgegenkommen muss, kann dies der brisanteste Bereich vieler Anwendungen sein.
-Hierfür können Architekturmuster Abhilfe schaffen.
-\cite[195]{App4U}
+Hierfür können Architekturmuster Abhilfe schaffen [\cite[195]{App4U}].
 \subsection{Model-View-Controller (MVC)}
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/ModelViewControllerDiagram.png}
 \caption{Model-View-Controller-Konzept. Die durchgezogene Linie symbolisiert eine direkte
 Assoziation, die gestrichelte eine indirekte Assoziation (z.B. über einen
-Beobachter).(\cite{WikiMVCBild})}
+Beobachter).[\cite{WikiMVCBild}]}
 \label{fig:abb8}
 \end{figure}
 Das \textbf{Model-View-Controller} (\textbf{MVC}) Muster (siehe Abb.\ref{fig:abb8}) gibt es schon
@@ -197,12 +196,13 @@ Programms.
 Weder das Model noch die View sollten die Klassen oder Methoden des Controllers kennen. Auf diese
 Weise wird eine Wiederverwendbarkeit der Model- und View-Schichten erreicht. Jedes Model-Objekt kann
 also durch unterschiedliche Controller verarbeitet und über verschiedene Views dargestellt werden
-und jede View lässt sich in vollkommen unterschiedliche Applikationen einsetzen.\cite{AppsForiPhone}
+und jede View lässt sich in vollkommen unterschiedliche Applikationen
+einsetzen [\cite{AppsForiPhone}].
 \subsection{Model-View-ViewModel (MVVM)}\label{MVVM}
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.7]{graphics/MVVMBild.png}
-\caption{MVVM-Muster.(\cite{MSDNA2MVVM})}
+\caption{MVVM-Muster.[\cite{MSDNA2MVVM}]}
 \label{fig:abb9}
 \end{figure}
 % Im Jahr 2005 stellte John Gossman, derzeit einer der Windows Presentation Foundation (WPF)- und
@@ -212,7 +212,9 @@ Das \textbf{Model-View-ViewModel} (\textbf{MVVM})-Muster besteht aus drei Kompon
 sehr ähnlich, der Unterschied ist, dass es bei MVVM anstatt Controller ein sogenanntes
 ViewModel gibt (siehe Abb.\ref{fig:abb9}):
 \begin{itemize} 
-  \item \textbf{Model}. %Das Model enthält die Geschäftslogik.
+  \item \textbf{Model}. Ähnlich wie bei MVC, kapselt diese Schicht die Daten der Anwendung in
+  Klassen und ist für die permanente Speicherung und Verarbeitung der Daten zuständig.%Das Model
+  % enthält die Geschäftslogik.
   \item \textbf{View}. Die View (Ansicht) repräsentiert die Benutzerschnittstelle. Die Ansicht wird
   in einer deklarativen Programmiersprache, wie bspw. XAML, erstellt. Es ist lediglich eine reine
   Beschreibung der Ansicht und enthält keine Ausführungslogik.
@@ -238,8 +240,7 @@ Abb.\ref{fig:abb9}).
 Durch das Binden von Eigenschaften einer View an ein ViewModel kommt es zur losen Kopplung zwischen den
 beiden, wodurch in einem ViewModel kein Code geschrieben werden muss, der eine Ansicht direkt
 aktualisiert.\\Ein besonderer Vorteil von MVVM ist die Möglichkeit, Komponententests an
-ViewModel-Klassen durchzuführen.
-\cite{MSDNAMVVM}
+ViewModel-Klassen durchzuführen [\cite{MSDNAMVVM}].
 \newpage
 \section{Plattformspezifische Entwicklung (App Life-Cycle)}
 Mit dem Begriff Software-Life-Cycle wird die Zeitspanne beschrieben, in der ein Softwareprodukt
@@ -252,7 +253,7 @@ Folgenden wird die App Entwicklung für die gängigsten mobilen Betriebssysteme vo
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/App_Lifecycle.png}
-\caption{App Life-Cycle \cite[154]{App4U}}
+\caption{App Life-Cycle [\cite[154]{App4U}]}
 \label{fig:abb5}
 \end{figure}
 \subsection{Android}
@@ -296,12 +297,13 @@ anfallen. Jede Anwendung in Android wird in einer eigenen virtuellen Maschine, d
 Sandbox, ausgeführt. Jede Anwendung ist somit isoliert von den anderen Apps und kann nur auf ihre
 eigene Daten zugreifen. So wird unter anderem bei einem Absturz die Stabilität des Systems
 gewährleistet.
-Die Entwicklung von Applikationen für Android erfolgt nach dem Model-View-Controller Architekturmuster. Im Folgenden werden die wichtigsten Komponenten einer Android Applikation vorgestellt.
-\cite[317]{App4U}
+Die Entwicklung von Applikationen für Android erfolgt nach dem Model-View-Controller
+Architekturmuster. Im Folgenden werden die wichtigsten Komponenten einer Android Applikation
+vorgestellt [\cite[317]{App4U}].
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/JVMvsDavlik.png}
-\caption{Vergleich JVM und Dalvik-VM. \cite[318]{App4U}}
+\caption{Vergleich JVM und Dalvik-VM. [\cite[318]{App4U}]}
 \label{fig:abb6}
 \end{figure}
 \subsubsection{AndroidManifest.xml}
@@ -330,7 +332,7 @@ folgende Unterordner:
   \item \textbf{/res/drawable}\\Alle App Icons befinden sich in diesem Ordner, der wiederum in
   verschiedenen Unterordner für die unterschiedlichen Auflösungen gegliedert wird.
 \end{itemize}
-\cite{AndroidTutorialBlog}
+[\cite{AndroidTutorialBlog}]
 \subsubsection{Activities}
 Activities sind Komponenten einer Android Applikation, die die Interaktion mit dem Benutzer
 (Bild aufnehmen, Email senden, SMS schicken etc.) ermöglichen. D.h. eine Activity stellt ein Fenster
@@ -361,21 +363,22 @@ definiert, welche von Activity erbt. Jede Activity hat folgende Methoden:
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/lifecycle-activity-android.png}
-\caption{Activity Life-Cycle.(\cite{ActivityLifeCycle})}
+\caption{Activity Life-Cycle [\cite{ActivityLifeCycle}]}
 \label{fig:abb7}
 \end{figure}
 \subsubsection{Services}
 Service ist eine Applikation Komponente, die Operationen im Hintergrund durchführt und keine
 Interaktion mit dem Benutzer benötigt. Ein Service wird von einer anderen Komponente, wie einer
-Activity, gestartet und läuft auch weiter, wenn die Activity nicht mehr im Vordergrund ist.
-\cite[320]{App4U}
+Activity, gestartet und läuft auch weiter, wenn die Activity nicht mehr im Vordergrund ist
+[\cite[320]{App4U}].
 \subsubsection{Intents}
 Activities und Services werden durch Nachrichten aufgerufen, die eine andere Komponente an sie
 sendet. Eine solche Nachricht wird Intent genannt. In einem Intentobjekt werden verschiedene Daten
 gespeichert. Jede Intentnachricht hat einen Kontext und ein Ziel. Als Kontext ist die erste
 Activity, also die Activity, die die Intentnachricht sendet und als Ziel die Activity, an die die
 Nachricht gesendet wurde. Je nach Bedarf können noch Daten, welche der neuen Activity übermittelt
-werden, in den Intent gespeichert werden, bevor die neue Activity gestartet wird.\cite[321]{App4U}
+werden, in den Intent gespeichert werden, bevor die neue Activity gestartet wird
+[\cite[321]{App4U}].
 \subsubsection{Komponenten der Benutzeroberfläche}
 Die Benutzeroberfläche oder User Interface (UI) in Android Apps besteht aus Views und View Groups.
 Views sind Bausteine, wie Textview oder Imageview. View Groups sind Container, die Views oder andere View
@@ -395,7 +398,7 @@ Development Kit (SDK) mit. In dem iOS SDK sind hochwertige Emulatoren für die ak
  enthalten und bei Bedarf lassen sich auch ältere Versionen herunterladen. Apps für iOS werden in
  Objective-C und seit kurzem auch mit der von Apple neu eingeführten Programmiersprache Swift
  entwickelt. Die \textbf{LLVM} Compiler Infrastruktur ist ein Open Source Projekt und die technische
- Grundlage für die native Entwicklung auf iOS (\cite{LLVM}). Der in Xcode integrierte
+ Grundlage für die native Entwicklung auf iOS [\cite{LLVM}]. Der in Xcode integrierte
  Interface-Builder unterstützt das Drag-and-drop-Verfahren und macht die Gestaltung der
  Benutzeroberfläche zu einer relativ einfachen Aufgabe.
  Die Eingabe des Quellcodes erfolgt in einem Texteditor. Eine Anwendung läuft auf dem im Xcode
@@ -439,7 +442,7 @@ und dadurch kann man flexibel mit verschiedenen Auflösungen und Darstellungsmodi
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.5]{graphics/storyboard.png}
-\caption{Storyboard. (\cite{DevApple})}
+\caption{Storyboard. [\cite{DevApple}]}
 \label{fig:abb12}
 \end{figure}
 \subsubsection{ViewController}
@@ -455,13 +458,13 @@ sieht man die Einzelschritte beim Laden einer View.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.3]{graphics/ViewController.png}
-\caption{Funktionsweise eines ViewControllers. (\cite{DevApple})}
+\caption{Funktionsweise eines ViewControllers. [\cite{DevApple}]}
 \label{fig:abb10}
 \end{figure}
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.2]{graphics/loading_a_view_into_memory_2x.png}
-\caption{Laden einer View. (\cite{DevApple})}
+\caption{Laden einer View [\cite{DevApple}].}
 \label{fig:abb11}
 \end{figure}
 \subsubsection{Navigation Controller}
@@ -537,9 +540,9 @@ C\#-Datei, die genau so heißt (Datei.xaml.cs).
 Beim Deklarieren eines Oberflächeelements im XAML lässt sich eine neue Methode in der Code-Behind-
 Datei erzeugen. In dieser Methode ist dann die Verarbeitungslogik enthalten.
 \footnotetext[1]{XAML (Extensible Application Markup Language) ist eine Dialektform von XML.}  
-\cite{MSDNApps}
-\cite[125]{App4U}
-\cite[382]{MoApp1}
+[\cite{MSDNApps}]
+[\cite[125]{App4U}]
+[\cite[382]{MoApp1}]
 \subsection{Fazit}
 Abschließend lässt sich feststellen, dass, die nativen
 Entwicklungsansätze sich grundsätzlich in den Programmiersprachen und den plattformspezifischen

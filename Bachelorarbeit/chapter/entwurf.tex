@@ -291,11 +291,11 @@ begrenzt oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von v
 wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
 erkennen. D.h. ob die Verbindung über WLAN oder über das mobile Internet erfolgt. Xamarin.Android
 bietet einen Mechanismus für diesen Zweck - durch die Klasse \textbf{NetworkInfo}. Mithilfe dieser Klasse
-kann die App auch erkennen ob Roaming eingeschaltet wurde (\cite{XamNetzwerkStatus}).\\Bei
+kann die App auch erkennen ob Roaming eingeschaltet wurde [\cite{XamNetzwerkStatus}].\\Bei
 Xamarin.iOS gibt es einen ähnlichen Mechanismus.
 \\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
 darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
-Verbindung besteht (\cite{XamNetzwerkStatusIOS}). \\Die Netzwerktyperkennung lässt sich nicht
+Verbindung besteht [\cite{XamNetzwerkStatusIOS}]. \\Die Netzwerktyperkennung lässt sich nicht
 plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten. Im Sinne von "`Cross-Plattform-Entwicklung"' wird für solche Fälle ein Interface im gemeinsamen Projekt definiert. Dieses Interface wird dann in den plattformspezifischen Projekten implementiert. Auf
 diese Weise lässt sich die Netzwerktyperkennung aus dem "`shared"' Projekt steuern und
 dementsprechend behandeln. Da bei der ScanApp eine Übertragung von
