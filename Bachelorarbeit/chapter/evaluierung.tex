@@ -56,7 +56,8 @@ wurde sichergestellt, dass die App nicht abstürzt, wenn der Server nicht erreich
 benötigten Mechanismen um eine Verbindung mit einem Server herzustellen und zu pflegen, werden von
 Xamarin zur Verfügung gestellt.
 \subsubsection{Sicherheit}
-Für eine sichere Kommunikation mit dem Backend, generiert die App mithilfe des
+Ein besonders wichtiges Kriterium für eine Business App.
+Für eine sichere Kommunikation mit dem Backend generiert die App mithilfe des
 Verschlüsselungsalgorithmus SHA-256 einen Adresszusatz für die Web Services URI. Darüber hinaus wird
 das Https Protokol benutzt. Einer der größten Vorteile der Benutzung von einer mächtigen
 Programmiersprache, wie C\# lässt sich in diesem Fall beobachten, Kriterium erfüllt.
@@ -76,16 +77,30 @@ gespeicherten Daten verloren gehen. Da die iOS- und die Android-Version der App 
 erfolgreich abgeschlossen haben, kann das Kriterium Zuverlässigkeit als erfüllt
 vermerkt werden.
 \subsection{Benutzbarkeit}
-Für die Scan-App wurde eine intuitive Benutzbarkeit angestrebt. Für die Menüpunkten wurden
-aussagekräftigen Namen ausgewählt und an vielen Stellen werden Hinweistexte angezeigt, in Form von
-Popup Fenster, so dass für die Benutzung der Anwendung keine Schulung vorausgesetzt wird.
+Benutzbarkeit (Usability) ist ein weiterer, besonders für mobile Anwendungen wichtiges Kriterium,
+das eine App erfüllen muss, damit sie Erfolg auf dem Markt haben kann. Für die Scan-App wurde eine
+intuitive Benutzbarkeit angestrebt.
+Für die Menüpunkten wurden aussagekräftigen Namen ausgewählt und an vielen Stellen werden
+Hinweistexte in Form von Popup Fenster angezeigt, so dass für die Benutzung der Anwendung keine
+Schulung vorausgesetzt wird.
 Mit dem GQM Ansatz lässt sich folgende Metrik ableiten:
 \\
   \\\textbf{Ziel}: Eine "`cross-plattform"' entwickelte App soll nicht deutlich langsamer als
   eine native Referenz Applikation sein.
   \\\textbf{Frage}: Wie lange braucht der Scanner von ScanApp um eine Barcodenummer zu erfassen?
-  \\\textbf{Metrik}: Die Zeit in Sekunden, die der Scanner braucht um einen Barcode zu scannen
-  im Vergleich zu der Zeit, die eine native Scanner-App braucht. \\Wert: ca 1. Die Xamarin
+  \\\textbf{Metrik}: 
+  \fbox{
+      $\frac{\textrm{Die Zeit in Sekunden, die der Scanner braucht um einen
+      Barcode zu scannen}}{\textrm{Zeit, die eine native Scanner-App braucht um einen Barcode zu
+     scannen}}$
+  }
+%      $\frac{\textrm{Die Zeit in Sekunden, die der Scanner braucht um einen Barcode zu
+%      scannen}}{\textrm{Zeit, die eine native Scanner-App braucht um einen Barcode zu
+%      scannen}}$
+%      \noindent\hspace*{20mm} 15,71 cm /$ \frac {6 ms (\textrm{Zeit pro Umdrehung})} {533,3 \mu}$\\ 
+% Die Zeit in Sekunden, die der Scanner 
+%   braucht um einen Barcode zu scannen im Vergleich zu der Zeit, die eine native Scanner-App braucht.
+   \\Wert: ca 1. Die Xamarin
   Scan-App braucht zwischen 2 - 5 Sekunden, eine native Scanner App ist unwesentlich schneller (2 bis 4 Sekunden).
 \subsection{Effizienz}
 Die mobilen Geräte werden immer leistungsfähiger, allerdings aufgrund der großen hochauflösenden
@@ -134,9 +149,18 @@ auch komplett in C\# definieren).
   \\
   \\\textbf{Ziel}: Der Großteil des Codes soll im gemeinsamen Projekt sein.
   \\\textbf{Frage}: Wie viel Prozent des Codes befinden sich im plattformübergreifenden Projekt?
-  \\\textbf{Metrik}: Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
-  von allen drei Projekte gesamt. \\Wert der Metrik: über 90\%.
+  \\\textbf{Metrik}: 
+  \fbox{
+      $\frac{\textrm{LOC (lines of code) im plattformübergreifenden "`shared"' Projekt}}{\textrm{LOC
+      von allen drei Projekte gesamt.}}$ }
+%   Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
+%   von allen drei Projekte gesamt. 
+  \\Über 95\% des gesamten Codes befindet sich im geteilten Projekt. Dieser Wert wurde
+  fogendermassen berechnet:
+  \\ $\frac{\textrm{"`shared"' ScanApp = ca. 7050 LOC}}{\textrm{("`shared"' ScanApp =
+ ca. 7050) + (ScanApp.Droid = ca. 150) + (ScanApp.iOS = ca. 200) LOC}}$ 
 \subsection{Übertragbarkeit}
+Das wichtigste Kriterium aus Cross-Plattform-Sicht. 
 Durch die Distribution der ScanApp in die entsprechenden App-Stores (Apples App Store und
 Androids Google Play Store) kann die Scan-App auf die für mobile Anwendungen übliche Art und Weise
 verbreitet werden. Kriterium erfüllt.
