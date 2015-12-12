@@ -41,41 +41,62 @@ Für die Bewertung der Funktionalität lassen sich folgende Metriken ableiten:
   \\\textbf{Ziel}: UI-Konzept - die von der Entwicklungsplattform bereitgestellten UI-Tools,
   sollen die Funktionalität einer nativ entwickelten App gewährleisten können.
   \\\textbf{Frage}: Wie viele angeforderten Funktionalitäten konnten nicht erfüllt werden,
-  aufgrund fehlende APIs? 
-  \\\textbf{Metrik}: Anzahl der Funktionen, die nicht unterstützt wurden. 
-  \\ Wert der Metrik: 0. Alle angeforderten Funktionalitäten konnten umgesetzt werden.
+  aufgrund fehlender APIs? 
+  \\\textbf{Metrik M1}: Anzahl der Funktionen, die nicht unterstützt wurden. 
+ \\Cross-Plattform-Entwicklung bringt viele Vorteile, allerdings passiert das nicht selten auf
+  Kosten der Funktionalität. Wie im Kapitel \ref{StandDerTechnik} erläutert, sind bspw. die Möglichkeiten
+  einer Web App begrenzt, so dass nur Web Apps mit einfach zu realisierende Funktionalität
+  plattformübergreifend entwickelt werden können. Je kleiner der Wert dieser Metrik, desto besser.
+  \\Im vorliegenden Fall gab es einige anspruchsvolle Anforderungen an die App, wie die
+  Scanner-Funktion, das Persistieren der Appdaten oder die Benutzung des Verschüsselungsalgorithmus
+  SHA-256 für die Generierung eines URI Adresszusatzes für die Web Services.
+   Dank C\#  und der Möglichkeit, NuGet Packages und Xamarin Konponenten anzubinden konnten alle
+   angeforderten Funktionalitäten umgesetzt werden. Daraus ergibt sich: \textbf{Wert von M1 = 0}.
    \\
  \\\textbf{Ziel}:Das Framework soll Zugriff auf native Elemente, wie bspw. die Kamera eines
  Smartphones ermöglichen.
   \\\textbf{Frage}: Wie oft wird auf die Kamera zugegriffen?
-  \\\textbf{Metrik}: Die Anzahl der Zugriffe auf die Kamera des Smartphones. \\Wert: 1. Es
-  wird einmal auf die Kamerafunktion zugegriffen, nämlich beim Scannen.
+  \\\textbf{Metrik M2}: Die Anzahl der Zugriffe auf die Kamera des Smartphones. 
+  \\Wenn der Wert dieser Metrik größer Null ist, ist es ein Indiz dafür, dass mindestens eine
+  hardwarenahe Funktionalität angefordert und gewährleistet wurde.
+  \\Es wird einmal auf die Kamera zugegriffen, nämlich beim Scannen. Dieses Feature wurde durch
+  die Xamarin Komponente ZXing.Net.Mobile ermöglicht. \textbf{Wert von M2 = 1}.
 \subsubsection{Interoperabilität}
 Die Kommunikation zwischen der App und dem Server wurde auf verschiedene Szenarien getestet. Es
-wurde sichergestellt, dass die App nicht abstürzt, wenn der Server nicht erreichbar ist. Die
-benötigten Mechanismen um eine Verbindung mit einem Server herzustellen und zu pflegen, werden von
-Xamarin zur Verfügung gestellt.
+wurde sichergestellt, dass die App nicht abstürzt, wenn der Server nicht erreichbar ist. Daraus
+lässt sich ableiten, dass die benötigten Mechanismen, um eine Verbindung mit einem Server
+herzustellen und zu pflegen, von Xamarin zur Verfügung gestellt wurden.
 \subsubsection{Sicherheit}
-Ein besonders wichtiges Kriterium für eine Business App.
-Für eine sichere Kommunikation mit dem Backend generiert die App mithilfe des
-Verschlüsselungsalgorithmus SHA-256 einen Adresszusatz für die Web Services URI. Darüber hinaus wird
-das Https Protokol benutzt. Einer der größten Vorteile der Benutzung von einer mächtigen
-Programmiersprache, wie C\# lässt sich in diesem Fall beobachten, Kriterium erfüllt.
+Ein besonders wichtiges Kriterium für eine Business App. Anwendungen dieser Kategorie benutzen oft
+Web Services und es werden sensible Daten über das Internet übertragen. Aus diesem Grund ist es sehr
+wichtig, dass solche Daten über sichere Kanäle übertragen werden.\\Mithilfe des GQM-Anstatzes
+lässt sich folgende Metrik ableiten: 
+\\\textbf{Ziel}:Das Framework soll die Benutzung von
+Verschlüsselungsalgorithmen ermöglichen.
+  \\\textbf{Frage}: Wie oft wurde ein Verschlüsselungsalgorithmus angewendet?
+  \\\textbf{Metrik M3}: Die Anzahl der Fällen, in denen ein Verschlüsselungsalgorithums angewendet
+  wurde.\\Je größer der Wert dieser Metrik ist, desto sicherer ist die mobile Anwendung.
+\\Für eine sichere Kommunikation mit dem Backend generiert die App mithilfe des
+Verschlüsselungsalgorithmus SHA-256 einen Adresszusatz für die Web Services URI. Das passiert bei
+der einmaligen Registrierung eines Benutzers und beim absenden einer Bestellung. Daraus lässt sich
+folgender Wert dieser Metrik berechnen: \textbf{Wert von M3 =2}. 
+\\Darüber hinaus wird das Https Protokol benutzt. In diesem Fall lässt sich einer der größten
+Vorteile der Benutzung von einer mächtigen Programmiersprache, wie C\# beobachten, Kriterium erfüllt.
 \subsubsection{Richtigkeit}
 %Sind alle geforderten Funktionen implementiert worden?
 Im vorangegangenen Kapitel wurden Anforderungen an die App spezifiziert und anschließend
 wurde die Anwendung nach diesen Kriterien getestet. D.h. alle geforderten Funktionen sind in beiden
-Versionen der App (iOS und Android) implementiert worden und somit ist dieses Kriterium erfüllt.
+Versionen der App (iOS und Android) implementiert und getestet worden und somit ist dieses Kriterium
+erfüllt.
 \subsection{Zuverlässigkeit}
 Dank Xamarin Test Cloud wurde die Zuverlässigkeit der Scan-App getestet. Aufgrund der großen
-Vielfalt an Android-Smartphones wurde besonders bei der Android Version darauf geachtet, dass die
+Vielfalt an Smartphones wurde besonders bei der Android Version darauf geachtet, dass die
 App auf möglichst vielen Geräten getestet wird. Es wurden unterschiedliche Szenarien durchgespielt,
 die eventuell zum Absturz der App führen könnten. Es wurde das Verhalten der Anwendung beobachtet,
 wenn bspw. die Internetverbindung während einer Anfrage an den Server unterbrochen wird, oder bei
-einem unerwarteten Ausschalten des Telefons. Es durften keine keine zuvor
-gespeicherten Daten verloren gehen. Da die iOS- und die Android-Version der App die Tests
-erfolgreich abgeschlossen haben, kann das Kriterium Zuverlässigkeit als erfüllt
-vermerkt werden.
+einem unerwarteten Ausschalten des Telefons. Es durften keine zuvor
+gespeicherten Daten verloren gehen. Da beide Versionen (iOS und Android) der App die Tests
+erfolgreich abgeschlossen haben, kann das Kriterium Zuverlässigkeit als erfüllt vermerkt werden.
 \subsection{Benutzbarkeit}
 Benutzbarkeit (Usability) ist ein weiterer, besonders für mobile Anwendungen wichtiges Kriterium,
 das eine App erfüllen muss, damit sie Erfolg auf dem Markt haben kann. Für die Scan-App wurde eine
@@ -86,37 +107,43 @@ Schulung vorausgesetzt wird.
 Mit dem GQM Ansatz lässt sich folgende Metrik ableiten:
 \\
   \\\textbf{Ziel}: Eine "`cross-plattform"' entwickelte App soll nicht deutlich langsamer als
-  eine native Referenz Applikation sein.
+  eine nativ entwickelte Referenz-Applikation sein.
   \\\textbf{Frage}: Wie lange braucht der Scanner von ScanApp um eine Barcodenummer zu erfassen?
-  \\\textbf{Metrik}: 
+  \\\textbf{Metrik M4}: 
   \fbox{
       $\frac{\textrm{Die Zeit in Sekunden, die der Scanner braucht um einen
       Barcode zu scannen}}{\textrm{Zeit, die eine native Scanner-App braucht um einen Barcode zu
      scannen}}$
   }
+  \\Angestrebter Wert dieser Metrik wäre die Eins. Das würde bedeuten, dass eine
+  plattformübergreifend entwickelte App nicht nur die Funktionalität einer nativ entwickelten App
+  aufweist, sondern auch eine ähnlich gute Performanz hat.
 %      $\frac{\textrm{Die Zeit in Sekunden, die der Scanner braucht um einen Barcode zu
 %      scannen}}{\textrm{Zeit, die eine native Scanner-App braucht um einen Barcode zu
 %      scannen}}$
 %      \noindent\hspace*{20mm} 15,71 cm /$ \frac {6 ms (\textrm{Zeit pro Umdrehung})} {533,3 \mu}$\\ 
 % Die Zeit in Sekunden, die der Scanner 
 %   braucht um einen Barcode zu scannen im Vergleich zu der Zeit, die eine native Scanner-App braucht.
-   \\Wert: ca 1. Die Xamarin
-  Scan-App braucht zwischen 2 - 5 Sekunden, eine native Scanner App ist unwesentlich schneller (2 bis 4 Sekunden).
+   \\Für die Erfassung eines Barcodes wurden bei der Scan-App zwischen 2 und 5
+   Sekunden gemessen. Bei einer nativen Scanner App wurden ähnliche Zeiten gemessen, wobei die
+   native App unwesentlich schneller war (2 bis 4 Sekunden).\\Daraus lässt sich der \textbf{Wert
+   von M4 = 0.85} berechnen.
 \subsection{Effizienz}
 Die mobilen Geräte werden immer leistungsfähiger, allerdings aufgrund der großen hochauflösenden
 Displays halten die Akkus nicht besonders lange. Aus diesem Grund werden Anwendungen, die zu viele
 Ressourcen und dadurch Akku im Hintergrund verbrauchen, oft von den Benutzern abgelehnt, auch wenn
-die App sonst fehlerfrei funktioniert.\\Xamarin.Forms bietet die Möglichkeit die Methoden
-\textit{onStart(), onSleep() und onResume()} zu überschreiben und somit lässt sich das Verhalten der App steuern, wenn die Anwendung
-im Hintergrund gerät.\\Bei der Entwicklung der App wurde explizit darauf geachtet, dass die
+die Apps sonst fehlerfrei funktionieren.\\Xamarin.Forms bietet die Möglichkeit die Methoden
+\textit{onStart(), onSleep() und onResume()} zu überschreiben und somit lässt sich das Verhalten der
+App steuern, wenn die Anwendung im Hintergrund gerät.\\Bei der Entwicklung der App wurde explizit darauf geachtet, dass die
 Kommunikation mit dem Server in separaten Threads ausgeführt wird, so dass die App nicht "`hängen
-bleibt"', wenn die Internetverbindung langsam ist oder gar nicht da ist. Wie im vorangegangenen
+bleibt"', wenn die Internetverbindung langsam oder gar nicht da ist. Wie im vorangegangenen
 Kapitel bereits erörtert, gibt Xamarin die Möglichkeit zwischen verschiedenen Arten von mobilen
 Internetverbindungen zu unterscheiden, dadurch lassen sich Ressourcen sparen. 
 \\Es lässt sich
-zusammenfassen, dass Xamarin die benötigten Mechanismen bietet, damit Entwickler dieses Kriterium erfüllen können.
+zusammenfassen, dass Xamarin die benötigten Mechanismen bereitstellt, sodass Entwickler dieses
+Kriterium erfüllen können.
 \subsection{Änderbarkeit}
-Ein besonders wichtiges Kriterium im Hinsicht plattformübergreifender App-Entwicklung. Der Sinn,
+Ein besonders wichtiges Kriterium in Hinsicht auf plattformübergreifende App-Entwicklung. Der Sinn,
 mobile Anwendungen "`cross platform"' zu entwickeln, ist es die Aufwände zu minimieren, und zwar
 nicht nur während der Entwicklungsphase, sondern auch während der Wartung. Die App Pflege soll
 möglichst plattformübergreifend erfolgen. Dasselbe gilt für die Erweiterung der Anwendung,
@@ -132,51 +159,126 @@ abgeleitet:
 % Es lässt sich schließen, dass die Scan-App und dadurch Xamarin.Forms dieses Kriterium erfüllt.
 \\
 \\\textbf{Ziel}: Es soll eine plattformübergreifende Programmiersprache benutzt werden.
-\\\textbf{Frage}: Wie viele Programmiersprachen wurde für die
- Implementierung der iOS-Version, für die Android-Version der App und für die Implementierung des
- gemeinsamen plattformübergreifenden Teils?
-\\\textbf{Metrik}: Die Anzahl der verwendeten Programmiersprachen.\\Der Wert dieser Metrik ist 1. Es
-wurde lediglich C\# angewendet (Für die Beschreibung der GUI wird auch XAML angewendet, allerdings lässt sich die GUI
-auch komplett in C\# definieren).
+\\\textbf{Frage}: Wie viele Programmiersprachen wurden für die
+ Implementierung der iOS-Version, der Android-Version der App und für die Implementierung des
+ gemeinsamen plattformübergreifenden Teils verwendet?
+\\\textbf{Metrik M5}: Die Anzahl der verwendeten Programmiersprachen.\\Der angestrebte Wert dieser
+Metrik ist die Zahl Eins.
+\\Es wurde lediglich C\# angewendet (Für die Beschreibung der GUI wird auch XAML angewendet,
+allerdings lässt sich die GUI auch komplett in C\# definieren).\\\textbf{Wert von M5 = 1}.
 \\
   \\\textbf{Ziel}: Geschäftslogik soll einmal in dem gemeinsamen Projekt implementiert werden
   und nicht in den plattformspezifischen Projekten.
   \\\textbf{Frage}: Für die Realisierung von wie viele Features mussten "`Custom Renderer"'
   benutzt werden? 
-  \\\textbf{Metrik}: Anzahl der "`Custom Renderer"'. \\Der Wert ist gleich: 0. Die ganze
-  App-Logik und Gestaltung der GUI wurde im gemeinsamen Projekt definiert und es wurden keine benutzerdefinierte Renderer in die
-  plattformspezifischen Projekten benötigt.
+  \\\textbf{Metrik M6}: Anzahl der "`Custom Renderer"'. \\Der Wert dieser Metrik ist proportional zu
+  den Aufwänden, die für einen Entwickler entstehen, wenn ein neues Feature implementiert werden
+  soll. Aus diesem Grund wird ein möglichst kleiner Wert angestrebt.
+  \\Die ganze App-Logik und Gestaltung der GUI wurde im gemeinsamen Projekt definiert und es wurden keine benutzerdefinierte Renderer in die
+  plattformspezifischen Projekten benötigt. Für diese Metrik ergibt sich: \textbf{Wert von M6 = 0}.
   \\
   \\\textbf{Ziel}: Der Großteil des Codes soll im gemeinsamen Projekt sein.
   \\\textbf{Frage}: Wie viel Prozent des Codes befinden sich im plattformübergreifenden Projekt?
-  \\\textbf{Metrik}: 
+  \\
+  \\\textbf{Metrik M7}: 
   \fbox{
       $\frac{\textrm{LOC (lines of code) im plattformübergreifenden "`shared"' Projekt}}{\textrm{LOC
       von allen drei Projekte gesamt.}}$ }
+      \\
+      \\Idealer Wert dieser Metrik wäre 1, bzw. 100\%.
 %   Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
 %   von allen drei Projekte gesamt. 
   \\Über 95\% des gesamten Codes befindet sich im geteilten Projekt. Dieser Wert wurde
-  fogendermassen berechnet:
+  fogendermassen berechnet:\\
   \\ $\frac{\textrm{"`shared"' ScanApp = ca. 7050 LOC}}{\textrm{("`shared"' ScanApp =
  ca. 7050) + (ScanApp.Droid = ca. 150) + (ScanApp.iOS = ca. 200) LOC}}$ 
+ \\
+ \\\textbf{Wert von M7 = 0.95}.
 \subsection{Übertragbarkeit}
-Das wichtigste Kriterium aus Cross-Plattform-Sicht. 
-Durch die Distribution der ScanApp in die entsprechenden App-Stores (Apples App Store und
-Androids Google Play Store) kann die Scan-App auf die für mobile Anwendungen übliche Art und Weise
-verbreitet werden. Kriterium erfüllt.
+Das wichtigste Kriterium aus Cross-Plattform-Sicht. Das Ziel von plattformübergreifende
+App-Entwicklung ist es, die gleiche Anwendung auf mehreren Plattform übertragen zu können. 
+Mit dem GQM-Ansatz lässt sich folgende Metrik ableiten:
+\\
+  \\\textbf{Ziel}: Eine mit Xamarin entwickelten App soll für mehrere mobilen Betriebssystem
+  verfügbar sein. 
+  \\\textbf{Frage}: Wie viele plattformspezifische Versionen der App sind aus der gemeinsamen
+  Codebasis entstanden? 
+  \\\textbf{Metrik M8}: Anzahl der Plattformen, für die die Xamarin-App verfügbar ist.
+  \\Je größer die Anzahl der mobilen Betriebssystemen, für die eine Version der App entstanden ist,
+  desto besser. Im vorliegenden Fall ist der Wert der Metrik gleich zwei (iOS und Android).
+  Allerdings wäre mit einem Xamarin Business-Account auch die Entwicklung einer weiteren Version der
+  App möglich, nämlich eine Windows Phones Version. D.h. der Wert der Metrik könnte auch drei sein.
+  \textbf{Wert von M8 = 2}.
+  \\
+\\Durch die Distribution der ScanApp in die entsprechenden App-Stores (Apples App Store und Androids
+Google Play Store) kann die Scan-App auf die für mobile Anwendungen übliche Art und Weise verbreitet werden. Mit
+dem GQM-Ansatz lässt sich folgende Metrik ableiten:
 \\
   \\\textbf{Ziel}: Die Distribution einer mit Xamarin entwickelten Anwendung in die
   entsprechenden App-Stores soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
   \\\textbf{Frage}: Wie viel Zeit nimmt das Hochladen einer Xamarin App in den App Store und
   Google Play Store in Anspruch?
-  \\\textbf{Metrik}: Benötigte Zeit für die Distribution einer Xamarin App in Apples App Store und
-  Androids Google Play Store.\\
-  Wert der Metrik:
-  ca 30 Minuten bis 1 Stunde.
-  Für die Konfigurierung der benötigten Einstellungen und die Erstellung einer Android APK-Datei und einer iOS IPA-Datei durch Xamarin Studio werden typischerweise je 15 bis 30 Minuten
-  gebraucht. Das anschließende Hochladen in die jeweiligen Stores unterscheidet sich nicht von dem
-  Hochladen einer nativen iOS oder Android App und wird ebenso innerhalb 15 bis 30 Minuten
-  erledigt.
+  \\\textbf{Metrik M9}: Benötigte Zeit für die Distribution einer Xamarin App in Apples App Store.
+  \\\textbf{Metrik M10}: Benötigte Zeit für die Distribution einer Xamarin App in Androids Google Play Store.
+  \\Angestrebt wird, dass der Wert dieser Metrik weniger als eine Stunde ist.
+  \\Für die Konfiguration der benötigten Einstellungen und die Erstellung einer Android APK-Datei,
+  bzw. einer iOS IPA-Datei durch Xamarin Studio werden typischerweise jeweils 15 bis 30 Minuten
+  gebraucht. Das anschließende Hochladen in die jeweiligen Stores unterscheidet sich nicht von dem Hochladen einer
+  nativen iOS- oder Android-App und wird ebenso innerhalb 15 bis 30 Minuten erledigt.
+  \\\textbf{Wert von M9: ca 45 Minuten}.\\\textbf{Wert von M10: ca 45 Minuten}
+%   \subsection{Zusammenfassung der berechneten Werte}
+\begin{table}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Metrik} & \textbf{Wert} & \textbf{Auswertung} \\\hline 
+\textbf{M1: }{\footnotesize Anzahl der angeforderten Funktionen, die nicht realisiert werden} & 0 &
++
+\\
+{\footnotesize konnten} &  &  \\
+\hline
+\textbf{M2: }{\footnotesize Anzahl der Zugriffe auf die Kamera des Smartphones} & 1 & + \\
+\hline
+\textbf{M3: }{\footnotesize Anzahl der Fälle, in denen ein Verschlüsselungsalgorithmus} & 2 & +
+\\
+{\footnotesize angewendet wurde} &  &  \\
+\hline
+\textbf{M4: }{\footnotesize Verhältnis der Zeit in Sekunden, die der Scanner benötigt um} & 0.85 &
++
+\\
+{\footnotesize einen Barcode einzuscannen zu der Zeit, die eine} &  & 
+\\
+{\footnotesize nativ entwickelte Scanner-App für denselben Vorgang benötigt} &  & 
+\\
+\hline
+\textbf{M5: }{\footnotesize Anzahl der verwendeten Programmiersprachen} & 1 & + \\
+\hline
+\textbf{M6: }{\footnotesize Anzahl der benutzerdefinierten Renderer} & 0 & + \\
+\hline
+\textbf{M7: }{\footnotesize Verhältnis der LOC (lines of codes) des gemeinsamen Codeantiels} & 0.95
+& +
+\\
+{\footnotesize zu der LOC des ganzen Codes} &  & 
+\\
+\hline
+\textbf{M8: }{\footnotesize Anzahl der Plattformen, für die die Xamarin App verfügbar ist} & 2 & +
+\\
+\hline
+\textbf{M9: }{\footnotesize Benötigte Zeit für das Exportieren einer iOS IPA-Datei}
+& 45 Min.
+& +
+\\
+{\footnotesize und anschließend das Hochladen in den Apples App Store} &  & \\
+\hline
+\textbf{M10: }{\footnotesize Benötigte Zeit für das Exportieren einer Android APK-Datei}
+& 45 Min.
+& +
+\\
+{\footnotesize und anschließend das Hochladen in den Google Play Store} &  & \\
+\hline
+\end{tabular}
+\caption{Zusammenfassung der berechneten Werte aller Metriken}
+\label{table3}
+\end{table}
 % \begin{itemize}
 %   \item Es soll eine plattformübergreifende Programmiersprache benutzt werden.
 %   \item Gute Unterstützung durch IDE.
