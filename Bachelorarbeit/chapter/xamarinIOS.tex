@@ -29,15 +29,16 @@ verschiedene Arten von Accounts, die mit unterschiedlichen Features verbunden si
   \item \textbf{Enterprise Account} (\$158 im Monat).\\Im Enterprise Account sind viele weitere
   Features enthalten, wie z.B. die Anbindung einer verschlüsselten lokalen Datenbank.
 \end{itemize}
-Bevor man mit der App Entwicklung mit Xamarin anfangen kann, müssen einige Voraussetzungen erfüllt
-werden.\\Wenn man für iOS oder Mac OS X entwickeln möchte, wird ein Mac Rechner vorausgesetzt.
-Auf einem Mac kann man mit Xamarin Studio, mittels Xamarin.iOS und Xamarin.Android,
-plattformübergreifend für iOS und Android entwickeln. Es reichen ein Mac Rechner und ein Xamarin
-Indie Account.
+Bevor mit der App Entwicklung mit Xamarin angefangen werden kann, müssen einige Voraussetzungen
+erfüllt werden.\\Für die Entwicklung von iOS- oder Mac OS X-Apps, wird ein Mac
+Rechner vorausgesetzt.
+Auf einem Mac kann mit Xamarin Studio, mittels Xamarin.iOS und Xamarin.Android,
+plattformübergreifend für iOS und Android entwickelt werden. Es reichen ein Mac Rechner und ein
+Xamarin Indie Account.
 \\Auf einem Windows PC kann man nur für Android und Windows Phone entwickeln. Eventuell
 kann man einen Mac Rechner als Build Server (Macintosh Build Host mit Apples SDK) benutzen, um unter
 Windows Apps für iOS entwickeln zu können (siehe Abb.\ref{fig:abb16}).
-Dafür ist allerdings mindestens Business Account erforderlich.
+Dafür ist allerdings mindestens Xamarin Business Account erforderlich.
 \\Um für die drei meist verbreiteten mobilen Betriebssystemen
 (Android, iOS und Windows Phone) plattformübergreifend entwickeln zu können, werden zwei Rechner
 (ein Mac und ein Windows PC) und den Xamarin Business Account benötigt. Mit dem Business Account
@@ -52,8 +53,8 @@ lässt sich Xamarin als Plugin in Visual Studio einbinden.
 \newpage
 \section{Xamarin Bibliotheken}
 Im Folgenden werden die drei wichtigsten Bibliotheken von Xamarin vorgestellt. 
-Mit Xamarin.iOS/Xamarin.Android erstellte Programme stehen nativen Anwendungen in nichts nach und
-können problemlos in App- bzw. Play- Store eingestellt werden. Da es sich sehr der nativen
+Mit Xamarin.iOS bzw. Xamarin.Android erstellte Programme stehen nativen Anwendungen in nichts nach
+und können problemlos in App Store bzw. Play Store eingestellt werden. Da es sich sehr der nativen
 App-Programmierung ähnelt, ist der Einstieg in Xamarin.iOS und Xamarin.Android reibungslos für
 erfahrene Entwickler. Im Gegensatz zu der üblichen App Entwicklung, bei der
 unterschiedliche Programmiersprachen (Objective-C und Java) verwendet werden, wird bei Xamarin.iOS
@@ -63,23 +64,23 @@ sich Apps für iOS, Android und Windows Phone mit gemeinsamen Code erstellen. Xam
 nicht für alle Typen von Anwendungen geeignet.
 \subsection{Xamarin.iOS}
 Mit Xamarin.iOS bietet Xamarin die Möglichkeit, native Apps für iOS zu entwickeln. Um Xamarin.iOS benutzen zu können,
-benötigt man:
+wird Folgendes benötigt:
 \begin{itemize}
   \item das aktuelle iOS SDK
   \item die letzte Version von Xcode
   \item Mac OS X 10.9.3+
 \end{itemize}
-Unter Mac OS werden Xamarin Apps mit der Entwicklungsumgebung Xamarin Studio entwickelt. Bevor man
-eine iOS App auf einem mobilen Endgerät deployen und testen kann, muss man einen Apple Developer
-Account haben. Dieser Account ist auch erforderlich, wenn man Apps in den App
-Store stellen möchte.
+Unter Mac OS werden Xamarin Apps mit der Entwicklungsumgebung Xamarin Studio entwickelt. Für das
+Deployen und Testen einer iOS App auf einem mobilen Endgerät wird ein Apple Developer
+Account vorausgesetzt. Dieser Account ist auch erforderlich, wenn man Apps in den App Store stellen
+möchte.
 \\Der Ahead-Of-Time (AOT) Compiler kompiliert Xamarin.iOS Apps direkt zu nativen ARM Assemblercode.
 D.h. man kann mit Xamarin native iOS Apps erstellen. Xamarin.iOS ist eine Art Übersetzung der iOS
 SDK von Apple in C\# mit .NET Namenskonventionen. Somit hat man Zugriff auf alle iOS APIs.
-Ein automatisierter Binding-Generator ermöglicht die Benutzung von existierendem Objective-C Code,
-sowie Frameworks und benutzerdefinierten Controls in einer Xamarin App.\\Wenn man iOS Apps
-mittels Visual Studio entwickelt, muss man die App auf dem Macintosh Build Host simulieren, da es
-auf Windows keinen iOS Simulator gibt.
+Mit einem automatisierten Binding-Generator ist auch die Benutzung von existierendem Objective-C
+Code, sowie Frameworks und benutzerdefinierten Controls in einer Xamarin App möglich.\\Wenn iOS
+Apps mittels Visual Studio auf einem Windows PC entwickelt werden, müssen die Apps auf dem
+Macintosh Build Host simuliert werden, da es auf Windows keinen iOS Simulator gibt.
 
 Xamarin.iOS App Entwicklung ist wie bereits erwähnt fast identisch mit der herkömmlichen iOS App
 Entwicklung. Der Unterschied besteht grundsätzlich in der Programmiersprache. Es werden weiterhin
@@ -90,10 +91,10 @@ Protocol genügen soll. Ein Objective-C Protocol ist ähnlich wie ein C\# Interfac
 Unterschied, dass die Methoden eines Protocols auch optional sein können.
 Also Xamarin.iOS benutzt .NET Events mit UIKit Steuerelemente (Buttons, Labels,
 Text Felder usw.).\\Xamarin.iOS stellt einen einen iOS UI-Designer zur Verfügung, mit dem die
-Gestaltung der Benutzeroberfläche auf die gleiche Art und Weise erfolgt, wie bei der iOS App
+Gestaltung der Benutzungsoberfläche auf die gleiche Art und Weise erfolgt, wie bei der iOS App
 Entwicklung mit dem UI Builder von Xcode (siehe Abb.\ref{fig:abb17}). Der Xamarin Designer für iOS
 ist enthalten in Xamarin Studio und lässt sich auch in Visual Studio integrieren. Das Tool
-ermöglicht das Erstellen von Benutzeroberflächen mithilfe Storyboards und stellt einen Mechanismus
+ermöglicht das Erstellen der Benutzungsoberfläche mithilfe Storyboards und stellt einen Mechanismus
 zum programmatischen Zugriff auf UI Elemente bereit.
 \begin{figure}[!h]
 \centering
@@ -104,11 +105,11 @@ zum programmatischen Zugriff auf UI Elemente bereit.
 \\Xamarin.iOS unterstützt den "`target-action style"' für die Bearbeitung eines Events, das durch
 eine Interaktion ausgelöst wird. D.h. Xamarin.iOS
 benutzt iOS Steuerelemente um .NET Ereignisse (Events) auszulösen.\\Beim Markieren eines
-Steuerelements (z.B. Button) kann man unter Properties eine eindeutige Bezeichnung für das
-Element, sowie andere Eigenschaften einstellen (siehe Abb.\ref{fig:abb18}).
-Um ein "`target-action"' für einen Button zu erstellen, muss man lediglich auf den Button in dem iOS
-Designer doppelklicken. Der Code des zuständigen UIViewControllers wird dann automatisch angezeigt
-und der Entwickler wird aufgefordert auszuwählen, wo die Methode hinzugefügt werden soll, die beim
+Steuerelements (z.B. Button) können unter Properties eine eindeutige Bezeichnung für das
+Element, sowie andere Eigenschaften eingestellt werden (siehe Abb.\ref{fig:abb18}).
+Um ein "`target-action"' für einen Button zu erstellen, muss lediglich auf den Button in dem iOS
+Designer doppelgeklickt werden. Der Code des zuständigen UIViewControllers wird dann automatisch
+angezeigt und der Entwickler wird aufgefordert auszuwählen, wo die Methode hinzugefügt werden soll, die beim
 Vorkommen dieses Ereignisses aufgerufen wird.
 \begin{figure}[!h]
 \centering
@@ -116,7 +117,7 @@ Vorkommen dieses Ereignisses aufgerufen wird.
 \caption{Properties eines Steuerelements [\cite{XiOS}]}
 \label{fig:abb18}
 \end{figure}
-\\Xamarin.iOS unterstützt alle nativen Steuerelemente von Apple. Die können zu einer Xamarin.iOS
+\\Xamarin.iOS unterstützt alle nativen Steuerelemente von Apple. Sie können zu einer Xamarin.iOS
 Applikation hinzugefügt werden. Das kann mit dem iOS Designer, Xcodes Interface Builder oder
 programmatisch passieren. Die meist verwendeten iOS UI Steuerelemente sind:
 \begin{itemize}

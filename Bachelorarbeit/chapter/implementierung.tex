@@ -7,10 +7,10 @@ Rechner benötigt - ein Mac-Rechner als Build-Server  und ein Windows-PC auf dem 
 Aus diesem Grund fiel die Entwicklungsumgebungswahl für die Implementierung der Scan-App auf
 Xamarin Studio. Xamarin Studio bietet mehrere Solution-Templates an
 (siehe \ref{fig:abb36}).
-\\Beim Anlegen des Xamarin.Forms Projekts namens ScanApp werden automatisch zwei weitere Projekte
-erstellt, so dass folgende Projekte entstehen:
+\\Beim Anlegen des Xamarin.Forms Projekts namens ScanApp wurden automatisch zwei weitere Projekte
+erstellt, so dass folgende Projekte entstanden sind:
 \begin{itemize}
-  \item ScanApp - das gemeinsame, plattformübergreifende Projekt.
+  \item ScanApp - das gemeinsame, plattformübergreifende Shared Projekt.
   \item ScanApp.Droid - plattformspezifisches Projekt für Android.
   \item ScanApp.iOS - plattformspezifisches Projekt für iOS.
 \end{itemize}
@@ -71,7 +71,7 @@ wichtigsten Implementierungsschritte vorgestellt.
 In beiden plattformspezifischen Projekten (ScanApp.iOS und ScanApp.Droid) wurde je eine
 SQLite-Datenbankdatei hinzugefügt. Damit die Persistierung der App-Daten aus dem gemeinsamen
 Projekt, also "`cross plattform"', gesteuert werden kann, wurde eine C\#-Datei aus Github
-heruntergeladen und in das gemeinsame Projekt "`shared"' ScanApp (in die Model-Komponente
+heruntergeladen und in das Shared Projekt ScanApp (in die Model-Komponente
 Persistenz, die in Abb. \ref{fig:abb41} abgebildet ist) eingefügt. 
 % In diesem File wird eine C\#-Klasse definiert, die Compiler Direktiven benutzt um mehrere
 % Plattformen in derselben Codebasis zu unterstützen.
@@ -79,7 +79,7 @@ Persistenz, die in Abb. \ref{fig:abb41} abgebildet ist) eingefügt.
 % Datenbank angegeben werden. 
 Die jeweiligen Pfade (im vorliegenden Fall sind es zwei Pfade, einmal für die Datenbank, die
 in die Ressourcen des plattformspezifischen Projekt ScanApp.iOS hinzugefügt wurde und einmal zu der
-Datenbank in der Ressourcen des ScanApp.Droid Projekts) lassen sich mittels Compiler Direktiven und
+Datenbank in der Ressourcen des ScanApp.Droid Projekts) ließen sich mittels Compiler Direktiven und
 mithilfe der Klasse \textcolor{gray}{System.Environment} für jede Plattform generieren.
 In Abb.
 \ref{fig:abb27} ist ein Ausschnitt der Implementierung der Datenbankverbindung zu
@@ -98,7 +98,7 @@ Deadlocks entstehen!
 Beim Erstellen einer neuen Datei bietet Xamarin Studio außer
 Standard C\#-Dateien, wie "`Empty Class"', "`Empty Interface"' usw., noch vorgefertigte
 Xamarin.Forms-Dateien, wie "`Forms ContentPage"', "`Forms ContentPage Xaml"', "`Forms Content View"'
-oder "`Forms ContentView Xaml"' an. \\Wie bereits im \ref{View} erläutert, werden die
+oder "`Forms ContentView Xaml"' an. \\Wie bereits im \ref{View} erläutert, wurden die
 Ansichten der App in Xaml implementiert.
 Beim Anlegen einer Xamarin.Forms
 ContentPage Xaml-Datei wird automatisch auch die zugrundeliegende C\#-Datei, bekannt auch als
@@ -119,9 +119,9 @@ Binding"' (in Deutsch Datenbindung) realisiert.
 \\Der Aufbau einer Xaml-Datei ist dem Gerüst eines XML-Dokuments sehr ähnlich.
 Es gibt ein Wurzelelement und jedes Element kann Attribute besitzen. Dadurch entsteht eine
 übersichtliche Hierarchie der Elemente.
-In Abb. \ref{fig:abb23} sieht man eine typische
-Xaml-Datei, die die in Abb. \ref{fig:abb34} dargestellte "`Persönliche Daten Ansicht"' beschreibt und
-sich in der View-Komponente (siehe Abb. \ref{fig:abb41}) befindet.
+In Abb. \ref{fig:abb23} ist eine typische
+Xaml-Datei zu sehen, die die in Abb. \ref{fig:abb34} dargestellte "`Persönliche Daten Ansicht"'
+beschreibt und sich in der View-Komponente (siehe Abb. \ref{fig:abb41}) befindet.
 Diese Ansicht wird von der benutzerdefinierten Base\_Page abgeleitet, die ihrerseits von der Klasse Xamarin.Forms.Page
 abgeleitet wird.
 \begin{figure}[!h]
@@ -169,7 +169,7 @@ die Viewmodel-Klassen um die Navigation kümmern.
 Allerdings ist \textit{Navigation} ein Property der Ansicht. D.h. das Viewmodel muss signalisieren,
 dass es zu einer anderen Ansicht gewechselt werden soll. Da das Viewmodel die Ansicht nicht kennt,
 kann das durch das \textbf{\textit{Xamarin.Forms Messaging Center}} erreicht werden. Die Ansicht
-abonniert Navigationsnachrichten des Viewmodels und wird somit immer informiert, wenn die
+abonniert Navigationsnachrichten des Viewmodels und wird somit jedes Mal informiert, wenn die
 Seite gewechselt werden soll.
 \\Analog lassen sich auch die anderen Ansichten der
 Scan App und die dazugehörigen ViewModels implementieren. Aus diesem Grund wird
@@ -384,7 +384,8 @@ zu testenden mobilen Applikation kommuniziert.
 Der Xamarin Test Cloud Agent muss eingebettet in die iOS Applikationen sein, wenn die App
 kompiliert wird. Bei Android Applikationen ist der TestCloud Agent eine separate Anwendung, die
 neben der zu testende App installiert wird. Die Tests interagieren mit der UI als würde ein Benutzer
-in Wirklichkeit Text ein ein Entry-Feld eintippen, irgendeine Geste durchführen, oder auf einen Button klicken usw.
+in Wirklichkeit Text in ein Entry-Feld eintippen, irgendeine Geste durchführen, oder auf einen
+Button klicken usw.
 \\Typischerweise wird jeder UITest als eine Methode definiert. Die Klasse, die den Test enthält,
 wird als Test Fixture bezeichnet. Eine Text Fixture enthält entweder einen Test oder eine logische Gruppe von Tests.
 Sie ist für Einstellungen und Bereingungen, die nach den Tests durchgeführt werden sollen zuständig.
@@ -412,7 +413,7 @@ REPL erlaubt Entwicklern, mit der Anwendung zu interagieren, während es läuft.
 Um einen Xamarin.UITest zum laufen zu bringen, muss das NuGet Package Xamarin Test Cloud Agent zum
 iOS-Projekt hinzugefügt werden. Bei Xamarin.Android ist das nicht erforderlich. Allerdings braucht
 man bei Android eine APK-Datei. D.h. JDK und Android SDK müssen installiert sein. In den meisten
-Fällen werden die aber mitinstalliert bei der Installation von Xamarin.Android [\cite{XamUITest}].
+Fällen werden sie bei der Installation von Xamarin.Android mitinstalliert [\cite{XamUITest}].
 \subsection{Testgeräte}
 Die von Android und Apple zur Verfügung gestellten Simulatoren erleichtern wesentlich den
 Testprozess, allerdings um sicher zu gehen, dass eine App wirklich fehlerfrei funktioniert, kommt
@@ -440,19 +441,28 @@ Da es vor allem
 bei Android eine große Vielfalt an Geräten gibt, kann Testen sehr mühsam und zeitaufreibend sein.
 Softwarehersteller müssen nicht selten Apps auf dutzende sogar hunderte Geräte installieren und
 testen.
+Xamarin.UITests können lokal ausgeführt werden und erleichtern die Entwicklung einer App. Die
+eigentliche Stärke von Xamarin.UITest ist, allerdings, die Möglichkeit, diese lokale Tests in die
+Xamarin Test Cloud hochzuladen. In der Cloud steht eine Vielzahl von realen Geräten (alle ohne
+Jailbreak) zur Verfügung. Xamarin Test Cloud generiert bei jedem Schritt eines Testfalls Screenshots
+von der App (siehe \ref{fig:abb35}).
+Somit kann der Developer einen Vergleich zwischen den Darstellungen seiner App auf den verschiedenen
+Geräten ziehen und gegebenfalls visuelle Inkonsistenzen feststellen. Screenshots können allerdings
+nicht alle Benutzereindrücke abbilden. Für diesen Zweck bietet der Service auch
+Videoaufnahme von Tests.
 % \\Die meisten Developer verzichten auf systematisches Testen, weil die verfügbaren Tools und
 % Dienste zu kompliziert und schwer zu benutzen sind und nur auf einem Gerät bzw. Simulator ausgeführt
 % werden können. 
-\\Abhilfe kann man sich bei einem Dienst von Xamarin, genannt Xamarin Test Cloud,
-schaffen.\\Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro
+% \\Abhilfe kann man sich bei einem Dienst von Xamarin, genannt Xamarin Test Cloud, schaffen.
+\\Alle Xamarin-Plattform-Abonnements beinhalten 60 Xamarin Test Cloud Geräte-Minuten pro
 Monat. D.h., jeder Entwickler, der einen Xamarin Account hat, kann die Dienste der Xamarin Test Cloud in Anspruch nehmen.
 Xamarin verfügt über 1600 reale iOS- und Android-Smartphones und Tabletts. An dieser Stelle muss
 klargestellt werden, dass es allerdings nur iOS- und Android-Geräte sind, also die Test Cloud von
 Xamarin unterstützt noch nicht Windows Phone.
-Mit der Test Cloud kann man leicht visuelle Inkonsistenzen feststellen, indem man die Ergebnisse eines UI-Tests auf
-dutzende Geräten vergleicht. Der Entwickler hat die Möglichkeit Screenshots an beliebigen Stellen
-des Tests zu machen (siehe \ref{fig:abb35}).
-Darüber hinaus bietet der Service auch Videoaufnahme von Tests.
+% Mit der Test Cloud lassen sich visuelle Inkonsistenzen leicht feststellen, indem die Ergebnisse
+% eines UI-Tests auf dutzende Geräten verglichen werden. Der Entwickler hat die Möglichkeit
+% Screenshots an beliebigen Stellen des Tests zu machen (siehe \ref{fig:abb35}).
+% Darüber hinaus bietet der Service auch Videoaufnahme von Tests.
 Eine Geräte-Minute wird konsumiert, wenn der Test auf einem Gerät ausgeführt wird, wobei es keine
 Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgeführt werden.
 % \\Beim
@@ -473,13 +483,13 @@ Rolle spielt ob die Tests parallel auf mehrere Geräte oder nacheinander ausgefüh
 % in Wirklichkeit Text ein ein Entry-Feld eintippen, irgendeine Geste durchführen, oder auf einen Button klicken usw.
 % Nachdem die Tests geschrieben worden sind, kann man die lokal ausführen und wenn die Tests
 % erfolgreich abgeschlossen wurden, kann man die auch in der Cloud ausführen lassen.
-Xamarin.UITests können lokal ausgeführt werden und erleichtern die Entwicklung einer App. Die
-eigentliche Stärke von Xamarin.UITest ist, allerdings, die Möglichkeit, diese lokale Tests in die
-Xamarin Test Cloud hochzuladen. In der Cloud steht eine Vielzahl von realen Geräten (alle ohne
-Jailbreak) zur Verfügung. Xamarin Test Cloud generiert bei jedem Schritt eines Testfalls Screenshots von der App.
-Somit kann der Developer einen Vergleich zwischen den Darstellungen seiner App auf den verschiedenen
-Geräten ziehen. Screenshots können allerdings nicht alle Benutzereindrücke abbilden. Für diesen
-Zweck ist auch ein Screen Recording möglich.
+% Xamarin.UITests können lokal ausgeführt werden und erleichtern die Entwicklung einer App. Die
+% eigentliche Stärke von Xamarin.UITest ist, allerdings, die Möglichkeit, diese lokale Tests in die
+% Xamarin Test Cloud hochzuladen. In der Cloud steht eine Vielzahl von realen Geräten (alle ohne
+% Jailbreak) zur Verfügung. Xamarin Test Cloud generiert bei jedem Schritt eines Testfalls Screenshots von der App.
+% Somit kann der Developer einen Vergleich zwischen den Darstellungen seiner App auf den verschiedenen
+% Geräten ziehen. Screenshots können allerdings nicht alle Benutzereindrücke abbilden. Für diesen
+% Zweck ist auch ein Screen Recording möglich.
 
 % Typischerweise wird jeder UITest als eine Methode definiert. Die Klasse, die den Test enthält, wird als Test Fixture bezeichnet. Eine Text Fixture enthält entweder einen Test oder eine logische Gruppe von Tests. 
 % Sie ist für Einstellungen und Bereingungen, die nach den Tests durchgeführt werden sollen zuständig.

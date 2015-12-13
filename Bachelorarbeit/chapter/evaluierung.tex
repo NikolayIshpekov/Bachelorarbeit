@@ -4,6 +4,7 @@ eines Software-Produkts, das mit dieser Technologie entwickelt wurde, bewertet w
 Fall ist es die Scan-App.\\\textbf{ISO/IEC 9126} definiert Software-Qualität als:\\ \emph{
 Gesamtheit von Merkmalen und Merkmalswerten eines Software-Produkts, die sich auf dessen Eignung
 beziehen, festgelegte oder vorausgesetzte Erfordernisse zu erfüllen}.
+\newline[\cite{ISO9126}]
 \\Um die Qualität eines
 Software-Produkts bewerten zu können, werden möglichst objektive prüfbare Kriterien benötigt.
 \section{Goal-Question-Metric}
@@ -332,8 +333,8 @@ der Xamarin Comunity das NuGet Package \textit{Microsoft.Net.Http} empfohlen. De
 enthaltene Http-Client weist allerdings Schwächen auf, wenn die Kommunikation wie im vorliegenden
 Fall nicht über http sondern über https erfolgen soll. Diese Schwächen sind kaum
 dokumentiert und es kann lange dauern bis der Entwickler auf die Fehlerquelle kommt.
-\subsubsection{Die Größe der IPA-Datei}
-Die Datei ist größer als die IPA-Datei einer nativ entwickelten iOS-App.
+% \subsubsection{Die Größe der IPA-Datei}
+% Die Datei ist größer als die IPA-Datei einer nativ entwickelten iOS-App.
 \subsubsection{Xamarin Studio}
 Es wurde beobachtet, dass bei Debuggen über einen längeren Zeitraum, Xamarin Studio stehen geblieben
 ist und neugestartet werden musste. Allerdings muss angemerkt werden, das dies sehr selten
@@ -347,17 +348,17 @@ meistens mit der Hilfe der Beschreibungssprache Xaml.
 Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
 .NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den
 nativ entwickelten iOS- und Android-Apps zu unterscheiden sind. \\Interessant für die vorliegende
-Arbeit ist der Ansatz von Xamarin.Forms. Wie im Kapitel 4.4.1.
+Arbeit ist der Ansatz von Xamarin.Forms. Wie im Kapitel \ref{ViewsUndLayouts}
 bereits erläutert, haben Entwickler fünf verschiedenen Arten von Ansichten zur Auswahl, um  eine
 Seite (Page) mit Xamarin.Forms zu erstellen. Für die Implementierung der ScanApp werden lediglich
 ContentPages, NavigationPages und eine MasterDetailPage für die Menüsteuerung benutzt. \\Sollte es speziellere Anforderungen an der
-Benutzeroberfläche geben, müssen Entwickler sogenannte "`custom renderer"' benutzen, um auf native
+Benutzeroberfläche geben, müssen Entwickler benutzerdefinierte Renderer benutzen, um auf native
 plattformspezifische SDK-Features zugreifen zu können. Allerdings befinden sich die Xamarin
 Renderer-APIs noch in einer Bearbeitungsphase [\cite{XamarinCustomRenderer}] und allem Anschein nach
 wird es noch einige Zeit dauern bis Xamarin die Mächtigkeit der herkömmlichen nativen App Entwicklung erreichen
-kann.\\Es wurden oft die Vorteile der mächtigen .NET Plattform erwähnt. Allerdings muss beachtet
-werden, dass Xamarin nicht alle diese Vorteile nutzen kann, weil Xamarin nicht direkt auf .NET
-basiert, sondern auf das Open-Source-Projekt Mono. D.h. Xamarin-Developer haben nur
+kann.\\Es wurden oft die Vorteile der mächtigen .NET Plattform erwähnt, allerdings muss an dieser
+Stelle beachtet werden, dass Xamarin nicht alle diese Vorteile nutzen kann, weil Xamarin nicht
+direkt auf .NET basiert, sondern auf das Open Source Projekt Mono. D.h. Xamarin-Developer haben nur
 eine Teilmenge der Funktionalitäten von .NET zur Verfügung.
 
 

@@ -16,7 +16,7 @@ alternative Methoden zum Code-Sharing:
 \label{fig:abb40}
 \end{figure}
 \newline
-Abb. \ref{fig:abb40} veranschaulicht die Verteilung der Projekten.
+Abb. \ref{fig:abb40} veranschaulicht die Verteilung der Projekte.
 Der Großteil des Codes wird sich im plattformübergreifenden Projekt, ScanApp befinden. In diesem
 "`shared"' Projekt wird typischerweise die gesamte App-Logik, inklusive Gestaltung der
 Benutzungsoberfläche, ausgelagert. 
@@ -43,16 +43,16 @@ plattformspezifischen Projekte noch Einstellungen vorgenommen, wie Info.plist im
 AndroidManifest.xml bei Android. 
 Wie aus Abb. \ref{fig:abb40} ersichtlich, lassen sich beim Shared Projects-Ansatz keine "`open
 source"' Bibliotheken, wie NuGet Packages oder Xamarin Komponenten direkt an das gemeinsame Projekt anbinden.
-Das erfolgt in den plattformspezifischen Projekte. Eine solche Xamarin Komponente ist bspw. die ZXing-Komponente zum Scannen von Barcodes, die
-eine zentrale Rolle in der App spielt. Das ebenso in der ScanApp eingebundene NuGet Package
+Das erfolgt in den plattformspezifischen Projekten. Eine solche Xamarin Komponente ist bspw. die
+ZXing-Komponente zum Scannen von Barcodes, die eine zentrale Rolle in der App spielt. Das ebenso in der ScanApp eingebundene NuGet Package
 "`DeviceInfo"' bietet eine API, mit der Entwickler Informationen über das Smartphone bekommen
-können. Am Ende dieses Kapitels werden die für die ScanApp benötigten NuGut Packages und Xamarin
+können. Am Ende dieses Kapitels werden die für die ScanApp benötigten NuGet Packages und Xamarin
 Komponenten näher vorgestellt. 
 % \\Der Entwurf der ScanApp bezieht sich fast ausschließlich auf das
 % "`shared"' Projekt (siehe Abb. \ref{fig:abb40}). 
-\\Es ist nahe liegend, dass bei einer
-"`Cross-Plattform-Entwicklung"' gezielt wird, dass alle Gemeinsamkeiten in das
-"`shared"' Projekt ausgelagert werden. Die plattformspezifischen Projekte sollten möglichst
+\\Es ist naheliegend, dass bei 
+"`Cross-Plattform-Entwicklung"' gezielt wird, dass alle Gemeinsamkeiten in das geteilte
+(shared) Projekt ausgelagert werden. Die plattformspezifischen Projekte sollten möglichst
 "`klein"' bleiben.
 Im Folgenden wird einen Einblick in den Entwurf der Anwendung gegeben.
 \begin{figure}[!h]
@@ -185,7 +185,7 @@ UserData, Order, OrderItem etc. definiert.\\Im Model wird noch eine Klasse defin
 Methoden für "`CRUD"'-Operationen (Create Read Update Delete) für das Persistieren der Modeldaten in
 die Datenbank (die in \ref{PersistenzBackend} vorgestellt wird) bietet.
 \subsection{View}\label{View}
-In der View-Komponente werden die Ansichten der Bedienungsoberfläche der App definiert. 
+In der View-Komponente werden die Ansichten der Benutzungsoberfläche der App definiert. 
 Die grafischen Interfaces der Scan-App werden mit der Markupsprache Xaml
 beschrieben. Somit wird eine strikte Trennung zwischen dem Oberflächendesign (in einer
 Xaml-Datei beschrieben) und der Funktionalität (in einer an der Xaml-Datei gebundenen C\#-Datei aus
@@ -252,7 +252,7 @@ Android-App-Entwicklung und sehr verbreitet bei der iOS-App-Entwicklung.
 plattformspezifischen Projekte muss lediglich jeweils eine SQLite-Datei zu den Ressourcen
 hinzugefügt werden. Im geteilten Projekt muss der Pfad zu der SQLite-Datenbank angegeben werden,
 einmal für Android und einmal für iOS. Die Zugriffe auf die Datenbank erfolgen plattformübergreifend (d.h. aus dem
-"`shared"' Projekt).
+Shared Projekt).
 
 Ein weiterer wichtiger und häufig vorkommender Punkt bei der Entwicklung von Apps, ist die
 Kommunikation mit dem Backend. Ähnlich wie die Anforderung für dauerhafte lokale Speicherung der App
@@ -266,7 +266,8 @@ folgenden Fällen zum Einsatz von Web Services:
   \item Beim Abschließen einer Bestellung.
 \end{itemize} 
 Das sind drei typische Interaktionen zwischen App und Backend. Im Prinzip ist es belanglos,
-wofür konkret Web Services eingesetzt werden, weil sie immer nach dem gleichen Muster funktionieren.
+wofür konkret Web Services eingesetzt werden, weil der Zugriff auf die Web Services immer nach
+dem gleichen Muster funktioniert.
 Die App sendet eine Anfrage, im vorliegenden Fall in Form eines Json-Objekts (oft werden auch XML-Dateien zwischen App
 und Server ausgetauscht, wobei bei XML der Overhead größer ist) und der Server antwortet
 mit einer Datei desselben Formats. Damit die Kommunikation gelingt, müssen sich Server und Client an
@@ -287,8 +288,8 @@ gar keinen Empfang haben. Abhängig vom Netzwerktyp kann die Geschwindigkeit eine
 stark variieren. Aus diesem Grund ist es wichtig, dass alle Serveranfragen in einem
 separaten Thread ausgeführt werden, so dass der Ablauf der App nicht durch eine schlechte oder
 fehlende Verbindung beeinträchtigt wird. Außerdem kann je nach Tarif der mobile Datenvolumen
-begrenzt oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von verbrauchten MB pro Monat erreicht
-wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
+begrenzt werden oder es können extra Kosten entstehen, wenn eine Bestimmte Grenze von verbrauchten
+MB pro Monat erreicht wird. Aus diesem Grund ist es sinnvoll, dass die App in der Lage ist, den Netzwerktyp zu
 erkennen. D.h. ob die Verbindung über WLAN oder über das mobile Internet erfolgt. Xamarin.Android
 bietet einen Mechanismus für diesen Zweck - durch die Klasse \textbf{NetworkInfo}. Mithilfe dieser Klasse
 kann die App auch erkennen ob Roaming eingeschaltet wurde [\cite{XamNetzwerkStatus}].\\Bei
@@ -296,8 +297,9 @@ Xamarin.iOS gibt es einen ähnlichen Mechanismus.
 \\Der Befehl \textcolor{gray}{\textsl{Reachability.InternetConectionStatus()}} liefert Auskunft
 darüber ob eine Internetverbindung über WLAN, über mobiles Internet erfolgt oder es gar keine
 Verbindung besteht [\cite{XamNetzwerkStatusIOS}]. \\Die Netzwerktyperkennung lässt sich nicht
-plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten. Im Sinne von "`Cross-Plattform-Entwicklung"' wird für solche Fälle ein Interface im gemeinsamen Projekt definiert. Dieses Interface wird dann in den plattformspezifischen Projekten implementiert. Auf
-diese Weise lässt sich die Netzwerktyperkennung aus dem "`shared"' Projekt steuern und
+plattformübergreifend implementieren, das erfolgt in den plattformspezifischen Projekten. Im Sinne von "`Cross-Plattform-Entwicklung"'
+wird für solche Fälle ein Interface im gemeinsamen Projekt definiert. Dieses Interface wird dann in den plattformspezifischen Projekten implementiert. Auf
+diese Weise lässt sich die Netzwerktyperkennung aus dem Shared Projekt steuern und
 dementsprechend behandeln. Da bei der ScanApp eine Übertragung von
 größeren Dateien, wie bspw. Bilder nicht vorgesehen ist, ist eine Netzwerktyperkennung unnötig und
 es wurde darauf verzichtet.
@@ -432,7 +434,7 @@ angeboten werden:
 Mit dem "`Back"'-Button wird zurück zu der Warenkorb-Ansicht navigiert.
 In der Ansicht Abgeschlossene Bestellungen kann mit Klick auf eine Bestellung zu einer Ansicht
 navigiert werden, in der die einzelnen Bestellungspositionen angezeigt werden. Mit dem
-"`Back"'-Button wird zurücknavigiert.
+"`Back"'-Button wird zurücknavigiert. 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale = 0.45]{graphics/ScanApp_Navigation_new.png}
@@ -440,7 +442,7 @@ navigiert werden, in der die einzelnen Bestellungspositionen angezeigt werden. M
 \label{fig:abb39}
 \end{figure}
 \section{Hardwarenahe Funktionalität: Barcodescanner}
-Die Struktur der App wurde im "`shared"' Projekt definiert. 
+Die Struktur der App wurde im Shared Projekt definiert. 
 Xamarin.Forms ist eine Art Abstraktionsschicht. Man kann es als die Schnittmenge aller
 Funktionalitäten betrachten, die sich im geteilten Projekt implementieren lassen. Die
 meisten Funktionalitäten lassen sich auf diese Weise "`cross-plattform"'
@@ -449,15 +451,15 @@ umgesetzt werden kann. Typischerweise sind es hardwarenahe Funktionalitäten, wie
 spezielle Sensoren des Endgeräts.\\Im vorliegenden Fall ist die Implementierung des Barcodescanners
 einer der wenigen Punkten, bei denen ein Eingriff in die plattformspezifischen Projekte notwendig
 ist. Sowie zum ScanApp.iOS, als auch zum ScanApp.Droid muss die Xamarin Komponente ZXing.Net.Mobile
-hinzugefügt werden. Diese Komponente greift auf native APIs zu, wie die API zur Steuerung der Kamera des Geräts,
-um die Scanner-Funktion zu ermöglichen. 
+hinzugefügt werden. Diese Komponente greift auf native APIs zu - die API zur Steuerung der Kamera
+des Geräts, um die Scanner-Funktion zu ermöglichen. 
 % Da sich diese Funktionalität nicht plattformübergreifend implementieren lässt, 
 % muss das in den zwei
 % plattformspezifischen Projekten (ScanApp.iOS und ScanApp.Android) erfolgen. 
 In beiden Projekten wird
 je eine Klasse Scanner.cs erstellt, in der mithilfe der von der ZXing.Net.Mobile bereitgestellten
 API die Funktionalität des Scanners implementiert wird. 
-\\Der Programmablauf wird im geteilten Projekt gesteuert. Im "`shared"' Projekt wird zu
+\\Der Programmablauf wird im geteilten Projekt gesteuert. Im Shared Projekt wird zu
 diesem Zweck ein Interface definiert, das von den Scanner-Klassen der plattformspezifischen Projekte
 implementiert wird. Der für die Scan-Ansicht zuständige ViewModel führt die Methode
 ScanClicked() aus, wenn auf den Scan-Button geklickt wird. 
@@ -497,7 +499,7 @@ ScanClicked() aus, wenn auf den Scan-Button geklickt wird.
 \section{Xamarin Komponenten (Components) und NuGet Packages} \label{nuGetPackages}
 Wie in \ref{nugets} bereits erwähnt, ist die Möglichkeit, Xamarin Komponenten und NuGet Packages an
 ein Projekt anzubinden, eine der größten Stärken von Xamarin.
-Da zu Xamarin.Forms "`shared"' Projects keine Komponenten zum gemeinsamen Projekt
+Da beim Xamarin.Forms Shared Project Ansatz keine Komponenten zum geteilten Projekt
 hinzugefügt werden können, müssen die benötigten Komponenten zu den
 plattformspezifischen Projekten hinzugefügt werden (siehe Abb. \ref{fig:abb40}).
 \subsection{Xamarin Components}
@@ -533,8 +535,8 @@ implementieren, sondern auch fast die ganze Benutzungsoberfläche der App. Daraus
 (oder sogar drei, wenn auch eine Windows Phone als Zielplattform erwünscht ist) Versionen der
 Anwendung, die alle das native "`Look and Feel"' der jeweiligen Plattform haben. Die gemeinsame
 Codebasis erleichtert nicht nur den Entwurf, sondern auch das Fixen von Bugs und die Wartung der
-App. Als negative Feststellung kann an dieser angemerkt werden, dass NuGet Packages und Xamarin
-Components nicht zum geteilten Projekt hinzugefügt werden können und dadurch entsteht doppelten
-Aufwand (Bei dem Xamarin.Forms PCL-Ansatz ist das allerdings nicht der Fall. Da werden "`open
-source"' Bibliotheken zum gemeinsamen Projekt hinzugefügt).
+App. Als negative Feststellung kann an dieser Stelle angemerkt werden, dass NuGet Packages und
+Xamarin Components nicht zum geteilten Projekt hinzugefügt werden können und dadurch entsteht doppelten
+Aufwand (Bei dem Xamarin.Forms PCL-Ansatz ist das allerdings nicht der Fall. Da werden Open
+Source Bibliotheken zum gemeinsamen Projekt hinzugefügt). 
 
