@@ -113,7 +113,7 @@ Mit dem GQM Ansatz lässt sich folgende Metrik ableiten:
   \\\textbf{Metrik M4}: 
   \fbox{
       $\frac{\textrm{Die Zeit in Sekunden, die der Scanner braucht um einen
-      Barcode zu scannen}}{\textrm{Zeit, die eine native Scanner-App braucht um einen Barcode zu
+      Barcode zu scannen}}{\textrm{Zeit, die die Referenzapp braucht um einen Barcode zu
      scannen}}$
   }
   \\Angestrebter Wert dieser Metrik wäre die Eins. Das würde bedeuten, dass eine
@@ -183,7 +183,7 @@ allerdings lässt sich die GUI auch komplett in C\# definieren).\\\textbf{Wert vo
   \\
   \\\textbf{Metrik M7}: 
   \fbox{
-      $\frac{\textrm{LOC (lines of code) im plattformübergreifenden "`shared"' Projekt}}{\textrm{LOC
+      $\frac{\textrm{LOC (lines of code) im plattformübergreifenden Shared Projekt}}{\textrm{LOC
       von allen drei Projekte gesamt.}}$ }
       \\
       \\Idealer Wert dieser Metrik wäre 1, bzw. 100\%.
@@ -227,7 +227,44 @@ dem GQM-Ansatz lässt sich folgende Metrik ableiten:
   gebraucht. Das anschließende Hochladen in die jeweiligen Stores unterscheidet sich nicht von dem Hochladen einer
   nativen iOS- oder Android-App und wird ebenso innerhalb 15 bis 30 Minuten erledigt.
   \\\textbf{Wert von M9: ca 45 Minuten}.\\\textbf{Wert von M10: ca 45 Minuten}
-%   \subsection{Zusammenfassung der berechneten Werte}
+   \\
+  \\\textbf{Ziel}: Die Installationsdatei (APK-Datei bei Android und IPA-Datei bei iOS) sollte
+  nicht deutlich größer als die Installationsdatei einer nativ entwickelten App .
+  \\\textbf{Frage}: Wie groß ist die Installationsdatei einer mit Xamarin erstellten App im
+  Vergleich zu der Größe der Installationsdatei der Referenzapplikation?  
+  \\
+  \\\textbf{Metrik M11}: 
+  \fbox{
+      $\frac{\textrm{Größe der IPA-Installationsdatei der Xamarin Scan-App im App
+      Store}}{\textrm{Größe der IPA-Datei der Referenzapplikation im App Store}}$ }
+      \\
+      \\Da die Referenzapplikation nur eine iOS Version hat, lässt sich diese Messung nur für die
+      iOS Version der Scan-App durchführen. Idealer Wert dieser Metrik wäre 1. Es wäre
+      wünschenswert, dass die Xamarin App nicht deutlich größer als die Referenzapplikation ist.
+      Es soll allerdings beachtet werden, dass die Xamarin Scan-App um einige Features erweitert
+      wurde, mit dem Ziel, eine möglichst größere Gruppe von Enterprise-Apps zu repräsentieren, so
+      dass die Evaluierung von Xamarin als Cross-Plattform-Entwicklungsframework objektiver wird. Aus diesem
+      Grund ist es zu erwarten, dass die Installationsdatei der Xamarin App größer als die der
+      Referenzapplikation ist.
+%   Prozentsatz von LOC (lines of code) im plattformübergreifenden aus LOC
+%   von allen drei Projekte gesamt. 
+  \\
+  \\ \textbf{M11 = }$\frac{\textrm{43.7 MB}}{\textrm{1.5 MB}}$ \textbf{ = 29.1}
+\subsection{Auswertung der gemessenen Werte}
+In Tabelle \ref{table3} werden die gemessenen Werte der mit dem GQM-Ansatz abgeleiteten Metriken
+zusammengefasst. In der Spalte Auswertung wurde ein "`+"' eingetragen, wenn der Wert der
+Metrik sich dem angestrebten Wert genähert hat und ein "`-"', wenn der Wert der Metrik nicht
+befriedigend war.
+\\Wie aus der Tabelle ersichtlich, sind die Auswertungen der meisten Metriken positiv
+ausgefallen. Bei Metrik M11 ist das allerdings nicht der Fall gewesen. Der Wert dieser Metrik ließ
+sich nur bei der iOS Version der App ermitteln, weil die Anwendung, die als Vorlage für die Scan-App
+gedient hat, nur für iOS verfügbar war. 
+% \\Die Größe der
+% APK-Installationsdatei der Android Version der App ließ sich mit der APK-Dateigröße anderer
+% ähnlichen Apps vergleichen.
+\\Die Größe der APK-Datei der Android Version der Scan-App im Google Play Store beträgt 18 MB.
+Vergleichbare Apps haben eine deutlich kleinere APK-Datei (1 bis 5 MB). Daraus lässt sich
+ schießen, dass Xamarin Apps im Allgemeinen deutlich grösser als nativ erstellte Apps sind.
 \begin{table}
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -255,7 +292,7 @@ dem GQM-Ansatz lässt sich folgende Metrik ableiten:
 \hline
 \textbf{M6: }{\footnotesize Anzahl der benutzerdefinierten Renderer} & 0 & + \\
 \hline
-\textbf{M7: }{\footnotesize Verhältnis der LOC (lines of codes) des gemeinsamen Codeantiels} & 0.95
+\textbf{M7: }{\footnotesize Verhältnis der LOC (lines of codes) des gemeinsamen Codeanteils} & 0.95
 & +
 \\
 {\footnotesize zu der LOC des ganzen Codes} &  & 
@@ -275,6 +312,12 @@ dem GQM-Ansatz lässt sich folgende Metrik ableiten:
 & +
 \\
 {\footnotesize und anschließend das Hochladen in den Google Play Store} &  & \\
+\hline
+\textbf{M11: }{\footnotesize Verhältnis der Größe einer Xamarin App Installationsdatei}
+& 29.1
+& -
+\\
+{\footnotesize zu der Größe der Installationsdatei der Referenzapplikation} &  & \\
 \hline
 \end{tabular}
 \caption{Zusammenfassung der berechneten Werte aller Metriken}
@@ -300,14 +343,14 @@ dem GQM-Ansatz lässt sich folgende Metrik ableiten:
 %   \item Die Distribution einer mit Xamarin entwickelten Anwendung in die entsprechenden App-Stores
 %   soll mit einem ähnlich großen Aufwand verbunden sein, wie die Distribution einer nativen App.
 % \end{itemize}
-\section{Feststellungen}
+\section{Weitere Feststellungen}
 \subsection{Positive Feststellungen}
 Es lässt sich zusammenfassen, dass Xamarin als Cross Plattform Entwicklungstool, bzw. Xamarin Studio
 als Entwicklungsumgebung (IDE), sich kaum von den herkömmlichen Entwicklungsumgebungstools, wie
 Eclipse oder Xcode unterscheidet. Mit Xamarin.UITest verfügt Xamarin über ein integriertes
-Werkzeug zum Ausführen und Auswertung von automatisierten UI-Tests. Darüber hinaus lassen sich "`open source"'
-Bibliotheken, wie Xamarin Components oder NuGet Packages hinzufügen. Wie es sich für eine gute
-Entwicklungsumgebung gehört, verfügt die IDE über "`Autocomplete"'- und "`Debug"'-Funktionen.
+Werkzeug zum Ausführen und Auswertung von automatisierten UI-Tests. Darüber hinaus lassen sich Open
+Source Bibliotheken, wie Xamarin Components oder NuGet Packages hinzufügen. Wie es sich für eine
+gute Entwicklungsumgebung gehört, verfügt die IDE über "`Autocomplete"'- und "`Debug"'-Funktionen.
 \\Es muss erwähnt werden, dass das Team von Xamarin sich
 große Mühe für die Weiterentwicklung des Frameworks gibt.
 Wenn Apple, bspw. neue APIs vorstellt, können sie innerhalb weniger Stunden mit Xamarin verwendet
@@ -336,14 +379,14 @@ dokumentiert und es kann lange dauern bis der Entwickler auf die Fehlerquelle ko
 % \subsubsection{Die Größe der IPA-Datei}
 % Die Datei ist größer als die IPA-Datei einer nativ entwickelten iOS-App.
 \subsubsection{Xamarin Studio}
-Es wurde beobachtet, dass bei Debuggen über einen längeren Zeitraum, Xamarin Studio stehen geblieben
+Es wurde beobachtet, dass bei Debuggen über einen längeren Zeitraum, Xamarin Studio hängen geblieben
 ist und neugestartet werden musste. Allerdings muss angemerkt werden, das dies sehr selten
 vorgekommen ist.
 \subsubsection{Oberflächen-Designer}
 Für Xamarin.iOS und Xamarin.Android gibt es ähnlich wie bei Eclipse und Xcode einen Designer für
 die Erstellung der Bedienoberfläche, allerdings ist Xamarin noch nicht soweit, einen
-Cross-Plattform-Designer anzubieten und die Gestaltung der Ansichten erfolgt programmatisch,
-meistens mit der Hilfe der Beschreibungssprache Xaml.
+Cross-Plattform-Designer anzubieten. Die Gestaltung der Ansichten erfolgt programmatisch,
+meistens mit der Hilfe der Beschreibungssprache XAML.
 \section{Grenzen der Cross-Plattform-Entwicklung}
 Xamarin entwickelt sich mit raschem Tempo. Xamarin.iOS und Xamarin.Android bieten
 .NET Entwicklern, die Möglichkeit Apps für iOS und Android zu entwickeln, die kaum von den
@@ -352,7 +395,7 @@ Arbeit ist der Ansatz von Xamarin.Forms. Wie im Kapitel \ref{ViewsUndLayouts}
 bereits erläutert, haben Entwickler fünf verschiedenen Arten von Ansichten zur Auswahl, um  eine
 Seite (Page) mit Xamarin.Forms zu erstellen. Für die Implementierung der ScanApp werden lediglich
 ContentPages, NavigationPages und eine MasterDetailPage für die Menüsteuerung benutzt. \\Sollte es speziellere Anforderungen an der
-Benutzeroberfläche geben, müssen Entwickler benutzerdefinierte Renderer benutzen, um auf native
+Benutzungsoberfläche geben, müssen Entwickler benutzerdefinierte Renderer verwenden, um auf native
 plattformspezifische SDK-Features zugreifen zu können. Allerdings befinden sich die Xamarin
 Renderer-APIs noch in einer Bearbeitungsphase [\cite{XamarinCustomRenderer}] und allem Anschein nach
 wird es noch einige Zeit dauern bis Xamarin die Mächtigkeit der herkömmlichen nativen App Entwicklung erreichen
