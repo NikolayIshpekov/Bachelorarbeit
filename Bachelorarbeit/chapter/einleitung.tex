@@ -12,7 +12,7 @@ auf ihren Smartphones als auf deren Laptops oder PCs [\cite{XamBlog}]. Die meist
 den Nutzer als Konsumenten, allerdings stehen viele weitere Möglichkeiten in diesem Bereich zur
 Verfügung. Mobile Endgeräte werden leistungsfähiger und es lässt sich
 eine Tendenz zur Nutzung von Smartphones im Arbeitsleben beobachten.
-Unternehmen können mit sogenannten Business Apps schnell und unkompliziert ihre Geschäftsprozesse
+Unternehmen können mit sogenannten Business-Apps schnell und unkompliziert ihre Geschäftsprozesse
 mobilisieren.
 Durch diesen grundlegenden Wandel spielen Google, Facebook und Apple heutzutage eine größere
 Rolle als Nokia oder Siemens Mobile. \\Smartphones eröffnen beinahe unbegrenzte Möglichkeiten, die
@@ -24,8 +24,8 @@ Kunden als auch von Geschäftspartnern direkt in die eigenen IT-Systeme ermöglich
 [\cite[4]{SmMApps}].
 % \\Für die Erzeugung von Business Apps müssen
 % Softwarehersteller einige technische Barrieren überwinden. 
-\\Wahrscheinlich das größte Hindernis, das Business Apps Entwickler überwinden müssen, ist die Heterogenität der mobilen
-Plattformen.
+\\Das wahrscheinlich größte Hindernis, das Business-Apps Entwickler überwinden müssen, ist die
+große Vielfalt an mobilen Plattformen.
 Derzeit existieren mehrere mobile Betriebssysteme (siehe Abb.\ref{fig:abb1}) [\cite{SmOSMaQ1}].
 %%\includegraphics[scale = 0.7]{graphics/chartMSOSQ1.png} 
 \begin{figure}[!h]
@@ -34,33 +34,47 @@ Derzeit existieren mehrere mobile Betriebssysteme (siehe Abb.\ref{fig:abb1}) [\c
 \caption{Worldwide Smartphone OS Market Share[\cite{SmOSMaQ1}]}
 \label{fig:abb1}
 \end{figure}
-\\In der Regel ist für jedes Betriebssystem eine eigene Management- und
-Entwicklungsinfrastruktur nötig und es ist naheliegend, dass das ist mit hohen Kosten und langen
-Entwicklungszeiten verbunden ist. Geschäftsanwendungen, die für eine nicht überschaubare Anzahl von
-Nutzern bestimmt sind und mit vielen Varianten ausgerollt werden, bringen ein Skalierbarkeit-Problem mit. Wie können
-Tausende von Endgeräten mit neuen Versionen einer Software betankt werden und wie kann im
-Einzelnen sichergestellt werden, dass die neue Softwareversion sich mit dem Betriebssystem des
-Endgerätes verträgt?\\Eine der häufigsten Anforderungen für eine Business Anwendung ist, dass die
-App auf mehreren mobilen Plattformen läuft.
-Da auf den meisten Smartphones entweder Android oder iOS installiert ist, spielen diese beiden
-Plattformen eine zentrale Rolle für die Entwicklung von mobilen Softwareanwendungen.
-Unglücklicherweise sind Android und iOS inkompatibel zueinander. Das bedeutet, dass ein Entwickler,
-der eine auf beiden Plattformen lauffähige App entwickeln möchte, mehrere
-plattformspezifischen Sprachen beherrschen muss. Für Android Apps wird die Programmiersprache Java
-vorausgesetzt und für die Entwicklung einer iOS Anwendung - Objective-C oder Swift. 
+\\In der Regel ist für jede mobile Plattform eine eigene Management- und
+Entwicklungsinfrastruktur nötig. 
+% und es ist naheliegend, dass das ist mit hohen Kosten und langen
+% Entwicklungszeiten verbunden ist. 
+% Geschäftsanwendungen, die für eine nicht überschaubare Anzahl von
+% Nutzern bestimmt sind und mit vielen Varianten ausgerollt werden, bringen ein Skalierbarkeit-Problem mit.
+% %  Wie können
+% Es ist eine Herausforderung, Anwendungen herzustellen, die auf tausenden von Endgeräten
+% lauffähig sein sollen.
+%  mit neuen Versionen einer Software zu betanken.
+% Bei der Heterogenität der mobilen
+% werden und wie kann im Einzelnen sichergestellt werden, dass die neue Softwareversion sich mit dem Betriebssystem des
+% Endgerätes verträgt?
+% \\Eine häufig vorkommende Anforderungen für eine Business Anwendung ist, dass die
+% App auf mehreren mobilen Plattformen laufen soll.
+\\Da auf den meisten Smartphones entweder Android oder iOS installiert ist, spielen diese beiden
+mobilen Betriebssysteme eine zentrale Rolle für die Entwicklung von mobilen Softwareanwendungen.
+Eine Business-Anwendung wird selten für nur eine Plattform vorgesehen. 
+Da iOS und Android inkompatibel zueinander sind, muss ein
+Entwickler mehrere plattformspezifische Sprachen beherrschen, um eine auf beiden Plattformen
+lauffähige App entwickeln zu können. Für Android Apps wird die Programmiersprache Java vorausgesetzt
+und für die Entwicklung einer iOS Anwendung - Objective-C oder Swift.
  Auch Windows Phone (Windows Phone-Apps werden in C\# entwickelt) wird als Zielplattform immer
- attraktiver. Sollte eine App auf alle drei Plattformen laufen, wird der Entwicklungsaufwand groß.
+ attraktiver. Sollte eine App auf alle drei mobilen Betriebssystemen laufen, wird der
+ Entwicklungsaufwand groß.
  Die Anwendung muss drei mal, in drei verschiedenen Programmiersprachen implementiert werden.
  Aus gleichen Anforderungen resultieren drei völlig unabhängige und unterschiedliche
- Lösungen.\\Darüber hinaus hat sich der Smartphonemarkt als unbeständig erwiesen und demzufolge ist
- plattformgebundene App Entwicklung ein riskantes Unterfangen. Unternehmen, die sich auf die
+ Lösungen. Das führt auch dazu, dass im Falle eines Bugs, es drei mal gefixt werden muss.\\Darüber
+ hinaus hat sich der Smartphonemarkt als unbeständig erwiesen.
+ Demzufolge ist plattformgebundene App Entwicklung ein riskantes Unterfangen. Unternehmen, die sich auf die
  Herstellung und Verbreitung mobiler Applikationen spezialisiert haben, müssen
  plattformübergreifende Anwendungen mit Alleinstellungsmerkmal entwerfen, um langfristig auf dem
  Markt bestehen zu können.
 \section{Lösungsidee}
- \textbf{Cross-Plattform-Entwicklung} könnte hier Abhilfe schaffen. Die Idee ist, dass anstelle
- von 300 Stunden, nur 150 - 200 Stunden für die Entwicklung der App eingeplant werden müssen.
-  D.h., Softwarehersteller können somit die Entwicklungskosten deutlich reduzieren. 
+ \textbf{Cross-Plattform-Entwicklung} könnte hier Abhilfe schaffen. Die Idee bei diesem
+ Entwicklungsansatz ist, dass die Entwicklung einer App plattformübergreifend erfolgt.
+ D.h., eine App soll einmal entwickelt werden und auf mehreren unterschiedlichen mobilen
+ Betriebssystemen ausführbar sein.
+% Anstelle von 300 Stunden können für die Entwicklung der App nur 150 - 200 Stunden
+% eingeplant werden.
+   Die Entwicklungskosten von Softwarehersteller könnten sich dadurch deutlich reduzieren lassen. 
   
   Cross-Plattform-Technologien scheinen die Zukunft der App Entwicklung zu sein. Allerdings ist es
   keine einfache Aufgabe, eine geeignete plattformübergreifende Technologie auszuwählen. Diese
@@ -73,15 +87,17 @@ vorausgesetzt und für die Entwicklung einer iOS Anwendung - Objective-C oder Swi
   Business Apps geeignet und welche Vor- und Nachteile bringt Xamarin mit?
 
 \section{Aufgaben und Ziele}
-Ziel der Arbeit ist eine Cross-Plattform-Entwicklungsumgebung für die Erstellung von
-mobilen Enterprise-Anwendungen (Business Apps) für heterogene Plattformen zu evaluieren.\\Die
-aktuellsten Cross-Plattform-Entwicklungsumgebungen sollen vorgestellt werden und es sollen die Gründe erörtert
- werden, warum Xamarin sich am besten für das oben beschriebene Problem eignet.\\Es wird eine App
- nachgebaut, die schon für iOS entwickelt wurde. Ziel ist, zwei App Versionen aus einer gemeinsamen
- Codebasis zu entwickeln, eine iOS- und eine Android-Version.
- Dabei ist interessant herauszufinden, an welchen Stellen es Probleme entstehen können und ob es überhaupt möglich ist, die Anwendung mit Xamarin so zu
- entwickeln, dass die App keine Leistungsverluste aufweist.\\ Es werden die benötigten
- Installationsschritte, sowie Hardware- und Softwarevoraussetzungen erläutert.
+Ziel der Arbeit ist eine Cross-Plattform-Entwicklungsframework für die Erstellung von
+mobilen Enterprise-Anwendungen (Business-Apps) für heterogene Plattformen zu evaluieren.\\Die
+aktuellsten Cross-Plattform-Entwicklungstools sollen vorgestellt werden und es sollen die Gründe
+erörtert werden, warum Xamarin sich am besten für das oben beschriebene Problem eignet.\\Es wird eine App
+ nachgebaut und erweitert, die schon für iOS entwickelt wurde. Ziel ist, zwei App Versionen aus
+ einer gemeinsamen Codebasis zu entwickeln, eine iOS- und eine Android-Version.
+ Dabei ist interessant herauszufinden, an welchen Stellen es Probleme entstehen können und ob es
+ überhaupt möglich ist, die Anwendung mit Xamarin so zu entwickeln, dass die App keine
+ Leistungsverluste aufweist.
+ \\Ebenso werden die benötigten Installationsschritte, sowie Hardware- und
+ Softwarevoraussetzungen erläutert.
   
 
 
